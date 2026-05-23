@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>六级22天冲刺 · CET-6 Tracker</title>
+<meta name="description" content="六级22天冲刺备考追踪器 · 覆盖词汇、听力、阅读、翻译、作文全科训练 · 每日任务打卡+视频直达">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline';">
+<style>
+  :root {
+    --bg: #0f1119;
+    --surface: #1a1d2e;
+    --card: #1e2135;
+    --border: #2a2d40;
+    --text: #e2e4ed;
+    --text2: #9599ad;
+    --gold: #f0a500;
+    --green: #4ade80;
+    --red: #f87171;
+    --blue: #6366f1;
+    --purple: #a78bfa;
+    --cyan: #22d3ee;
+    --radius: 14px;
+    --shadow: 0 4px 24px rgba(0,0,0,.3);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: -apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+  body::before {
+    content: ''; position: fixed; top: -50%; left: -50%; width: 200%; height: 200%;
+    background: radial-gradient(ellipse at 30% 20%, rgba(99,102,241,.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 70% 60%, rgba(240,165,0,.06) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 80%, rgba(74,222,128,.04) 0%, transparent 50%);
+    pointer-events: none; z-index: 0;
+  }
+  /* skip-link */
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+  .sr-only:focus{position:fixed;top:10px;left:10px;width:auto;height:auto;clip:auto;padding:8px 16px;background:var(--blue);color:#fff;font-weight:600;border-radius:8px;z-index:999;white-space:nowrap}
+
+  /* ── Header ── */
+  .header {
+    position: sticky; top: 0; z-index: 100;
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    background: rgba(15,17,25,.85);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 24px;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 16px; flex-wrap: wrap;
+  }
+  .header-title {
+    font-size: 1.3rem; font-weight: 700; letter-spacing: -.02em;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .header-title .icon { font-size: 1.5rem; }
+  .countdown {
+    display: flex; align-items: center; gap: 8px;
+    background: var(--card); padding: 8px 16px; border-radius: 30px;
+    font-size: .9rem; border: 1px solid var(--border);
+  }
+  .countdown-num {
+    font-size: 1.6rem; font-weight: 800; color: var(--gold);
+    line-height: 1;
+  }
+  .progress-bar-wrap {
+    flex: 1; min-width: 120px; max-width: 280px;
+    height: 6px; background: var(--border); border-radius: 10px;
+    overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%; border-radius: 10px;
+    background: linear-gradient(90deg, var(--blue), var(--purple));
+    transition: width .5s cubic-bezier(.4,0,.2,1);
+  }
+  .progress-text { font-size: .8rem; color: var(--text2); white-space: nowrap; }
+
+  /* ── Layout ── */
+  .app {
+    display: flex; height: calc(100vh - 68px); position: relative; z-index: 1;
+  }
+  .sidebar {
+    width: 240px; min-width: 240px;
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    overflow-y: auto; padding: 8px 0;
+    scrollbar-width: thin; scrollbar-color: var(--border) transparent;
+  }
+  .sidebar::-webkit-scrollbar { width: 4px; }
+  .sidebar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
+
+  .day-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 16px; cursor: pointer;
+    transition: all .15s; border-left: 3px solid transparent;
+    font-size: .85rem; position: relative;
+  }
+  .day-item:hover { background: rgba(255,255,255,.03); }
+  .day-item.active {
+    background: rgba(99,102,241,.1);
+    border-left-color: var(--blue);
+  }
+  .day-item.completed .day-check { background: var(--green); border-color: var(--green); }
+  .day-item.completed .day-check::after {
+    content: '✓'; color: #000; font-size: .65rem; font-weight: 800;
+  }
+  .day-check {
+    width: 20px; height: 20px; border-radius: 50%;
+    border: 2px solid var(--border); flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    transition: all .2s;
+  }
+  .day-label { flex: 1; }
+  .day-label small { display: block; color: var(--text2); font-size: .7rem; margin-top: 1px; }
+  .day-badge {
+    font-size: .65rem; padding: 2px 6px; border-radius: 8px;
+    background: rgba(240,165,0,.15); color: var(--gold);
+  }
+  .day-badge.work { background: rgba(148,163,184,.1); color: var(--text2); }
+
+  .jump-today {
+    display: none; padding: 8px 16px; text-align: center;
+  }
+  .jump-today .btn-jump {
+    background: var(--blue); color: #fff; border: none;
+    padding: 6px 16px; border-radius: 20px; font-size: .8rem;
+    cursor: pointer; font-family: inherit;
+  }
+  @media(max-width:720px){.jump-today{display:block}}
+
+  /* ── Main ── */
+  .main {
+    flex: 1; overflow-y: auto; padding: 24px 28px;
+    scrollbar-width: thin; scrollbar-color: var(--border) transparent;
+  }
+  .main::-webkit-scrollbar { width: 4px; }
+  .main::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
+
+  .day-header {
+    margin-bottom: 20px;
+  }
+  .day-header h2 {
+    font-size: 1.6rem; font-weight: 700;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .day-header .date { color: var(--text2); font-size: .9rem; font-weight: 400; }
+  .day-tag {
+    display: inline-block; padding: 4px 12px; border-radius: 20px;
+    font-size: .75rem; font-weight: 600; margin-left: 8px;
+  }
+  .day-tag.fire { background: rgba(240,165,0,.15); color: var(--gold); }
+  .day-tag.work { background: rgba(148,163,184,.1); color: var(--text2); }
+
+  .stage-banner {
+    background: linear-gradient(135deg, rgba(99,102,241,.12), rgba(168,123,250,.08));
+    border: 1px solid rgba(99,102,241,.2);
+    border-radius: var(--radius); padding: 12px 18px; margin-bottom: 18px;
+    font-size: .85rem; color: var(--text2);
+  }
+  .stage-banner strong { color: var(--purple); }
+
+  .task-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 16px 18px; margin-bottom: 10px;
+    display: flex; align-items: flex-start; gap: 14px;
+    transition: all .2s; position: relative;
+  }
+  .task-card:hover { border-color: rgba(255,255,255,.1); }
+  .task-card.done { opacity: .7; border-left: 3px solid var(--green); }
+  .task-card.done .task-content { text-decoration: line-through; text-decoration-color: var(--text2); }
+
+  .task-cb {
+    width: 22px; height: 22px; border-radius: 6px;
+    border: 2px solid var(--border); flex-shrink: 0; margin-top: 1px;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: all .2s;
+  }
+  .task-cb:hover { border-color: var(--blue); }
+  .task-cb:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+  .task-cb.checked {
+    background: var(--green); border-color: var(--green);
+  }
+  .task-cb.checked::after {
+    content: '✓'; font-size: .7rem; font-weight: 800; color: #000;
+  }
+
+  .task-body { flex: 1; min-width: 0; }
+  .task-meta {
+    display: flex; align-items: center; gap: 8px; margin-bottom: 4px;
+    flex-wrap: wrap;
+  }
+  .task-time {
+    font-size: .75rem; color: var(--text2);
+    background: rgba(255,255,255,.04); padding: 2px 8px; border-radius: 10px;
+  }
+  .task-dur {
+    font-size: .75rem; color: var(--cyan);
+    background: rgba(34,211,238,.1); padding: 2px 8px; border-radius: 10px;
+  }
+  .task-cat {
+    font-size: .7rem; padding: 2px 8px; border-radius: 10px;
+    font-weight: 600; text-transform: uppercase;
+  }
+  .task-cat.word { background: rgba(240,165,0,.12); color: var(--gold); }
+  .task-cat.video { background: rgba(99,102,241,.12); color: var(--blue); }
+  .task-cat.listen { background: rgba(168,123,250,.12); color: var(--purple); }
+  .task-cat.exam { background: rgba(248,113,113,.12); color: var(--red); }
+  .task-cat.review { background: rgba(74,222,128,.12); color: var(--green); }
+  .task-cat.other { background: rgba(148,163,184,.1); color: var(--text2); }
+
+  .task-content { font-size: .92rem; margin-bottom: 4px; line-height: 1.45; }
+  .task-note {
+    font-size: .78rem; color: var(--text2); line-height: 1.4;
+  }
+  .task-actions { display: flex; gap: 8px; margin-top: 6px; flex-wrap: wrap; }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 6px 14px; border-radius: 20px; font-size: .78rem;
+    border: 1px solid var(--border); cursor: pointer;
+    background: transparent; color: var(--text);
+    transition: all .15s; text-decoration: none;
+    font-family: inherit;
+  }
+  .btn:hover { background: rgba(255,255,255,.05); border-color: rgba(255,255,255,.15); }
+  .btn.play { border-color: rgba(99,102,241,.3); color: var(--blue); }
+  .btn.play:hover { background: rgba(99,102,241,.1); }
+  .btn.search { border-color: rgba(34,211,238,.2); color: var(--cyan); font-size: .73rem; }
+
+  .day-footer {
+    margin-top: 20px; padding-top: 16px;
+    border-top: 1px solid var(--border);
+    display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+    color: var(--text2); font-size: .85rem;
+  }
+  .day-footer strong { color: var(--text); }
+
+  /* ── Responsive ── */
+  @media (max-width: 720px) {
+    .app { flex-direction: column; height: auto; }
+    .sidebar {
+      width: 100%; min-width: 0; max-height: 140px;
+      display: flex; overflow-x: auto; overflow-y: hidden;
+      border-right: none; border-bottom: 1px solid var(--border);
+      padding: 8px; gap: 4px;
+    }
+    .sidebar::-webkit-scrollbar { height: 3px; }
+    .day-item {
+      flex-direction: column; align-items: center; gap: 4px;
+      padding: 8px 12px; border-left: none; border-bottom: 2px solid transparent;
+      min-width: 60px; text-align: center; font-size: .75rem;
+      white-space: nowrap;
+    }
+    .day-item.active { border-left: none; border-bottom-color: var(--blue); }
+    .main { padding: 16px; }
+    .header { padding: 10px 14px; }
+    .header-title { font-size: 1rem; }
+    .countdown { padding: 6px 12px; }
+    .countdown-num { font-size: 1.3rem; }
+    .progress-bar-wrap { max-width: 140px; }
+  }
+</style>
+</head>
+<body>
+<a href="#main-content" class="sr-only">跳转到内容</a>
+<div class="header">
+  <div class="header-title">
+    <span class="icon">🎯</span> 六级冲刺
+  </div>
+  <div class="progress-bar-wrap">
+    <div class="progress-bar-fill" id="globalProgressBar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="22" style="width:0%"></div>
+  </div>
+  <div class="progress-text" id="globalProgressText">0/22 天完成</div>
+  <div class="countdown">
+    倒计时 <span class="countdown-num" id="countdownNum">22</span> 天
+  </div>
+</div>
+
+<div class="app" id="main-content">
+  <div class="sidebar" id="sidebar" role="tablist" aria-label="学习日导航">
+    <div class="jump-today"><button class="btn-jump" onclick="switchDay(getTodayIndex()+1)">📍 跳到今天</button></div>
+  </div>
+  <div class="main" id="mainContent"></div>
+</div>
+
+<script>
+// ═════════════════════ PLAN DATA ═════════════════════
+const STAGES = [
+  { name:'方法论+单词启动',  icon:'📖', range:[1,7] },
+  { name:'真题实战',         icon:'⚔️', range:[8,14] },
+  { name:'模考冲刺',         icon:'🔥', range:[15,22] },
+];
+const TAG_FIRE = '<span class="day-tag fire">🔥 时间多</span>';
+const TAG_WORK = '<span class="day-tag work">📋 工作日</span>';
+const COLLECTION_BASE = 'https://space.bilibili.com/11021614/lists';
+
+const planData = [
+{ day:1, date:'5.22', wd:'周五', type:'fire', stage:1, total:'≈2h',
+  tasks:[
+    {cat:'word',  time:'早晨', dur:'30min', text:'不背单词：新词80个', note:'选词书「六级核心词汇」，刷第一组', actions:[], doneLabel:'刷完80个新词'},
+    {cat:'video', time:'上午', dur:'42min', text:'瑞思拜：六级阅读第1讲·基本做题步骤', note:'掌握「连连看」方法：关键词→定位→同义替换', actions:[
+      {label:'📺 打开合集找视频', url:COLLECTION_BASE, tip:'合集：26上 六级阅读 → 第1讲'},
+      {label:'🔍 B站搜索', url:'https://search.bilibili.com/all?keyword=我是瑞斯拜+六级阅读+第一讲+基本做题步骤', tip:'搜「我是瑞斯拜 六级阅读第一讲」'}
+    ], doneLabel:'看完视频+做了笔记'},
+    {cat:'video', time:'下午', dur:'23min', text:'瑞思拜：六级作文课第1节·考什么怎么套', note:'把模板框架抄本子上：开头段/论证段/结尾段', actions:[
+      {label:'📺 打开合集找视频', url:COLLECTION_BASE, tip:'合集：26年六级作文 → 第1节'},
+      {label:'🔍 B站搜索', url:'https://search.bilibili.com/all?keyword=我是瑞斯拜+六级作文课+第一节', tip:'搜「我是瑞斯拜 六级作文课第一节」'}
+    ], doneLabel:'模板已抄到本子上'},
+    {cat:'listen',time:'晚上', dur:'20min', text:'听力预热：看着原文听真题Section A', note:'不做题！纯感受"原来这个音是这个单词"', actions:[], doneLabel:'听完Section A'},
+    {cat:'word',  time:'碎片', dur:'-', text:'不背单词：APP复习提醒', note:'来了就刷，别攒', actions:[], doneLabel:'复习完成'},
+  ]
+},
+{ day:2, date:'5.23', wd:'周六', type:'fire', stage:1, total:'≈2h10min',
+  tasks:[
+    {cat:'word',  time:'早晨', dur:'35min', text:'不背单词：新词80个+复习', note:'保持节奏', actions:[], doneLabel:'完成'},
+    {cat:'video', time:'上午', dur:'31min', text:'瑞思拜：六级翻译第1篇·节约美德', note:'学翻译基本步骤：拆句→主干提取→逐句翻译', actions:[
+      {label:'📺 打开合集找视频', url:COLLECTION_BASE, tip:'合集：26上六级翻译 → 节约美德'},
+      {label:'🔍 B站搜索', url:'https://search.bilibili.com/all?keyword=我是瑞斯拜+六级翻译+节约美德', tip:'搜「我是瑞斯拜 六级翻译 节约美德」'}
+    ], doneLabel:'看完+笔记'},
+    {cat:'video', time:'下午', dur:'43min', text:'瑞思拜：六级听力第1节·基本做题方法', note:'"从听懂到做对"——注意视听一致原则', actions:[
+      {label:'📺 打开合集找视频', url:COLLECTION_BASE, tip:'合集：26上六级听力 → 第1节'},
+      {label:'🔍 B站搜索', url:'https://search.bilibili.com/all?keyword=我是瑞斯拜+六级听力+第一节', tip:'搜「我是瑞斯拜 六级听力第一节」'}
+    ], doneLabel:'看完+笔记'},
+    {cat:'word',  time:'碎片', dur:'-', text:'不背单词：复习提醒', actions:[], doneLabel:'完成'},
+  ]
+},
+
+// CONTINUED BELOW - days 3-22 data...
+
+{ day:3, date:'5.24', wd:'周日', type:'fire', stage:1, total:'≈2h25min',
+  tasks:[
+    {cat:'word', time:'早晨', dur:'35min', text:'不背单词：新词80个+复习', actions:[], doneLabel:'完成'},
+    {cat:'video', time:'上午', dur:'24min', text:'瑞思拜：六级阅读第2讲·仔细阅读', note:'学仔细阅读的解题技巧', actions:[{label:'📺 打开合集找视频', url:COLLECTION_BASE, tip:'合集：26上 六级阅读 → 第2讲'}], doneLabel:'看完+笔记'},
+    {cat:'video', time:'下午', dur:'32min', text:'瑞思拜：六级听力第2节·长对话', note:'学长对话的做题方法', actions:[{label:'📺 打开合集找视频', url:COLLECTION_BASE, tip:'合集：26上六级听力 → 第2节'}], doneLabel:'看完+笔记'},
+    {cat:'word', time:'碎片', dur:'-', text:'不背单词：复习提醒', actions:[], doneLabel:'完成'},
+  ]
+},
+{ day:4, date:'5.25', wd:'周一', type:'work', stage:1, total:'≈1h25min',
+  tasks:[
+    {cat:'word', time:'早晨', dur:'30min', text:'不背单词：新词80个', actions:[], doneLabel:'完成'},
+    {cat:'video', time:'午休', dur:'30min', text:'瑞思拜：六级作文课第2节·模板套用', note:'把A1讲的模板套到真题题目上练', actions:[{label:'📺 打开合集找视频', url:COLLECTION_BASE, tip:'合集：26上六级作文 → 第2节'}], doneLabel:'看完+练习'},
+    {cat:'review',time:'晚上', dur:'25min', text:'翻译复习：回顾第2天的节约美德', note:'重看翻译笔记，遮住译文自己翻一遍', actions:[], doneLabel:'复习完成'},
+    {cat:'word', time:'碎片', dur:'-', text:'不背单词：复习提醒', actions:[], doneLabel:'完成'},
+  ]
+},
+{ day:5, date:'5.26', wd:'周二', type:'work', stage:1, total:'≈1h40min',
+  tasks:[
+    {cat:'word', time:'早晨', dur:'30min', text:'不背单词：新词80个', actions:[], doneLabel:'完成'},
+    {cat:'video', time:'午休', dur:'28min', text:'瑞思拜：六级翻译第2篇·共享经济', note:'练习拆句翻译法', actions:[{label:'📺 打开合集找视频', url:COLLECTION_BASE, tip:'合集：26上六级翻译 → 共享经济'}], doneLabel:'看完+笔记'},
+    {cat:'review',time:'晚上', dur:'40min', text:'整理笔记：作文模板+阅读方法总结', note:'用自己话总结一遍方法，加深记忆', actions:[], doneLabel:'笔记整理完成'},
+    {cat:'word', time:'碎片', dur:'-', text:'不背单词：复习提醒', actions:[], doneLabel:'完成'},
+  ]
+},
+{ day:6, date:'5.27', wd:'周三', type:'work', stage:1, total:'≈1h30min',
+  tasks:[
+    {cat:'word', time:'早晨', dur:'25min', text:'不背单词：新词80个', actions:[], doneLabel:'完成'},
+    {cat:'video', time:'午休', dur:'32min', text:'瑞思拜：六级听力第3节·篇章', note:'学篇章题型的做题方法', actions:[{label:'📺 打开合集找视频', url:COLLECTION_BASE, tip:'合集：26上六级听力 → 第3节'}], doneLabel:'看完+笔记'},
+    {cat:'review',time:'晚上', dur:'30min', text:'背作文模板+不背单词复习', note:'把A2的模板反复读，读到能脱口而出', actions:[], doneLabel:'完成'},
+  ]
+},
+{ day:7, date:'5.28', wd:'周四', type:'work', stage:1, total:'≈55min',
+  tasks:[
+    {cat:'word', time:'早晨', dur:'25min', text:'不背单词：新词80个', actions:[], doneLabel:'完成'},
+    {cat:'other', time:'晚上', dur:'30min', text:'回看所有笔记+准备第一套真题', note:'阅读方法论/作文模板/翻译步骤/听力方法全部过一遍。准备好最近3年内任意一套六级真题', actions:[{label:'🔍 搜真题资源', url:'https://search.bilibili.com/all?keyword=六级真题+2025+2024+PDF', tip:'B站搜六级真题PDF，或买星火/华研真题集'}], doneLabel:'笔记已过完，真题已就位'},
+    {cat:'word', time:'碎片', dur:'-', text:'不背单词：复习提醒', actions:[], doneLabel:'完成'},
+  ]
+},
+{ day:8, date:'5.29', wd:'周五', type:'fire', stage:2, total:'≈2h55min',
+  tasks:[
+    {cat:'word', time:'早晨', dur:'25min', text:'不背单词：新词80个', actions:[], doneLabel:'完成'},
+    {cat:'exam', time:'白天', dur:'2h10min', text:'📝 真题第1套：完整模考', note:'严格计时！作文30→听力30→阅读40→翻译30。选词填空放到最后做！', actions:[{label:'🔍 搜真题资源', url:'https://search.bilibili.com/all?keyword=六级真题+2025+2024+PDF', tip:'推荐做2024年12月或2025年6月的真题'}], doneLabel:'模考完成'},
+    {cat:'review',time:'晚上', dur:'20min', text:'对答案+标记错题', note:'不精析，只标出错题，明天专门精析', actions:[], doneLabel:'完成'},
+    {cat:'word', time:'碎片', dur:'-', text:'不背单词：复习提醒', actions:[], doneLabel:'完成'},
+  ]
+},
+{ day:9, date:'5.30', wd:'周六', type:'fire', stage:2, total:'≈2h35min',
+  tasks:[
+    {cat:'word', time:'早晨', dur:'25min', text:'不背单词：新词80个', actions:[], doneLabel:'完成'},
+    {cat:'review',time:'上午', dur:'50min', text:'🔍 精析阅读：每道错题回原文找对应句', note:'标记生词+整理同义替换对（如decline→drop）。生词加入不背单词生词本', actions:[], doneLabel:'精析完成'},
+    {cat:'review',time:'下午', dur:'40min', text:'🔍 精析听力：对答案→看原文听→不看原文盲听', note:'标记连读/弱读。听不出来的地方反复听3遍', actions:[], doneLabel:'精析完成'},
+    {cat:'review',time:'晚上', dur:'40min', text:'🔍 精析翻译+作文：对照范文，用模板重写作文', note:'对照参考答案，圈出不会翻的词，记下参考译文的句型', actions:[], doneLabel:'精析完成'},
+    {cat:'word', time:'碎片', dur:'-', text:'不背单词：复习+真题生词入生词本', actions:[], doneLabel:'完成'},
+  ]
+},
+{ day:10, date:'5.31', wd:'周日', type:'fire', stage:2, total:'≈2h55min',
+  tasks:[
+    {cat:'word', time:'早晨', dur:'25min', text:'不背单词：新词80个', actions:[], doneLabel:'完成'},
+    {cat:'exam', time:'白天', dur:'2h10min', text:'📝 真题第2套：完整模考', note:'严格计时！注意做题顺序：仔细阅读→长篇匹配→翻译→选词填空', actions:[{label:'🔍 搜真题资源', url:'https://search.bilibili.com/all?keyword=六级真题+2025+2024+PDF', tip:'推荐做2024年6月或2025年12月的真题'}], doneLabel:'模考完成'},
+    {cat:'review',time:'晚上', dur:'20min', text:'对答案+标记错题', actions:[], doneLabel:'完成'},
+    {cat:'word', time:'碎片', dur:'-', text:'不背单词：复习提醒', actions:[], doneLabel:'完成'},
+  ]
+},
+{ day:11, date:'6.1', wd:'周一', type:'fire', stage:2, total:'≈2h25min',
+  tasks:[
+    {cat:'word', time:'早晨', dur:'25min', text:'不背单词：新词80个', actions:[], doneLabel:'完成'},
+    {cat:'review',time:'白天', dur:'2h', text:'🔍 精析第2套（阅读→听力→翻译→作文）', note:'和第9天一样流程：阅读找对应句+听力盲听+翻译对比+作文重写', actions:[], doneLabel:'精析完成'},
+    {cat:'word', time:'碎片', dur:'-', text:'不背单词：复习提醒', actions:[], doneLabel:'完成'},
+  ]
+},
+{ day:12, date:'6.2', wd:'周二', type:'work', stage:2, total:'≈1h20min',
+  tasks:[
+    {cat:'word', time:'早晨', dur:'20min', text:'不背单词：新词60个（减量，优先复习）', actions:[], doneLabel:'完成'},
+    {cat:'video', time:'午休', dur:'30min', text:'📺 弱项强化：根据前两套真题暴露的弱点，挑C1~C6中对应视频看', note:'阅读弱→C3/C4；听力弱→C1/C2；词汇弱→C5/C6。去瑞思拜合集里找', actions:[{label:'📺 打开合集页面', url:COLLECTION_BASE, tip:'去合集页面，找26上 六级阅读/六级听力 的后续视频'}], doneLabel:'看完'},
+    {cat:'review',time:'晚上', dur:'30min', text:'不背单词复习+背作文模板', actions:[], doneLabel:'完成'},
+  ]
+},
+{ day:13, date:'6.3', wd:'周三', type:'work', stage:2, total:'≈1h30min',
+  tasks:[
+    {cat:'word', time:'早晨', dur:'20min', text:'不背单词：新词60个', actions:[], doneLabel:'完成'},
+    {cat:'exam', time:'晚上', dur:'1h10min', text:'📝 真题第3套：阅读40min+听力30min', note:'分模块做，作文翻译明天完成', actions:[{label:'🔍 搜真题资源', url:'https://search.bilibili.com/all?keyword=六级真题+2025+2024+PDF', tip:'推荐做2023年12月的真题'}], doneLabel:'阅读+听力完成'},
+    {cat:'word', time:'碎片', dur:'-', text:'不背单词：复习提醒', actions:[], doneLabel:'完成'},
+  ]
+},
+{ day:14, date:'6.4', wd:'周四', type:'work', stage:2, total:'≈1h30min',
+  tasks:[
+    {cat:'word', time:'早晨', dur:'20min', text:'不背单词：新词60个', actions:[], doneLabel:'完成'},
+    {cat:'exam', time:'晚上', dur:'1h10min', text:'📝 完成第3套：作文+翻译+对答案', note:'作文30min+翻译30min，然后对答案', actions:[], doneLabel:'完成'},
+    {cat:'word', time:'碎片', dur:'-', text:'不背单词：复习提醒', actions:[], doneLabel:'完成'},
+  ]
+},
+{ day:15, date:'6.5', wd:'周五', type:'fire', stage:3, total:'≈3h25min',
+  tasks:[
+    {cat:'word', time:'早晨', dur:'15min', text:'不背单词：新词50个（维持为主）', actions:[], doneLabel:'完成'},
+    {cat:'review',time:'白天', dur:'1h30min', text:'🔍 精析第3套：重点看阅读和听力的错题规律', note:'找规律：哪种题型总错？是定位不准还是单词不认识？', actions:[], doneLabel:'精析完成'},
+    {cat:'video', time:'下午', dur:'1h', text:'📺 弱项强化：从C1~C6中选2个视频看', note:'C1=听力第4节30min,C2=听力第5节42min,C3=阅读第4讲35min,C4=阅读第5讲31min,C5=考前词汇25min,C6=同义替换10min', actions:[{label:'📺 打开合集页面', url:COLLECTION_BASE, tip:'去瑞思拜合集找对应视频'}], doneLabel:'看完2个视频'},
+    {cat:'exam', time:'晚上', dur:'40min', text:'作文模板练习：限时30min写一篇', note:'用模板套不同话题，练到条件反射', actions:[], doneLabel:'作文完成'},
+  ]
+},
+{ day:16, date:'6.6', wd:'周六', type:'fire', stage:3, total:'≈3h55min',
+  tasks:[
+    {cat:'word', time:'早晨', dur:'15min', text:'不背单词：新词50个', actions:[], doneLabel:'完成'},
+    {cat:'exam', time:'白天', dur:'2h10min', text:'📝 真题第4套：完整模考（严格计时！）', note:'这是倒数第二套完整真题，按真实考试节奏来', actions:[{label:'🔍 搜真题资源', url:'https://search.bilibili.com/all?keyword=六级真题+2023+2024+PDF', tip:'推荐做2023年6月的真题'}], doneLabel:'模考完成'},
+    {cat:'review',time:'下午', dur:'1h30min', text:'🔍 精析第4套', note:'该精析的精析，时间不够的话重点看阅读和听力错题', actions:[], doneLabel:'精析完成'},
+  ]
+},
+{ day:17, date:'6.7', wd:'周日', type:'fire', stage:3, total:'≈3h55min',
+  tasks:[
+    {cat:'word', time:'早晨', dur:'15min', text:'不背单词：新词50个', actions:[], doneLabel:'完成'},
+    {cat:'exam', time:'上午', dur:'2h10min', text:'📝 真题第5套：最后一次完整模考！', note:'最后一次！拿出考试状态。选词填空依然最后做', actions:[{label:'🔍 搜真题资源', url:'https://search.bilibili.com/all?keyword=六级真题+2023+2024+PDF', tip:'推荐做2023年6月或2022年12月的真题'}], doneLabel:'模考完成'},
+    {cat:'review',time:'下午', dur:'1h30min', text:'🔍 精析第5套', actions:[], doneLabel:'精析完成'},
+  ]
+},
+{ day:18, date:'6.8', wd:'周一', type:'fire', stage:3, total:'≈2h27min',
+  tasks:[
+    {cat:'word', time:'早晨', dur:'10min', text:'不背单词：新词30个（收缩，重复习）', actions:[], doneLabel:'完成'},
+    {cat:'video', time:'白天', dur:'26min', text:'📺 瑞思拜：考前50分-必考词汇预测', note:'考前必备的高频词和预测词', actions:[{label:'🔍 B站搜索', url:'https://search.bilibili.com/all?keyword=我是瑞斯拜+考前50分+必考词汇预测', tip:'搜「瑞斯拜 考前50分 必考词汇」'}], doneLabel:'看完'},
+    {cat:'video', time:'白天', dur:'11min', text:'📺 瑞思拜：10组最常见同义替换+写作高级替换词', note:'阅读和写作都能用上', actions:[{label:'🔍 B站搜索', url:'https://search.bilibili.com/all?keyword=我是瑞斯拜+同义替换+写作高级替换词', tip:'搜「瑞斯拜 同义替换 写作高级替换词」'}], doneLabel:'看完'},
+    {cat:'exam', time:'下午', dur:'1h10min', text:'作文模板限时练习×2篇', note:'不同类型话题各一篇（现象分析+利弊讨论），30min/篇', actions:[], doneLabel:'2篇完成'},
+    {cat:'review',time:'晚上', dur:'30min', text:'回顾5套真题错题本+总结高频错误类型', note:'是词汇问题？定位问题？还是时间不够？', actions:[], doneLabel:'总结完成'},
+  ]
+},
+{ day:19, date:'6.9', wd:'周二', type:'work', stage:3, total:'≈1h20min',
+  tasks:[
+    {cat:'word', time:'早晨', dur:'20min', text:'不背单词：只复习，不学新词', note:'词汇量已经够了，维持即可', actions:[], doneLabel:'完成'},
+    {cat:'review',time:'晚上', dur:'30min', text:'作文模板背诵：默写模板框架', note:'确保能条件反射——拿到任何题目3分钟内列出提纲', actions:[], doneLabel:'默写完成'},
+    {cat:'review',time:'晚上', dur:'30min', text:'翻译热点话题浏览', note:'教育/科技/文化/环境各看一篇范文，熟悉常见表达', actions:[{label:'🔍 搜翻译范文', url:'https://search.bilibili.com/all?keyword=六级翻译+预测+热点话题+2026', tip:'B站搜「六级翻译 预测 热点话题」'}], doneLabel:'浏览完成'},
+  ]
+},
+{ day:20, date:'6.10', wd:'周三', type:'work', stage:3, total:'≈55min',
+  tasks:[
+    {cat:'word', time:'早晨', dur:'15min', text:'不背单词：只复习', actions:[], doneLabel:'完成'},
+    {cat:'listen',time:'晚上', dur:'40min', text:'听力保温：挑一套真题听力裸听做题', note:'保持耳朵的英语感觉，做完复盘错题', actions:[], doneLabel:'完成'},
+  ]
+},
+{ day:21, date:'6.11', wd:'周四', type:'work', stage:3, total:'≈1h5min',
+  tasks:[
+    {cat:'word', time:'早晨', dur:'15min', text:'不背单词：只复习', actions:[], doneLabel:'完成'},
+    {cat:'video', time:'晚上', dur:'25min', text:'📺 重温：考前50分-必考词汇预测', note:'考前最后一次过高频词', actions:[{label:'🔍 B站搜索', url:'https://search.bilibili.com/all?keyword=我是瑞斯拜+考前50分+必考词汇预测', tip:'搜「瑞斯拜 考前50分 必考词汇」'}], doneLabel:'看完'},
+    {cat:'review',time:'晚上', dur:'15min', text:'作文模板最后默写一遍', actions:[], doneLabel:'默写完成'},
+    {cat:'other', time:'晚上', dur:'10min', text:'🎒 检查：准考证+身份证+文具+听力耳机电池', note:'耳机试一下，电池换新的', actions:[], doneLabel:'全部就位'},
+  ]
+},
+{ day:22, date:'6.12', wd:'周五', type:'fire', stage:3, total:'≈1h30min',
+  tasks:[
+    {cat:'word', time:'早晨', dur:'20min', text:'不背单词：快速过一遍生词本', note:'只过生词本，不学新词', actions:[], doneLabel:'完成'},
+    {cat:'review',time:'上午', dur:'40min', text:'过一遍所有5套真题的错题', note:'不需要重做，快速浏览错题+纠正思路', actions:[], doneLabel:'完成'},
+    {cat:'review',time:'下午', dur:'30min', text:'作文模板默写×1 + 浏览翻译热点词', note:'最后一次默写模板', actions:[], doneLabel:'完成'},
+    {cat:'other', time:'晚上', dur:'-', text:'😴 早点睡，什么都不做', note:'明天上考场！相信自己', actions:[], doneLabel:'已休息'},
+  ]
+}];
+
+// ═══════════════════ APP LOGIC ═══════════════════
+const EXAM_DATE = new Date(2026,5,13);
+const STORAGE_KEY = 'cet6_tracker_v2';
+
+function getTodayIndex() {
+  const now = new Date();
+  const start = new Date(2026,4,22);
+  const diff = Math.floor((now - start) / 86400000);
+  return Math.max(0, Math.min(21, diff));
+}
+
+function loadState() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; }
+  catch { return {}; }
+}
+function saveState(state) { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
+
+function calcProgress(state) {
+  let completedDays = 0;
+  planData.forEach((d,i) => {
+    const dayKey = 'day' + (i+1);
+    const tasks = state[dayKey] || {};
+    const totalTasks = d.tasks.length;
+    const doneTasks = Object.values(tasks).filter(v=>v).length;
+    if (totalTasks > 0 && doneTasks >= totalTasks) completedDays++;
+  });
+  return completedDays;
+}
+
+function getDayState(state, dayNum) {
+  return state['day' + dayNum] || {};
+}
+
+// Render sidebar with ARIA roles
+function renderSidebar(activeDay) {
+  const sidebar = document.getElementById('sidebar');
+  const state = loadState();
+  let html = '<div class="jump-today"><button class="btn-jump" onclick="switchDay(getTodayIndex()+1)">📍 跳到今天</button></div>';
+  planData.forEach((d,i) => {
+    const dn = i+1;
+    const dayState = getDayState(state, dn);
+    const allDone = d.tasks.length > 0 && d.tasks.every((_,ti) => dayState['t'+ti]);
+    const isActive = dn === activeDay;
+    const cls = ['day-item', isActive ? 'active' : '', allDone ? 'completed' : ''].filter(Boolean).join(' ');
+    html += '<div class="'+cls+'" data-day="'+dn+'" onclick="switchDay('+dn+')" onkeydown="if(event.key===\'Enter\'||event.key===\' \'){event.preventDefault();switchDay('+dn+')}" role="tab" aria-selected="'+(isActive?'true':'false')+'" tabindex="'+(isActive?'0':'-1')+'">'
+      + '<div class="day-check"></div>'
+      + '<div class="day-label">Day '+dn+'<small>'+d.date+' '+d.wd+'</small></div>'
+      + '<span class="day-badge '+(d.type==='work'?'work':'')+'">'+(d.type==='fire'?'🔥':d.total)+'</span>'
+      + '</div>';
+  });
+  sidebar.innerHTML = html;
+  setTimeout(() => {
+    const el = sidebar.querySelector('[data-day="'+activeDay+'"]');
+    if (el) el.scrollIntoView({ behavior:'smooth', block:'nearest' });
+  }, 100);
+}
+
+function renderMain(dayNum) {
+  const d = planData[dayNum-1];
+  const state = loadState();
+  const dayState = getDayState(state, dayNum);
+  const dn = dayNum;
+  const stage = STAGES.find(s => dn >= s.range[0] && dn <= s.range[1]);
+  const tag = d.type === 'fire' ? TAG_FIRE : TAG_WORK;
+  const allDone = d.tasks.length > 0 && d.tasks.every((_,ti) => dayState['t'+ti]);
+
+  let html = '<div class="day-header"><h2>Day '+dn+' <span class="date">· '+d.date+' '+d.wd+'</span>'+tag+'</h2></div>';
+
+  if (stage) {
+    html += '<div class="stage-banner">'+stage.icon+' <strong>第'+(stage.range[0]>=15?'三':stage.range[0]>=8?'二':'一')+'阶段：'+stage.name+'</strong>'+(dn===stage.range[0]?' — 今天进入新阶段！':'')+'</div>';
+  }
+  if (allDone) {
+    html += '<div class="stage-banner" style="background:rgba(74,222,128,.08);border-color:rgba(74,222,128,.2);">✅ 今天的任务全部完成！干得漂亮。</div>';
+  }
+
+  d.tasks.forEach((t,ti) => {
+    const isDone = !!dayState['t'+ti];
+    const catLabel = {word:'单词',video:'视频',listen:'听力',exam:'真题',review:'复习',other:'其他'}[t.cat];
+    const cardClass = 'task-card' + (isDone ? ' done' : '');
+
+    html += '<div class="'+cardClass+'" id="task-'+dn+'-'+ti+'">'
+      + '<div class="task-cb '+(isDone?'checked':'')+'" data-day="'+dn+'" data-ti="'+ti+'" onclick="toggleTask('+dn+','+ti+')" onkeydown="if(event.key===\'Enter\'||event.key===\' \'){event.preventDefault();toggleTask('+dn+','+ti+')}" role="checkbox" aria-checked="'+(isDone?'true':'false')+'" tabindex="0"></div>'
+      + '<div class="task-body">'
+      + '<div class="task-meta">'
+      + (t.time?'<span class="task-time">'+t.time+'</span>':'')
+      + (t.dur&&t.dur!=='-'?'<span class="task-dur">'+t.dur+'</span>':'')
+      + '<span class="task-cat '+t.cat+'">'+catLabel+'</span>'
+      + '</div>'
+      + '<div class="task-content">'+t.text+'</div>'
+      + (t.note?'<div class="task-note">💡 '+t.note+'</div>':'')
+      + (t.actions&&t.actions.length?'<div class="task-actions">'+t.actions.map(a=>'<a class="btn '+(a.label.includes('打开')||a.label.includes('B站')?'play':'search')+'" href="'+a.url+'" target="_blank" rel="noopener noreferrer" title="'+(a.tip||'')+'">'+a.label+'</a>').join('')+'</div>':'')
+      + '</div></div>';
+  });
+
+  html += '<div class="day-footer">⏱️ 今日总计 <strong>'+d.total+'</strong>'+(allDone ? ' · ✅ 全部完成' : ' · '+d.tasks.filter((_,ti)=>dayState['t'+ti]).length+'/'+d.tasks.length+' 项完成')+'</div>';
+  document.getElementById('mainContent').innerHTML = html;
+}
+
+function toggleTask(dayNum, ti) {
+  const state = loadState();
+  const dayKey = 'day' + dayNum;
+  if (!state[dayKey]) state[dayKey] = {};
+  state[dayKey]['t'+ti] = !state[dayKey]['t'+ti];
+  saveState(state);
+  renderMain(dayNum);
+  renderSidebar(dayNum);
+  updateGlobalProgress();
+}
+
+function switchDay(dayNum) {
+  renderMain(dayNum);
+  renderSidebar(dayNum);
+  window.location.hash = 'day' + dayNum;
+  const el = document.querySelector('[data-day="'+dayNum+'"]');
+  if (el) el.scrollIntoView({ behavior:'smooth', block:'nearest' });
+}
+
+function updateGlobalProgress() {
+  const state = loadState();
+  const completedDays = calcProgress(state);
+  const pct = Math.round((completedDays / 22) * 100);
+  const bar = document.getElementById('globalProgressBar');
+  bar.style.width = pct + '%';
+  bar.setAttribute('aria-valuenow', completedDays);
+  const text = completedDays + '/22 天完成 (' + pct + '%)';
+  document.getElementById('globalProgressText').textContent = text;
+  bar.setAttribute('aria-valuetext', text);
+}
+
+function updateCountdown() {
+  const now = new Date();
+  const diff = Math.ceil((EXAM_DATE - now) / 86400000);
+  document.getElementById('countdownNum').textContent = Math.max(0, diff);
+}
+
+function init() {
+  let activeDay = getTodayIndex() + 1;
+  const hash = window.location.hash;
+  if (hash && hash.startsWith('#day')) {
+    const d = parseInt(hash.replace('#day',''));
+    if (d >= 1 && d <= 22) activeDay = d;
+  }
+  renderMain(activeDay);
+  renderSidebar(activeDay);
+  updateGlobalProgress();
+  updateCountdown();
+  setTimeout(() => {
+    const todayIdx = getTodayIndex() + 1;
+    const el = document.querySelector('[data-day="'+todayIdx+'"]');
+    if (el && activeDay === todayIdx) el.scrollIntoView({ behavior:'smooth', block:'center' });
+  }, 200);
+}
+
+init();
+</script>
+</body>
+</html>

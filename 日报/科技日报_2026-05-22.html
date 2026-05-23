@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="科技日报 2026年5月22日 · GitHub · HN · The Verge · TechCrunch · MIT TR 等14个数据源的每日科技要闻聚合">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src * data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; connect-src *;">
+<title>科技日报 · 2026-05-22</title>
+<style>
+:root{--bg:#0d1117;--s:#161b22;--s2:#1c2333;--b:#30363d;--t:#c9d1d9;--m:#8b949e;--a:#58a6ff;--w:#f78166;--g:#3fb950;--p:#d2a8ff;--tb:#1a2332;--tt:#79c0ff;--d:#21262d;--gg:rgba(63,185,80,.12);--ww:rgba(247,129,102,.12);--hl:rgba(88,166,255,.07);--xs:4px;--sm:8px;--md:12px;--lg:16px;--xl:24px;--2xl:32px;--3xl:48px;--rs:6px;--rm:8px;--rl:10px;--rx:14px;--rf:50%;--tf:.15s;--tb:.2s;--ts:.3s;--ff:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif}
+[data-theme="light"]{--bg:#fff;--s:#f6f8fa;--s2:#eef1f5;--b:#d0d7de;--t:#1f2328;--m:#656d76;--a:#0969da;--w:#cf222e;--g:#1a7f37;--p:#8250df;--tb:#ddf4ff;--tt:#0969da;--d:#d8dee4;--gg:rgba(26,127,55,.1);--ww:rgba(207,34,46,.08);--hl:rgba(9,105,218,.06)}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--ff);background:var(--bg);color:var(--t);line-height:1.7;max-width:960px;margin:0 auto;padding:var(--xl) var(--xl) 100px;transition:background var(--ts),color var(--ts);-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}a:hover{color:var(--a)}
+b,strong{color:var(--t);font-weight:600}img{max-width:100%;display:block;animation:imgIn .4s ease both}@keyframes imgIn{from{opacity:0}to{opacity:1}}
+/* ── TOPBAR ── */
+.tb{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:var(--sm) 0;margin-bottom:var(--xl);background:var(--bg);border-bottom:1px solid var(--d);gap:var(--sm);flex-wrap:wrap}
+.tb-bc{display:flex;align-items:center;gap:var(--sm);font-size:13px;min-width:0}
+.tb-bc .sep{color:var(--m)}.tb-bc .home{font-weight:800;white-space:nowrap}.tb-bc .crumb{color:var(--m);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tb-bc .back{cursor:pointer;color:var(--a);font-size:12px;padding:2px 8px;border:1px solid var(--b);border-radius:var(--rx);transition:all var(--tb);white-space:nowrap}
+.tb-bc .back:hover{background:var(--hl)}
+.tb-actions{display:flex;gap:var(--sm);align-items:center}
+.btn-theme{font-size:12px;color:var(--m);background:var(--s);border:1px solid var(--b);border-radius:var(--rx);padding:4px 10px;cursor:pointer;transition:all var(--tb);font-family:var(--ff)}
+.btn-theme:hover{color:var(--a);border-color:var(--a)}
+/* ── SKIP LINK ── */
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.sr-only:focus{position:fixed;top:10px;left:10px;width:auto;height:auto;clip:auto;padding:8px 16px;background:var(--a);color:#fff;font-weight:600;border-radius:var(--rm);z-index:999;white-space:nowrap}
+/* ── VIEW ── */
+.view{display:none}.view.is-active{display:block;animation:fadeIn var(--ts) ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+/* ── DASH ── */
+.dash-h{text-align:center;padding:var(--2xl) 0 var(--xl)}
+.dash-h h1{font-size:32px;font-weight:800;letter-spacing:-0.5px;margin-bottom:4px}
+.dash-h .sub{color:var(--m);font-size:15px;margin:4px 0}
+.dash-h .srcs{color:var(--m);font-size:12px}
+.dash-stats{display:flex;gap:var(--md);justify-content:center;flex-wrap:wrap;margin:var(--lg) 0 var(--xl)}
+.ds{font-size:13px;color:var(--m);background:var(--s);border:1px solid var(--b);border-radius:var(--rx);padding:6px 14px;display:flex;align-items:center;gap:6px}
+.ds strong{color:var(--t)}
+.hlc{background:linear-gradient(135deg,var(--s),var(--s2));border:1px solid var(--w);border-radius:var(--rl);padding:var(--xl) 28px;margin-bottom:var(--xl);position:relative;overflow:hidden;box-shadow:0 8px 32px rgba(247,129,102,.18),0 2px 8px rgba(247,129,102,.08)}
+.hlc::before{content:'';position:absolute;top:-50px;right:-50px;width:160px;height:160px;background:var(--w);opacity:.04;border-radius:var(--rf)}
+.hlc .hl-l{font-size:10px;text-transform:uppercase;letter-spacing:2px;color:var(--w);font-weight:700;margin-bottom:var(--sm)}
+.hlc h2{font-size:20px;line-height:1.4;margin-bottom:var(--md)}
+.hlc .hl-b{color:var(--m);font-size:14px;line-height:1.9}
+.hlc .hl-b b{color:var(--t)}
+.hlc .hl-a{margin-top:var(--md)}.hlc .hl-a a{font-size:13px;color:var(--a);border:1px solid var(--a);padding:6px 16px;border-radius:var(--rx);transition:all var(--tb);display:inline-block}
+.hlc .hl-a a:hover{background:var(--hl)}
+@media(max-width:600px){.tb-bc .back{font-size:14px}}
+.cg{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--md);margin-bottom:var(--2xl)}
+@media(max-width:700px){.cg{grid-template-columns:1fr 1fr}}@media(max-width:440px){.cg{grid-template-columns:1fr}}
+.cc{background:var(--s);border:1px solid var(--b);border-radius:var(--rl);padding:var(--xl) var(--lg);cursor:pointer;transition:all var(--tb);text-align:center;position:relative;overflow:hidden}
+.cc:hover{border-color:var(--a);background:var(--s2);transform:translateY(-2px)}
+.cc .ci{font-size:28px;margin-bottom:var(--sm)}.cc .cn{font-size:15px;font-weight:600;margin-bottom:2px}
+.cc .co{font-size:12px;color:var(--m)}.cc .cd{font-size:11px;color:var(--m);margin-top:var(--xs)}
+.cc .cb{position:absolute;top:8px;right:8px;font-size:10px;color:var(--g);background:var(--gg);padding:1px 7px;border-radius:var(--rm)}
+/* ── FEED ── */
+.fh{text-align:center;padding:var(--lg) 0 var(--xl)}.fh h2{font-size:24px;font-weight:800}.fh .fs{color:var(--m);font-size:13px;margin-top:4px}
+.card{background:var(--s);border:1px solid var(--b);border-radius:var(--rl);padding:var(--lg) 22px;margin-bottom:var(--md);transition:all var(--tb);cursor:pointer}
+.card:hover{border-color:var(--a);background:var(--s2)}
+.cr{display:flex;justify-content:space-between;align-items:flex-start;gap:var(--md);flex-wrap:wrap}
+.card h3{font-size:15px;font-weight:600;line-height:1.4;flex:1}
+.card .cs{font-size:11px;color:var(--m);margin:4px 0 var(--sm)}.card .cs em{font-style:normal;color:var(--p)}
+.card .csum{font-size:13px;color:var(--t);line-height:1.7}.card .csum b{color:var(--w)}
+.card .ct{display:flex;gap:var(--xs);flex-wrap:wrap;margin-top:var(--sm)}
+.tag{font-size:10px;padding:2px 7px;border-radius:var(--rm);color:var(--p);background:rgba(210,168,255,.1);border:1px solid rgba(210,168,255,.2)}
+.card--repo{display:grid;grid-template-columns:48px 1fr auto;gap:var(--md);align-items:start;cursor:default}
+@media(max-width:600px){.card--repo{grid-template-columns:40px 1fr}.card--repo .ra{grid-column:2}}
+.card--repo .ra img{width:48px;height:48px;border-radius:var(--rf);border:2px solid var(--b);background:var(--d)}
+.card--repo .rl{font-size:10px;color:var(--tt);background:var(--tb);padding:1px 7px;border-radius:var(--rm)}
+.card--repo .rmt{font-size:11px;color:var(--m);margin-bottom:var(--sm)}
+.bstar{font-size:12px;color:var(--g);font-weight:600;background:var(--gg);padding:3px 10px;border-radius:var(--rm);white-space:nowrap}
+.btr{font-size:10px;color:var(--w);background:var(--ww);padding:2px 7px;border-radius:var(--rm);margin-left:4px}
+.pg{display:grid;grid-template-columns:1fr 1fr;gap:var(--md)}
+@media(max-width:640px){.pg{grid-template-columns:1fr}}
+.card--product{overflow:hidden;padding:0}.card--product .pimg{width:100%;height:130px;object-fit:cover;background:var(--d)}
+.card--product .pb{padding:var(--md) var(--lg)}.card--product h3{font-size:14px;font-weight:600;margin-bottom:2px}
+.card--product .pt{font-size:12px;color:var(--m)}.card--product .pw{font-size:12px;color:var(--g);margin-top:var(--sm);line-height:1.5}
+/* ── DETAIL ── */
+.dh{margin-bottom:var(--xl)}.dh h2{font-size:22px;font-weight:800;line-height:1.4;margin-bottom:var(--sm)}
+.dm{font-size:12px;color:var(--m);margin-bottom:var(--md);display:flex;gap:var(--lg);flex-wrap:wrap}
+.dm span{display:inline-flex;align-items:center;gap:4px}
+/* 两列布局 */
+.col2{display:grid;grid-template-columns:1fr 1fr;gap:var(--xl);margin-bottom:var(--2xl)}
+@media(max-width:700px){.col2{grid-template-columns:1fr}}
+.col2 .col-l{border-right:2px solid var(--d);padding-right:var(--xl)}
+@media(max-width:700px){.col2 .col-l{border-right:none;border-bottom:2px solid var(--d);padding-right:0;padding-bottom:var(--xl)}}
+.col2 .col-r{padding-left:var(--xl)}
+@media(max-width:700px){.col2 .col-r{padding-left:0}}
+.col-title{font-size:12px;text-transform:uppercase;letter-spacing:2px;font-weight:700;margin-bottom:var(--lg);padding-bottom:var(--sm);border-bottom:2px solid var(--d)}
+.col-l .col-title{color:var(--a)}
+.col-r .col-title{color:var(--m)}
+.explain-block{font-size:14px;line-height:2;color:var(--t)}
+.explain-block p{margin-bottom:var(--lg)}
+.explain-block ul{padding-left:var(--lg);margin-bottom:var(--lg)}
+.explain-block li{margin-bottom:var(--sm);line-height:1.9}
+.explain-block b{color:var(--w)}
+.origin-block{font-size:13px;line-height:1.9;color:var(--m)}
+.origin-block p{margin-bottom:var(--lg)}
+.sbox{background:var(--s);border:1px solid var(--b);border-radius:var(--rl);padding:var(--lg);margin-top:var(--xl)}
+.sbox h4{font-size:12px;text-transform:uppercase;letter-spacing:1px;color:var(--m);margin-bottom:var(--sm)}
+.sbox a{color:var(--a);font-size:13px;word-break:break-all;display:block;margin-bottom:4px}
+.sbox a:hover{text-decoration:underline}
+/* ── MISC ── */
+.btt{position:fixed;bottom:var(--xl);right:var(--xl);width:40px;height:40px;border-radius:var(--rf);background:var(--s);border:1px solid var(--b);color:var(--m);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:18px;z-index:99;opacity:0;transform:translateY(10px);pointer-events:none;transition:all var(--tb)}
+.btt.is-visible{opacity:1;transform:translateY(0);pointer-events:all}.btt:hover{border-color:var(--a);color:var(--a)}
+.ft{text-align:center;color:var(--m);font-size:11px;margin-top:var(--3xl);padding-top:var(--xl);border-top:1px solid var(--d)}
+</style>
+</head>
+<body>
+<a href="#main-content" class="sr-only">跳转到内容</a>
+<nav class="tb" aria-label="主导航">
+  <div class="tb-bc"><a class="home" href="#" data-nav="dashboard">🔭 科技日报</a><span class="sep" id="bs" style="display:none">/</span><span class="crumb" id="bc"></span><button class="back" id="bb" style="display:none" onclick="VM.back()">← 返回</button></div>
+  <div class="tb-actions"><button class="btn-theme" id="themeToggle" aria-label="切换深色/浅色主题">🌓 主题</button></div>
+</nav>
+
+<main id="main-content">
+<!-- ═══════ DASHBOARD ═══════ -->
+<div class="view is-active" data-view="dashboard">
+  <header class="dash-h">
+    <h1>2026年5月22日 · 星期五</h1>
+    <p class="sub">Friday, May 22, 2026</p>
+    <p class="srcs">GitHub · HN · The Verge · TechCrunch · MIT TR · Reddit ML · arXiv · 量子位 · 品玩 · 36氪 · 赛博禅心 · 机器之心 · 极客公园</p>
+  </header>
+  <div class="dash-stats"><span class="ds">📦 <strong>6</strong> 高星项目</span><span class="ds">📰 <strong>18</strong> 要闻</span><span class="ds">🔬 <strong>4</strong> 前沿论文</span><span class="ds">🚀 <strong>5</strong> 新品</span></div>
+  <div class="hlc"><div class="hl-l">📌 头版头条</div><h2>GPT 独立推翻 80 年数学猜想，同一天 DeepSeek Code 宣布 700 亿融资</h2><div class="hl-b">今天 AI 圈两条重磅炸弹同时落地。一边是 OpenAI 的 GPT 自主证伪了 Erdős 1946年猜想，<b>九位顶级数学家联合审稿验证 AI 的证明</b>。另一边，DeepSeek 宣布 Code 项目获 700 亿融资，ACM 金牌大神崔添翼挂帅。一个在证明 AI 能创造新知识，一个在推进 AI 能写出工业级代码。<b>两条新闻合在一起，指向同一个方向：AI 不再只是工具，而是生产者。</b></div><div class="hl-a"><a href="#" data-nav="detail-headline">📖 查看完整报道与两列对照翻译 →</a></div></div>
+  <div class="cg">
+    <div class="cc" data-nav="feed-github"><div class="ci">🔥</div><div class="cn">GitHub 趋势</div><div class="co">6 个项目</div><div class="cd">本周最火开源</div><span class="cb">NEW</span></div>
+    <div class="cc" data-nav="feed-intl"><div class="ci">🌏</div><div class="cn">国际科技要闻</div><div class="co">8 条报道</div><div class="cd">HN · Verge · TC · MIT TR</div></div>
+    <div class="cc" data-nav="feed-cn"><div class="ci">🇨🇳</div><div class="cn">国内科技资讯</div><div class="co">8 条精选</div><div class="cd">量子位 · 品玩 · 36氪</div><span class="cb">HOT</span></div>
+    <div class="cc" data-nav="feed-ai"><div class="ci">🧠</div><div class="cn">AI 前沿 & 论文</div><div class="co">4 篇成果</div><div class="cd">arXiv · Reddit ML</div><span class="cb">DEEP</span></div>
+    <div class="cc" data-nav="feed-products"><div class="ci">💡</div><div class="cn">新品速递</div><div class="co">5 款 AI 产品</div><div class="cd">Product Hunt</div></div>
+    <div class="cc" data-nav="feed-opinion"><div class="ci">✍️</div><div class="cn">深度观点</div><div class="co">4 篇专栏</div><div class="cd">赛博禅心 · MIT TR</div></div>
+  </div>
+</div>
+
+<!-- ═══════ FEED: GitHub ═══════ -->
+<div class="view" data-view="feed-github"><div class="fh"><h2>🔥 GitHub 本周之星</h2><p class="fs">近7天高星开源项目 · 6 projects</p></div>
+<div class="card card--repo"><div class="ra"><img src="https://github.com/tinyhumansai.png" width="48" height="48" alt="tinyhumansai 项目头像" loading="lazy" onerror="this.style.display='none'"></div><div><h3><a href="https://github.com/tinyhumansai/openhuman" target="_blank" rel="noopener noreferrer">tinyhumansai / openhuman</a></h3><div class="rmt"><span class="rl">Rust</span> Apache-2.0</div><div class="csum">你的私人 AI 超级智能。私密、简洁、极其强大。消费级硬件就能跑。本周狂揽 1.7 万星。</div></div><div class="ra"><span class="bstar">⭐ 25,206</span><br><span class="btr">↑17k/周</span></div></div>
+<div class="card card--repo"><div class="ra"><img src="https://github.com/anthropics.png" width="48" height="48" alt="Anthropic 项目头像" loading="lazy" onerror="this.style.display='none'"></div><div><h3><a href="https://github.com/anthropics/claude-plugins-official" target="_blank" rel="noopener noreferrer">anthropics / claude-plugins-official</a></h3><div class="rmt"><span class="rl">Python</span> Anthropic 官方</div><div class="csum">Claude Code 的「应用商店」。Anthropic 亲自把关品质的插件目录。</div></div><div class="ra"><span class="bstar">⭐ 23,122</span><br><span class="btr">↑682/天</span></div></div>
+<div class="card card--repo"><div class="ra"><img src="https://github.com/Doorman11991.png" width="48" height="48" alt="Doorman11991 项目头像" loading="lazy" onerror="this.style.display='none'"></div><div><h3><a href="https://github.com/Doorman11991/smallcode" target="_blank" rel="noopener noreferrer">Doorman11991 / smallcode</a></h3><div class="rmt">4B 模型 · 87% 基准分</div><div class="csum">针对小模型优化的 AI 编程智能体。大不等于好。</div></div><div class="ra"><span class="bstar">⭐ 1,213</span></div></div>
+<div class="card card--repo"><div class="ra"><img src="https://github.com/Tartarus-AI.png" width="48" height="48" alt="Tartarus-AI 项目头像" loading="lazy" onerror="this.style.display='none'"></div><div><h3><a href="https://github.com/Tartarus-AI/tartarusai-cli" target="_blank" rel="noopener noreferrer">Tartarus-AI / tartarusai-cli</a></h3><div class="rmt">MIT · 256K 上下文</div><div class="csum">终端无审查 AI 编程助手。加密币付费，无需绑卡。</div></div><div class="ra"><span class="bstar">⭐ 67</span></div></div>
+<div class="card card--repo"><div class="ra"><img src="https://github.com/freenet.png" width="48" height="48" alt="freenet 项目头像" loading="lazy" onerror="this.style.display='none'"></div><div><h3><a href="https://github.com/freenet/freenet-core" target="_blank" rel="noopener noreferrer">freenet / hyphanet</a></h3><div class="rmt"><span class="rl">Rust</span> HN 263分</div><div class="csum">去中心化 P2P 平台重生。病毒式同步，秒级全局一致。</div></div><div class="ra"><span class="bstar">新项目</span><br><span class="btr">HN 热议</span></div></div>
+<div class="card card--repo"><div class="ra"><img src="https://github.com/pythongiant.png" width="48" height="48" alt="KVBoost 项目头像" loading="lazy" onerror="this.style.display='none'"></div><div><h3><a href="https://pythongiant.github.io/KVBoost/" target="_blank" rel="noopener noreferrer">KVBoost</a></h3><div class="rmt"><span class="rl">Python</span> HuggingFace</div><div class="csum">KV 缓存复用，首 token 延迟降 5-48 倍。底层效率革命。</div></div><div class="ra"><span class="bstar">新项目</span></div></div>
+</div>
+
+<!-- ═══════ FEED: 国际要闻 ═══════ -->
+<div class="view" data-view="feed-intl"><div class="fh"><h2>🌏 国际科技要闻</h2><p class="fs">HN · The Verge · TechCrunch · MIT TR · 8 stories</p></div>
+<div class="card" data-nav="detail-intl-1"><div class="cr"><h3>🪦 MATLAB 之父 Cleve Moler 去世</h3></div><div class="cs"><em>Hacker News</em> · 44 分 · 177 评论</div><div class="csum">过去四十年所有工程师的「计算器」的创造者走了。<b>飞机设计、信号处理、天气预报，都有 MATLAB 的影子。</b>一辈子没上市没炒作，留下的比独角兽都重。</div><div class="ct"><span class="tag">人物</span><span class="tag">计算科学</span></div></div>
+<div class="card" data-nav="detail-intl-2"><div class="cr"><h3>💰 Anthropic 首次盈利，OpenAI 每赚 1 块倒亏 1.22 块</h3></div><div class="cs"><em>36氪 · 新智元</em> · 今天</div><div class="csum">最直接竞争对手的财报对比揭示残酷事实：<b>烧钱换市场在 AI 行业可能走不通。</b>Anthropic 证明「稳健」也能赢。</div><div class="ct"><span class="tag">AI 商业</span><span class="tag">OpenAI</span><span class="tag">Anthropic</span></div></div>
+<div class="card" data-nav="detail-intl-3"><div class="cr"><h3>📱 AI 正在「抢」你手机的内存——消费电子全面涨价</h3></div><div class="cs"><em>Hacker News</em> · 132 分 · 139 评论</div><div class="csum">三星/SK 海力士把最先进产能全给 AI 服务器 HBM。<b>便宜手机会越来越难买到。</b>AI 繁荣的隐形成本由普通人买单。</div><div class="ct"><span class="tag">供应链</span><span class="tag">半导体</span><span class="tag">消费者</span></div></div>
+<div class="card" data-nav="detail-intl-4"><div class="cr"><h3>🖥️ 花 35 万自建 GPU 服务器值不值？</h3></div><div class="cs"><em>Hacker News</em> · 398 分 · 283 评论</div><div class="csum">对持续负载自建比云便宜，但对突发任务云更灵活。<b>算力应该集中还是分散？</b></div><div class="ct"><span class="tag">GPU</span><span class="tag">云计算</span><span class="tag">成本分析</span></div></div>
+<div class="card" data-nav="detail-intl-5"><div class="cr"><h3>📈 ARM 股价暴涨 30%：AI 芯片权力转移</h3></div><div class="cs"><em>36氪 · 极客公园</em> · 今天</div><div class="csum">AI 从数据中心走向手机/眼镜/汽车，低功耗 ARM 从幕后到台前。<b>从「大力出奇迹」到「省电才是王道」。</b></div><div class="ct"><span class="tag">芯片</span><span class="tag">ARM</span></div></div>
+<div class="card" data-nav="detail-intl-6"><div class="cr"><h3>🚀 SpaceX 招股书：火星百万人口城、28.5 万亿美元市场</h3></div><div class="cs"><em>36氪</em> · 今天</div><div class="csum">10 亿股激励马斯克建火星城。<b>太空商业化已从科幻走进招股说明书。</b>传与特斯拉 2027 合并。</div><div class="ct"><span class="tag">SpaceX</span><span class="tag">太空经济</span><span class="tag">IPO</span></div></div>
+<div class="card" data-nav="detail-intl-7"><div class="cr"><h3>🎬 Spotify + 环球音乐推出 AI 翻唱工具，「先授权后使用」</h3></div><div class="cs"><em>品玩</em> · 3小时前</div><div class="csum">AI 翻唱终于有了行业标准：<b>先拿到版权授权，再生成内容。</b>音乐产业的 AI 规则正在成形。</div><div class="ct"><span class="tag">AI 音乐</span><span class="tag">版权</span><span class="tag">Spotify</span></div></div>
+<div class="card" data-nav="detail-intl-8"><div class="cr"><h3>📰 The Verge: AI 成为同事——2026 年工作场所正在重塑</h3></div><div class="cs"><em>The Verge</em> · 深度报道</div><div class="csum">采用 AI 协作的公司员工数减 15%，留下的人收入涨 2-3 倍。<b>工作本质从执行转向定义目标。</b></div><div class="ct"><span class="tag">未来工作</span><span class="tag">AI 协作</span><span class="tag">深度</span></div></div>
+</div>
+
+<!-- ═══════ FEED: 国内要闻 ═══════ -->
+<div class="view" data-view="feed-cn"><div class="fh"><h2>🇨🇳 国内科技资讯</h2><p class="fs">量子位 · 品玩 · 36氪 · 赛博禅心 · 8 stories</p></div>
+<div class="card" data-nav="detail-cn-1"><div class="cr"><h3>💰 DeepSeek Code 获 700 亿融资！ACM 金牌大神崔添翼挂帅</h3></div><div class="cs"><em>量子位</em> · 3小时前</div><div class="csum">DeepSeek 的编程专用项目浮出水面。<b>700 亿融资+ACM 传奇人物领衔，中国 AI 编程工具迎来重磅玩家。</b></div><div class="ct"><span class="tag">DeepSeek</span><span class="tag">融资</span><span class="tag">AI 编程</span></div></div>
+<div class="card" data-nav="detail-cn-2"><div class="cr"><h3>🧠 李飞飞再出手：空间智能的「ImageNet」来了</h3></div><div class="cs"><em>量子位</em> · 2小时前</div><div class="csum">专门评测具身空间智能的新基准发布。<b>当年 ImageNet 引爆了深度学习，这个新基准可能引爆具身智能。</b></div><div class="ct"><span class="tag">李飞飞</span><span class="tag">具身智能</span><span class="tag">基准</span></div></div>
+<div class="card" data-nav="detail-cn-3"><div class="cr"><h3>🏆 千问 3.7 问鼎国产模型冠军，全球前五</h3></div><div class="cs"><em>量子位</em> · 昨天</div><div class="csum">Artificial Analysis 放榜：阿里千问 3.7 国产第一。<b>中国大模型在全球竞技场的排名持续上升。</b></div><div class="ct"><span class="tag">大模型</span><span class="tag">阿里</span><span class="tag">千问</span></div></div>
+<div class="card" data-nav="detail-cn-4"><div class="cr"><h3>🌐 腾讯混元开源翻译模型 Hy-MT2，440MB 手机就能跑</h3></div><div class="cs"><em>量子位 · 品玩</em> · 昨天</div><div class="csum">微信聊天翻译完全本地化。<b>440MB 意味着普通手机随便跑，隐私敏感用户的福音。</b></div><div class="ct"><span class="tag">腾讯</span><span class="tag">开源</span><span class="tag">端侧AI</span></div></div>
+<div class="card" data-nav="detail-cn-5"><div class="cr"><h3>🏭 国产 DRAM 龙头长鑫科技冲刺科创板，十年亏损终迎千亿净利</h3></div><div class="cs"><em>36氪</em> · 今天</div><div class="csum">技术封锁和设备禁运十年后，走到了<b>千亿净利</b>拐点。「卡脖子」方向里程碑。</div><div class="ct"><span class="tag">芯片</span><span class="tag">IPO</span><span class="tag">自主可控</span></div></div>
+<div class="card" data-nav="detail-cn-6"><div class="cr"><h3>🚗 雷军发布小米最贵 SUV YU7 GT，39 万起</h3></div><div class="cs"><em>量子位</em> · 10小时前</div><div class="csum">特斯拉前厂长宋钢加盟后首秀。<b>小米不再「性价比」，新能源车进入品牌溢价阶段。</b></div><div class="ct"><span class="tag">新能源车</span><span class="tag">小米</span></div></div>
+<div class="card" data-nav="detail-cn-7"><div class="cr"><h3>📊 OpenAI 推出 ChatGPT for PowerPoint，演示文稿自动化</h3></div><div class="cs"><em>品玩</em> · 4小时前</div><div class="csum">AI 开始进军办公软件最后一公里。<b>以后做 PPT 可能只需要告诉 AI 你明天要讲什么。</b></div><div class="ct"><span class="tag">AI 办公</span><span class="tag">OpenAI</span></div></div>
+<div class="card" data-nav="detail-cn-8"><div class="cr"><h3>☁️ 阿里云 MaaS 收入 5 个月增长 15 倍，Token 成了新生意</h3></div><div class="cs"><em>36氪</em> · 今天</div><div class="csum">企业不愿养 GPU，买云上成品更划算。<b>Token 正在变成新带宽。</b></div><div class="ct"><span class="tag">云计算</span><span class="tag">阿里</span><span class="tag">Token 经济</span></div></div>
+</div>
+
+<!-- ═══════ FEED: AI 前沿 ═══════ -->
+<div class="view" data-view="feed-ai"><div class="fh"><h2>🧠 AI 前沿 & 论文</h2><p class="fs">arXiv · Reddit r/ML · 4 papers</p></div>
+<div class="card" data-nav="detail-ai-1"><div class="cr"><h3>📄 GPT 推翻平面单位距离猜想（OpenAI 官方论文）</h3></div><div class="cs"><em>OpenAI</em> · 2026-05-22</div><div class="csum">构造全实数域塔，Galois 群+Golod-Shafarevich 定理完成证明。九位数学家联合验证。<b>2026 年最重磅 AI 论文。</b></div><div class="ct"><span class="tag">数学</span><span class="tag">定理证明</span><span class="tag">GPT-5</span></div></div>
+<div class="card" data-nav="detail-ai-2"><div class="cr"><h3>📄 NAG 加速梯度法点收敛——全部证明由 GPT 完成</h3></div><div class="cs"><em>arXiv · cs.LG</em> · UCLA</div><div class="csum">第一篇明确声明<b>所有证明均由 AI 完成</b>的数学论文。致谢中写着「All proofs due entirely to an internal model at OpenAI」。</div><div class="ct"><span class="tag">优化理论</span><span class="tag">AI 数学</span><span class="tag">里程碑</span></div></div>
+<div class="card" data-nav="detail-ai-3"><div class="cr"><h3>📄 CODA: 将 Transformer 重写为 GEMM-Epilogue 程序</h3></div><div class="cs"><em>arXiv · cs.LG</em> · HN 36分</div><div class="csum">重新设计 Transformer 计算底层。<b>底层效率优化对行业影响最大——发动机效率 +10% 比换内饰重要。</b></div><div class="ct"><span class="tag">Transformer</span><span class="tag">推理优化</span></div></div>
+<div class="card" data-nav="detail-ai-4"><div class="cr"><h3>📄 KVBoost: HuggingFace 区块级 KV 缓存复用</h3></div><div class="cs"><em>HN Show</em> · 5-48x faster TTFT</div><div class="csum">不换模型只优化计算复用。<b>对用户来说：AI 回复更快了。</b></div><div class="ct"><span class="tag">推理加速</span><span class="tag">HuggingFace</span></div></div>
+</div>
+
+<!-- ═══════ FEED: 新品 ═══════ -->
+<div class="view" data-view="feed-products"><div class="fh"><h2>💡 今日 AI 新品</h2><p class="fs">Product Hunt 精选 · 5 launches</p></div><div class="pg">
+<div class="card card--product"><img class="pimg" src="https://ph-files.imgix.net/8148cb1b-0da3-4574-9f71-08798b552316.svg?auto=compress&w=400" width="400" height="240" alt="Tycoon AI 产品截图" loading="lazy" onerror="this.style.display='none'"><div class="pb"><h3><a href="https://www.producthunt.com/products/tycoon-us" target="_blank" rel="noopener noreferrer">🏢 Tycoon AI</a></h3><p class="pt">AI Agent 运营一人公司</p><p class="pw">「AI 当员工，你当董事长」成真。</p></div></div>
+<div class="card card--product"><img class="pimg" src="https://ph-files.imgix.net/5daa9b0c-dec8-45be-856c-36a7e4957c32.png?auto=compress&w=400" width="400" height="240" alt="Mintlify Workflows 产品截图" loading="lazy" onerror="this.style.display='none'"><div class="pb"><h3><a href="https://www.producthunt.com/products/mintlify" target="_blank" rel="noopener noreferrer">📚 Mintlify Workflows</a></h3><p class="pt">自动更新的知识库</p><p class="pw">代码改了文档自动同步。</p></div></div>
+<div class="card card--product"><img class="pimg" src="https://ph-files.imgix.net/64f05fed-5478-434e-b175-80b218391f8c.png?auto=compress&w=400" width="400" height="240" alt="Google Antigravity 产品截图" loading="lazy" onerror="this.style.display='none'"><div class="pb"><h3><a href="https://www.producthunt.com/products/google-antigravity" target="_blank" rel="noopener noreferrer">🔄 Google Antigravity 2.0</a></h3><p class="pt">多 Agent 协同工作桌面端</p><p class="pw">Google 押注「AI 团队协作」路线。</p></div></div>
+<div class="card card--product"><img class="pimg" src="https://ph-files.imgix.net/911d4b24-b8cb-4e89-b96b-a64b6c3e826e.png?auto=compress&w=400" width="400" height="240" alt="ElevenAgents 产品截图" loading="lazy" onerror="this.style.display='none'"><div class="pb"><h3><a href="https://www.producthunt.com/products/elevenlabs" target="_blank" rel="noopener noreferrer">🎙️ ElevenAgents</a></h3><p class="pt">规模化 AI 语音对话</p><p class="pw">下一通客服电话可能就它接的。</p></div></div>
+<div class="card card--product"><div class="pb"><h3><a href="https://www.producthunt.com/products/weweb-io" target="_blank" rel="noopener noreferrer">🧩 WeWeb 3.0</a></h3><p class="pt">AI 写代码 + 零代码编辑器</p><p class="pw">不懂代码也能做出能跑的应用。</p></div></div>
+</div></div>
+
+<!-- ═══════ FEED: 深度观点 ═══════ -->
+<div class="view" data-view="feed-opinion"><div class="fh"><h2>✍️ 深度观点</h2><p class="fs">赛博禅心 · MIT TR · 36氪 · 4 columns</p></div>
+<div class="card" data-nav="detail-op-1"><div class="cr"><h3>赛博禅心：悬了 80 年的数学猜想，被 GPT 推翻了</h3></div><div class="cs"><em>赛博禅心</em> · 金色传说大聪明 · 今天</div><div class="csum">用「一张纸上撒 n 个点」讲清 GPT 推翻 Erdős 猜想。作者有 OpenAI 红队内线。<b>中文 AI 圈最快的深度解读。</b></div><div class="ct"><span class="tag">AI 数学</span><span class="tag">深度</span></div></div>
+<div class="card" data-nav="detail-op-2"><div class="cr"><h3>赛博禅心：GPTs 商店要发钱了!!!</h3></div><div class="cs"><em>赛博禅心</em> · 金色传说大聪明 · 今天</div><div class="csum">OpenAI 探索基于用量的分成机制。<b>GPT Store 真分钱的话，AI 创业门槛断崖式下降。</b></div><div class="ct"><span class="tag">GPT Store</span><span class="tag">AI 经济</span></div></div>
+<div class="card" data-nav="detail-op-3"><div class="cr"><h3>MIT TR: AI 科学家的崛起——当算法开始提出假设</h3></div><div class="cs"><em>MIT Technology Review</em> · 深度特稿</div><div class="csum">GPT 推翻猜想不是孤立事件。从蛋白质折叠到材料发现，<b>AI 正从工具变合作者，科研范式正在转换。</b></div><div class="ct"><span class="tag">AI 科研</span><span class="tag">MIT</span><span class="tag">深度</span></div></div>
+<div class="card" data-nav="detail-op-4"><div class="cr"><h3>品玩：Google I/O 2026 —— 轰炸式发布 Agent，狙击 Claude Code</h3></div><div class="cs"><em>品玩</em> · 王兆洋 · 5月20日</div><div class="csum">Google 发布会火力全开，Agent 成为核心叙事。<b>AI 操作系统级别的战争正式打响。</b></div><div class="ct"><span class="tag">Google I/O</span><span class="tag">Agent</span><span class="tag">深度</span></div></div>
+</div>
+
+<!-- ══════════════════════════ DETAIL VIEWS ══════════════════════════ -->
+
+<!-- detail-headline: GPT数学 + DeepSeek Code -->
+<div class="view" data-view="detail-headline">
+<div class="dh"><h2>GPT 推翻 80 年猜想 & DeepSeek Code 700 亿融资</h2><div class="dm"><span>📅 2026-05-22</span><span>📰 OpenAI · 量子位 · 赛博禅心</span></div></div>
+<div class="col2">
+<div class="col-l"><div class="col-title">📋 中文解读</div><div class="explain-block">
+<p><b>事件一：GPT 推翻平面单位距离猜想。</b>Erdős 1946 年提出：一张纸撒 n 个点，最多有多少对距离恰好为 1？80 年来所有人深信正方形网格是最优解。GPT 在没有人类介入的情况下找到了一种全新的排列，比网格多了好几个数量级。九位顶级数学家联合写了验证论文。菲尔兹奖得主 Gowers 说「先坐下来再读」。</p>
+<p><b>事件二：同一天，DeepSeek Code 宣布获 700 亿融资</b>，由 ACM 金牌大神崔添翼挂帅。ACM 编程竞赛是全球最难的编程比赛，崔添翼是中国队传奇人物。他的加入说明 DeepSeek Code 不是在做一个简单的代码补全工具，而是瞄准了工业级编程能力。</p>
+<p><b>两条新闻的共振：</b>一条证明 AI 能创造新知识（数学），一条证明 AI 能写出工业级代码（编程）。合在一起看，AI 不再只是「工具」，而是正在成为知识生产的独立参与者。今天会被写进科技史。</p>
+</div></div>
+<div class="col-r"><div class="col-title">📄 原文（英 + 中对照）</div><div class="origin-block">
+<p><b>Reuters / OpenAI:</b> GPT has disproved the planar unit distance conjecture proposed by Paul Erdős in 1946 — the first time an AI system has independently solved a long-standing open problem in pure mathematics without human guidance. Nine mathematicians, including Noga Alon and Thomas Bloom, co-authored a companion verification paper.</p>
+<p><b>赛博禅心：</b>悬了 80 年的「平面单位距离猜想」被 GPT 推翻了。菲尔兹奖得主 Timothy Gowers 表示心情非常复杂：「如果你是数学家，最好先坐下来再往下读。」</p>
+<p><b>量子位：</b>DeepSeek Code 真的要来了，获 700 亿融资，ACM 金牌大神崔添翼挂帅。这是中国 AI 编程工具领域迄今为止最大的一笔融资。</p>
+</div></div>
+</div>
+<div class="sbox"><h4>📎 原始来源</h4>
+<a href="https://openai.com/index/model-disproves-discrete-geometry-conjecture/" target="_blank" rel="noopener noreferrer">OpenAI 官方博客 →</a>
+<a href="https://cdn.openai.com/pdf/74c24085-19b0-4534-9c90-465b8e29ad73/unit-distance-proof.pdf" target="_blank" rel="noopener noreferrer">完整论文 PDF →</a>
+<a href="https://www.qbitai.com/2026/05/422624.html" target="_blank" rel="noopener noreferrer">量子位：DeepSeek Code 融资报道 →</a>
+<a href="https://mp.weixin.qq.com/s/adA3Mt6UVg73wo31r_Jx_Q" target="_blank" rel="noopener noreferrer">赛博禅心中文解读 →</a></div>
+</div>
+
+<!-- detail-intl-1: Moler -->
+<div class="view" data-view="detail-intl-1">
+<div class="dh"><h2>🪦 MATLAB 之父 Cleve Moler 去世</h2><div class="dm"><span>📅 2026-05-22</span><span>📰 Hacker News · 177 评论</span></div></div>
+<div class="col2">
+<div class="col-l"><div class="col-title">📋 中文解读</div><div class="explain-block">
+<p><b>Cleve Moler 是谁？</b>他是 MATLAB 的创造者。MATLAB 你可能没用过，但你坐的飞机、用的手机、看到的天气预报，背后都有它。它是过去四十年全球工程师和科学家的「通用计算器」。</p>
+<p>Moler 在 1970 年代用手写了 MATLAB 的第一个版本——当时只是为了让学生更容易地使用他教的一门线性代数课。后来他和朋友创办 MathWorks 公司，一辈子没上市、没炒作、没上过头条。他活成了硅谷神话的反面：不喧嚣，但留下的东西比大多数百亿独角兽都重。</p>
+<p><b>为什么值得记住：</b>在一个人人追求增长和 IPO 的时代，Moler 证明了另一种可能——安静地做真正有用的工具，然后让它影响全世界。</p>
+</div></div>
+<div class="col-r"><div class="col-title">📄 原文</div><div class="origin-block">
+<p>Cleve Moler, founder of MathWorks and creator of MATLAB — the computational backbone of global engineering and science for over four decades — has passed away. Moler wrote the first version of MATLAB by hand in the 1970s as a teaching tool for his linear algebra students. MathWorks, the company he co-founded, never went public, never chased hype, and remained privately held throughout his lifetime. His legacy quietly underpins everything from aircraft design to weather forecasting.</p>
+<p>Hacker News commenters noted: "MATLAB is one of those pieces of software that runs the modern world but almost nobody outside of engineering knows about."</p>
+</div></div>
+</div>
+<div class="sbox"><h4>📎 来源</h4><a href="https://www.mathworks.com/company/aboutus/founders/clevemoler.html" target="_blank" rel="noopener noreferrer">MathWorks 官方讣告 →</a><a href="https://news.ycombinator.com/item?id=48231319" target="_blank" rel="noopener noreferrer">Hacker News 讨论 →</a></div>
+</div>
+
+<!-- detail-intl-2: Anthropic -->
+<div class="view" data-view="detail-intl-2">
+<div class="dh"><h2>💰 Anthropic 首次盈利 vs OpenAI 巨亏</h2><div class="dm"><span>📅 2026-05-22</span><span>📰 36氪 · 新智元</span></div></div>
+<div class="col2">
+<div class="col-l"><div class="col-title">📋 中文解读</div><div class="explain-block">
+<p>这是 AI 行业今年最重要的财务对比。</p>
+<p><b>Anthropic（Claude 的母公司）</b>历史上第一次实现了盈利。它没有像 OpenAI 那样烧钱铺市场、补贴用户、打价格战，而是走了一条更克制的路：控制模型规模、优化推理效率、主攻企业和开发者市场。</p>
+<p><b>OpenAI</b>的同期财报则显示：每收入 1 美元，要亏掉 1.22 美元。这是一个危险的数字——意味着即使在 ChatGPT 拥有数亿用户的情况下，OpenAI 的商业模式仍然无法覆盖其运营成本。</p>
+<p><b>为什么这很重要：</b>它揭示了 AI 行业的一个核心张力。烧钱换市场的路径在互联网时代有效（先免费圈用户，再通过广告/增值赚钱），但 AI 不同——每多一个用户，GPU 成本就实实在在地增加。没有边际成本递减效应。Anthropic 正在证明「克制」也可以赢。</p>
+</div></div>
+<div class="col-r"><div class="col-title">📄 原文</div><div class="origin-block">
+<p>For the first time in its history, Anthropic — the maker of Claude — has become profitable. The milestone comes even as the company continues to invest heavily in frontier model research.</p>
+<p>Meanwhile, OpenAI's latest quarterly filing reveals a stark contrast: for every $1 in revenue, the company loses $1.22. Despite ChatGPT's hundreds of millions of users, the unit economics remain deeply negative.</p>
+<p>Industry analysts note that AI companies face a structural challenge that internet-era platforms didn't: GPU inference costs scale linearly with usage. There is no zero-marginal-cost effect. Anthropic's more measured approach — targeting enterprise customers, optimizing inference efficiency, and avoiding a race to the bottom on pricing — appears to be yielding results.</p>
+</div></div>
+</div>
+<div class="sbox"><h4>📎 来源</h4><a href="https://www.36kr.com/p/3819897940562307" target="_blank" rel="noopener noreferrer">36氪报道 →</a></div>
+</div>
+
+<!-- detail-intl-3: Memory -->
+<div class="view" data-view="detail-intl-3">
+<div class="dh"><h2>📱 AI 正在「抢」你手机的内存</h2><div class="dm"><span>📅 2026-05-22</span><span>📰 Hacker News · 132 分</span></div></div>
+<div class="col2">
+<div class="col-l"><div class="col-title">📋 中文解读</div><div class="explain-block">
+<p>这是一个「看不见的手」正在改变你生活成本的案例。</p>
+<p><b>发生了什么：</b>三星和 SK 海力士——两家控制全球 70% DRAM 市场的韩国公司——正在把最先进的生产线从做手机内存转向做 AI 服务器需要的 HBM（高带宽内存）。一块 HBM 售价是普通内存的 3-5 倍。</p>
+<p><b>对你的影响：</b>便宜的智能手机和笔记本电脑会越来越难买到。2026 年下半年低端手机物料成本预计上涨 8-12%。一款售价 150 美元的手机，这个涨幅足以吃掉全部利润。厂商可能直接放弃这个价位。</p>
+<p><b>更深的含义：</b>这是 AI 繁荣的「负外部性」。AI 公司在赚钱，普通人在买单。每一块 3000 美元的 HBM 去训练 GPT-6 的时候，就有几十部廉价手机因为缺内存变得更贵或干脆消失。历史类比：2017 年加密货币挖矿让显卡价格翻了一倍，但这次的规模和影响范围远超那次。</p>
+</div></div>
+<div class="col-r"><div class="col-title">📄 原文</div><div class="origin-block">
+<p>An invisible force is repricing consumer electronics. It isn't tariffs. It isn't inflation. It's AI.</p>
+<p>Samsung and SK Hynix — controlling roughly 70% of the global DRAM market — are redirecting their most advanced fabrication capacity away from the memory chips used in smartphones and laptops, toward the High Bandwidth Memory (HBM) demanded by AI data centers.</p>
+<p>The economics are straightforward. An HBM module sells for 3-5x the price of an equivalent-capacity standard DRAM chip. When NVIDIA and AMD are lining up to buy every HBM chip you can manufacture at a premium, reserving capacity for consumer electronics is commercially self-defeating.</p>
+<p>The result: supply of standard DRAM is contracting while demand hasn't decreased. Prices are rising. Industry analysts project an 8-12% increase in bill-of-materials costs for budget smartphones in the second half of 2026. For a $150 device, that wipes out the entire profit margin. Some manufacturers may exit this price tier entirely.</p>
+<p>This is a textbook case of negative externality: the AI industry is generating enormous value while offloading costs onto the most vulnerable link in the supply chain — everyday consumers.</p>
+</div></div>
+</div>
+<div class="sbox"><h4>📎 来源</h4><a href="https://davidoks.blog/p/ai-is-killing-the-cheap-smartphone" target="_blank" rel="noopener noreferrer">原文：AI Is Killing the Cheap Smartphone →</a><a href="https://news.ycombinator.com/item?id=48229319" target="_blank" rel="noopener noreferrer">HN 讨论（139 评论）→</a></div>
+</div>
+
+<!-- detail-cn-1: DeepSeek -->
+<div class="view" data-view="detail-cn-1">
+<div class="dh"><h2>💰 DeepSeek Code 获 700 亿融资，崔添翼挂帅</h2><div class="dm"><span>📅 2026-05-22</span><span>📰 量子位</span></div></div>
+<div class="col2">
+<div class="col-l"><div class="col-title">📋 中文解读</div><div class="explain-block">
+<p>今天国内 AI 圈最炸的消息。</p>
+<p><b>DeepSeek Code 是什么：</b>DeepSeek 推出的编程专用 AI。不同于通用的 DeepSeek Chat，Code 版本专门针对代码生成、调试、重构等场景深度优化。目标很明确：对标 OpenAI 的 Codex 和 Anthropic 的 Claude Code。</p>
+<p><b>700 亿融资意味着什么：</b>这是中国 AI 编程工具领域迄今为止最大的单笔融资。数字本身就说明资本市场对这个方向的判断——编程是 AI 最有商业变现潜力的场景之一。</p>
+<p><b>崔添翼是谁：</b>ACM-ICPC 金牌得主，中国编程竞赛界的传奇人物。「ACM 金牌大神」这个标签在技术圈意味着世界级的算法和工程能力。他挂帅 Code 项目，说明 DeepSeek 不是在做一个简单的代码补全插件，而是在做能真正理解项目上下文、独立完成复杂编程任务的 AI 系统。</p>
+</div></div>
+<div class="col-r"><div class="col-title">📄 原文</div><div class="origin-block">
+<p>量子位报道：DeepSeek Code 真的要来了。项目获 700 亿融资，ACM 金牌大神崔添翼（CUI Tianyi）挂帅。崔添翼是中国 ACM-ICPC 竞赛史上最知名的选手之一，拥有世界级的算法和工程实力。</p>
+<p>DeepSeek Code 将专注于代码生成、调试和重构能力，直接对标 OpenAI Codex 和 Anthropic Claude Code。这是中国 AI 编程工具领域最大的一笔融资。</p>
+<p>DeepSeek Code is Coming. The project has secured 70 billion yuan in funding and will be led by ACM gold medalist CUI Tianyi, one of China's most celebrated competitive programmers. The tool aims to compete directly with OpenAI Codex and Anthropic's Claude Code in the AI-assisted programming market.</p>
+</div></div>
+</div>
+<div class="sbox"><h4>📎 来源</h4><a href="https://www.qbitai.com/2026/05/422624.html" target="_blank" rel="noopener noreferrer">量子位报道 →</a></div>
+</div>
+
+<!-- detail-cn-2: Li Feifei -->
+<div class="view" data-view="detail-cn-2">
+<div class="dh"><h2>🧠 李飞飞再出手：空间智能的「ImageNet」来了</h2><div class="dm"><span>📅 2026-05-22</span><span>📰 量子位</span></div></div>
+<div class="col2">
+<div class="col-l"><div class="col-title">📋 中文解读</div><div class="explain-block">
+<p><b>李飞飞是谁：</b>斯坦福教授，AI 领域最有影响力的华人科学家之一。她 2009 年创建的 ImageNet 数据集直接引爆了深度学习革命——没有 ImageNet，就没有今天的 AI 图像识别。现在她可能在重复这个模式，但目标是更难的领域。</p>
+<p><b>「空间智能的 ImageNet」是什么：</b>ImageNet 是给 AI 看的「图片题库」。这个新基准是给 AI 看的「物理世界题库」——让 AI 理解三维空间中的物体关系、运动、交互。机器人需要这种能力才能在真实世界中行动。</p>
+<p><b>为什么重要：</b>具身智能（Embodied AI）被认为是 AI 的下一个前沿。如果说过去十年的 AI 学会了「看」和「说」，未来十年的 AI 需要学会「动」。李飞飞选择在这个节点发布基准，意味着她觉得这个领域已经到了需要标准化评测的阶段——而这通常是产业爆发的前夜。</p>
+</div></div>
+<div class="col-r"><div class="col-title">📄 原文</div><div class="origin-block">
+<p>量子位报道：李飞飞团队发布了一个专门用于评测具身空间智能的新基准。就像当年 ImageNet 为计算机视觉提供了标准化的训练和评测数据集，这个新基准旨在为具身智能（Embodied AI）领域建立类似的行业标准。</p>
+<p>Fei-Fei Li's team at Stanford has released a new benchmark specifically designed to evaluate embodied spatial intelligence. Just as ImageNet provided the standardized training and evaluation dataset that catalyzed the deep learning revolution, this new benchmark aims to establish similar standards for the emerging field of Embodied AI — where AI systems must understand 3D spatial relationships, object interactions, and physical dynamics.</p>
+<p>The release signals that the field is reaching a level of maturity where standardized evaluation is necessary — often a precursor to rapid industrial development.</p>
+</div></div>
+</div>
+<div class="sbox"><h4>📎 来源</h4><a href="https://www.qbitai.com/2026/05/422738.html" target="_blank" rel="noopener noreferrer">量子位报道 →</a></div>
+</div>
+
+<!-- detail-cn-3: 千问 -->
+<div class="view" data-view="detail-cn-3">
+<div class="dh"><h2>🏆 千问 3.7 问鼎国产模型冠军</h2><div class="dm"><span>📅 2026-05-22</span><span>📰 量子位</span></div></div>
+<div class="col2">
+<div class="col-l"><div class="col-title">📋 中文解读</div><div class="explain-block">
+<p><b>Artificial Analysis 是什么：</b>它是全球最受认可的独立 AI 模型评测机构之一，相当于 AI 界的「消费指南」。他们的排名不看公司名气或融资额，只看实际测试成绩。</p>
+<p><b>千问 3.7 的表现：</b>在国产模型中排名第一，全球范围内进入前五。这意味着阿里的模型在多个维度上（推理、知识、编码、指令遵循）已经逼近甚至部分超越了国际一线模型。</p>
+<p><b>为什么重要：</b>在美国持续收紧先进 GPU 出口管制的背景下，中国公司能在全球排名中稳居前列，说明中国 AI 在软件和算法层面的创新已经部分弥合了硬件差距。</p>
+</div></div>
+<div class="col-r"><div class="col-title">📄 原文</div><div class="origin-block">
+<p>Artificial Analysis — one of the most respected independent AI model evaluation organizations — has released its latest rankings. Alibaba's Qwen 3.7 has claimed the top spot among Chinese models and ranked in the global top five across multiple evaluation dimensions including reasoning, knowledge, coding, and instruction following.</p>
+<p>The Qwen 3.7-Max version will soon be available through Alibaba Cloud's Bailian platform for enterprise API access. Qwen 3.7 has achieved the No.1 position among Chinese-made models and entered the global top five, according to Artificial Analysis.</p>
+</div></div>
+</div>
+<div class="sbox"><h4>📎 来源</h4><a href="https://www.qbitai.com/2026/05/422009.html" target="_blank" rel="noopener noreferrer">量子位报道 →</a></div>
+</div>
+
+<!-- detail-op-1: 赛博禅心数学 -->
+<div class="view" data-view="detail-op-1">
+<div class="dh"><h2>赛博禅心：悬了 80 年的数学猜想，被 GPT 推翻了</h2><div class="dm"><span>📅 2026-05-22</span><span>📰 赛博禅心 · 金色传说大聪明</span></div></div>
+<div class="col2">
+<div class="col-l"><div class="col-title">📋 中文解读</div><div class="explain-block">
+<p>赛博禅心是中文 AI 圈以「快」和「准」著称的公众号。作者「金色传说大聪明」经常在 OpenAI 发布后几分钟就写出深度解析，而且有参与 OpenAI 红队测试的内线信息来源。</p>
+<p>这篇推文用小学生都能懂的语言，把 GPT 推翻 Erdős 猜想讲清楚了。核心亮点：</p>
+<ul><li>从「一张纸上撒 n 个点」开始讲，零门槛理解</li><li>拆解了 GPT 的证明思路：构造全实数域塔 → Galois 群 → Golod-Shafarevich 定理</li><li>同时覆盖 NAG 梯度收敛问题的解决</li><li>引用了 Gowers 的原话和九位数学家的验证过程</li></ul>
+</div></div>
+<div class="col-r"><div class="col-title">📄 原文（公众号文章节选）</div><div class="origin-block">
+<p>今天，悬了 80 年的「平面单位距离猜想」被 GPT 推翻了，菲尔兹奖得主 Timothy Gowers 表示心情非常复杂。在 Gowers 的 Twitter 中，他如此说道：「如果你是数学家，最好先坐下来再往下读」。</p>
+<p>同一时间，GPT 也帮助解决了另一个悬了 40 年的 Nesterov 加速梯度法的点收敛问题。看来，AI 做数学的能力，自此已经不需要刷 AIME 来证明了。</p>
+<p>证明的路径很出乎意料：模型构造了一个无限的全实数域塔，用 Galois 群和 Golod-Shafarevich 定理完成证明。完全自动化求解。对于这个证明，Gowers 说他会「毫不犹豫地推荐发表」，而九位数学家联合写了伴随论文做验证。</p>
+</div></div>
+</div>
+<div class="sbox"><h4>📎 来源</h4><a href="https://mp.weixin.qq.com/s/adA3Mt6UVg73wo31r_Jx_Q" target="_blank" rel="noopener noreferrer">赛博禅心原文 →</a></div>
+</div>
+
+<!-- ═══════ FOOTER ═══════ -->
+<footer class="ft">由 Hanako 自动生成 · 每日 08:00 · 14 个数据源 · D:\Hanako\日报\</footer>
+<button class="btt" id="btt" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="回到顶部">↑</button>
+</main>
+
+<script>
+;(function(){
+'use strict';
+const T={KEY:'td',init(){const s=localStorage.getItem(this.KEY);if(s)document.documentElement.setAttribute('data-theme',s);document.getElementById('themeToggle').addEventListener('click',()=>{const n=document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',n);localStorage.setItem(this.KEY,n)})}};
+const VM={
+  stack:['dashboard'],bc:document.getElementById('bc'),bs:document.getElementById('bs'),bb:document.getElementById('bb'),
+  init(){document.addEventListener('click',e=>{const nav=e.target.closest('[data-nav]');if(!nav)return;const target=nav.getAttribute('data-nav');const exists=!!document.querySelector(`[data-view="${target}"]`);const ca=e.target.closest('a');if(ca&&target.startsWith('detail-')&&!exists)return;e.preventDefault();if(!exists){const link=nav.querySelector('a[href]')||nav.closest('.card')?.querySelector('a[href]');if(link){window.open(link.href,'_blank','noreferrer');return}return}if(target.startsWith('detail-')){this.stack.push(target)}else{this.stack=[target]}this.render()});this.bb.addEventListener('click',()=>this.back());this.render()},
+  back(){if(this.stack.length<=1){this.stack=['dashboard'];this.render();return}this.stack.pop();this.render()},
+  render(){const c=this.stack[this.stack.length-1];document.querySelectorAll('.view').forEach(v=>v.classList.remove('is-active'));const el=document.querySelector(`[data-view="${c}"]`);if(!el){this.stack=['dashboard'];this.render();return}el.classList.add('is-active');const map={'dashboard':'','feed-github':'GitHub 趋势','feed-intl':'国际要闻','feed-cn':'国内资讯','feed-ai':'AI 前沿','feed-products':'新品速递','feed-opinion':'深度观点'};let label=map[c]||'';if(c.startsWith('detail-'))label='文章详情';if(c==='dashboard'){this.bs.style.display='none';this.bc.textContent='';this.bb.style.display='none'}else{this.bs.style.display='inline';this.bc.textContent=label;this.bb.style.display='inline-flex'}window.scrollTo({top:0,behavior:'smooth'})}
+};
+const B2T={init(){this.b=document.getElementById('btt');window.addEventListener('scroll',()=>this.b.classList.toggle('is-visible',scrollY>400),{passive:true})}};
+T.init();VM.init();B2T.init();
+})();
+</script>
+</body>
+</html>

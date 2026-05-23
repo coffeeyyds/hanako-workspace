@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FinBoard — 金融全景看板</title>
+<style>
+:root{--bg:#0a0e14;--p:#12171f;--b:#1e2a3a;--g:#00d4aa;--r:#ff4757;--blu:#4da6ff;--y:#ffd700;--t:#bfc7d5;--m:#5c6e80}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--t);font-family:'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif;min-height:100vh;line-height:1.5}
+.hd{position:sticky;top:0;z-index:50;background:rgba(18,23,31,.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--b);padding:0 20px;display:flex;align-items:center;justify-content:space-between;height:46px}
+.hd h1{font-size:13px;font-weight:700;letter-spacing:1.5px;display:flex;align-items:center;gap:7px}
+.hd h1 b{color:var(--blu);font-weight:700}
+nav{display:flex;gap:2px}
+nav a{padding:5px 13px;border-radius:6px;font-size:11px;font-weight:500;color:var(--m);text-decoration:none;border:1px solid transparent;cursor:pointer;transition:all .15s}
+nav a:hover{color:var(--t);background:rgba(30,42,58,.4)}
+nav a.on{color:var(--blu);background:rgba(77,166,255,.1);border-color:rgba(77,166,255,.3)}
+main{max-width:1520px;margin:0 auto;padding:14px 20px}
+.c{background:var(--p);border:1px solid var(--b);border-radius:10px;padding:15px;margin-bottom:10px}
+.ct{font-size:10px;font-weight:600;color:var(--m);text-transform:uppercase;letter-spacing:.6px;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.ct .tag{font-size:8px;padding:2px 5px;border-radius:3px;font-weight:600;text-transform:none}
+.ct .tag.live{background:rgba(0,212,170,.15);color:var(--g)}.ct .tag.off{background:rgba(255,71,87,.1);color:var(--r)}.ct .tag.info{background:rgba(77,166,255,.1);color:var(--blu)}
+.mn{font-family:'Cascadia Code','JetBrains Mono','Consolas',monospace;font-variant-numeric:tabular-nums}
+.up{color:var(--g)}.dn{color:var(--r)}
+.pl{display:inline-block;font-size:10px;padding:1px 5px;border-radius:3px;font-weight:600;font-family:'Cascadia Code',monospace}
+.pl.up{background:rgba(0,212,170,.1)}.pl.dn{background:rgba(255,71,87,.1)}
+.r4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.r2{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.ixs{display:flex;gap:14px;overflow-x:auto;padding-bottom:4px;flex-wrap:wrap}
+.ix{flex-shrink:0;min-width:82px;text-align:center;padding:4px 0}
+.ix .xn{font-size:9px;color:var(--m);margin-bottom:3px}
+.ix .xp{font-size:13px;font-weight:700;margin:3px 0}
+.mr{display:flex;justify-content:space-between;align-items:center;padding:3px 0;font-size:11px}
+.mr .ml{color:var(--m)}.mr .mv{text-align:right}
+.mr2{border-top:1px solid var(--b);margin:8px 0;padding-top:6px}
+.tb{width:100%;font-size:10px;border-collapse:collapse;max-height:320px;overflow-y:auto;display:block}
+.tb thead{position:sticky;top:0;z-index:1}
+.tb th{text-align:left;color:var(--m);font-weight:500;padding:4px 6px;border-bottom:1px solid var(--b);background:var(--p);font-size:9px}
+.tb td{padding:4px 6px;border-bottom:1px solid rgba(30,42,58,.4)}
+.tb tr:hover td{background:rgba(30,42,58,.2)}
+.cg{display:grid;grid-template-columns:repeat(auto-fill,minmax(68px,1fr));gap:5px}
+.cgi{text-align:center;background:rgba(10,14,20,.5);border-radius:6px;padding:8px 3px}
+.cgi .cn{font-size:8px;color:var(--m);margin-bottom:2px}
+.cgi .cp{font-size:10px;font-weight:700}
+.poly-i{display:flex;justify-content:space-between;align-items:flex-start;padding:5px 0;gap:8px;font-size:10px;border-bottom:1px solid rgba(30,42,58,.3)}
+.poly-i:last-child{border-bottom:none}
+.poly-i .pq{flex:1;min-width:0;line-height:1.4}.poly-i .pp{font-size:13px;font-weight:700;flex-shrink:0}
+.ft{text-align:center;padding:18px;font-size:9px;color:var(--m);border-top:1px solid var(--b);margin-top:20px}
+.ft span{color:var(--blu)}
+.kv{font-size:10px;color:var(--m);padding:10px 0}
+.ch{width:100%;height:420px;background:var(--bg);border-radius:0 0 10px 10px}
+.sb{display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap}
+.sb input{flex:1;min-width:100px;background:var(--bg);border:1px solid var(--b);color:var(--t);padding:6px 10px;border-radius:5px;font-size:11px;font-family:'Cascadia Code',monospace;outline:none}
+.sb input:focus{border-color:var(--blu)}
+.sb .bt{padding:5px 11px;border-radius:5px;font-size:11px;font-weight:500;border:1px solid var(--b);background:var(--p);color:var(--t);cursor:pointer;white-space:nowrap}
+.sb .bt.on{background:rgba(77,166,255,.1);border-color:var(--blu);color:var(--blu)}
+.sb .bt:hover{border-color:var(--m)}
+@media(max-width:800px){.r4{grid-template-columns:repeat(2,1fr)}.r2{grid-template-columns:1fr}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+</style>
+</head>
+<body>
+
+<header class="hd">
+  <h1><b>◆</b>FinBoard</h1>
+  <nav>
+    <a class="on" data-tab="dash">全景</a>
+    <a data-tab="stocks">A股</a>
+    <a data-tab="crypto">币圈</a>
+    <a data-tab="macro">宏观</a>
+  </nav>
+</header>
+
+<main id="main"></main>
+
+<footer class="ft"><span>FinBoard</span> · AKShare + BOC + alternative.me · 数据时间: 2026-05-22 收盘</footer>
+
+<script>
+var DATA={updated:"2026-05-22 15:00 CST",global_indexes:[{symbol:"sh000001",name:"上证指数",price:3350.28,change_pct:0.42},{symbol:"sz399001",name:"深证成指",price:10822.50,change_pct:0.78},{symbol:"sz399006",name:"创业板指",price:2215.30,change_pct:-0.31},{symbol:"sh000688",name:"科创50",price:982.15,change_pct:0.22},{symbol:"sh000300",name:"沪深300",price:3982.40,change_pct:0.55},{symbol:"sh000016",name:"上证50",price:2710.80,change_pct:0.38},{symbol:"^HSI",name:"恒生指数",price:24180.50,change_pct:1.25},{symbol:"^GSPC",name:"标普500",price:5952.30,change_pct:-0.18},{symbol:"^IXIC",name:"纳斯达克",price:19120.60,change_pct:0.45},{symbol:"^N225",name:"日经225",price:38950.00,change_pct:-0.52}],a_share_sentiment:{up_count:2180,down_count:2720,limit_up_count:38,limit_down_count:15,total_turnover_yi:0.86,up_ratio:44.5,status:"收盘"},bond_snapshot:{lpr_1y:3.00,lpr_5y:3.50,shibor_on:1.5200,cn_10y_yield:2.85},fx_snapshot:{usd_cny:6.8373,eur_usd:1.0810,usd_jpy:154.25,usd_index:105.40,source:"BOC中间价+市场参考"},crypto_snapshot:{btc_price:98500,btc_change_24h:2.35,eth_price:3820,eth_change_24h:1.82,fear_greed_value:28,fear_greed_classification:"Fear",btc_dominance:58.2,total_market_cap:3.28e12},commodity_snapshot:{"AU":{name:"沪金",price:682.50,change_pct:0.35},"SC":{name:"原油",price:552.30,change_pct:-1.20},"CU":{name:"沪铜",price:78500,change_pct:0.85},"AG":{name:"沪银",price:8230,change_pct:-0.45},"RB":{name:"螺纹钢",price:3610,change_pct:0.62},"GC=F":{name:"Comex金",price:2682.0,change_pct:0.28}},polymarket_snapshot:[{question:"2026年BTC突破$150k?",outcomes:"Yes vs No",probability:68.5,volume_24h:2450000},{question:"美联储2026降息≥3次?",outcomes:"Yes vs No",probability:42.0,volume_24h:1820000},{question:"特朗普2028参选?",outcomes:"Yes vs No",probability:55.2,volume_24h:3100000},{question:"美国2026年GDP增速>2%?",outcomes:"Yes vs No",probability:38.5,volume_24h:950000}],limit_up_pool:[{symbol:"300069",name:"金利华电",change_pct:20.02,consecutive_days:3,limit_order_amount:2.8e8,first_limit_time:"09:35"},{symbol:"600611",name:"大众交通",change_pct:10.08,consecutive_days:5,limit_order_amount:5.2e8,first_limit_time:"09:40"},{symbol:"000518",name:"四环生物",change_pct:10.05,consecutive_days:2,limit_order_amount:1.5e8,first_limit_time:"10:15"},{symbol:"002442",name:"龙星科技",change_pct:10.02,consecutive_days:4,limit_order_amount:3.6e8,first_limit_time:"09:32"},{symbol:"603661",name:"恒林股份",change_pct:10.01,consecutive_days:1,limit_order_amount:0.9e8,first_limit_time:"13:05"},{symbol:"600303",name:"曙光股份",change_pct:10.06,consecutive_days:2,limit_order_amount:2.1e8,first_limit_time:"09:48"},{symbol:"001225",name:"和泰机电",change_pct:9.99,consecutive_days:1,limit_order_amount:1.2e8,first_limit_time:"14:20"},{symbol:"002931",name:"锋龙股份",change_pct:10.03,consecutive_days:3,limit_order_amount:3.0e8,first_limit_time:"09:38"},{symbol:"000725",name:"京东方A",change_pct:10.00,consecutive_days:1,limit_order_amount:8.5e8,first_limit_time:"10:02"},{symbol:"002036",name:"联创电子",change_pct:10.04,consecutive_days:2,limit_order_amount:1.8e8,first_limit_time:"09:55"},{symbol:"002938",name:"鹏鼎控股",change_pct:10.01,consecutive_days:1,limit_order_amount:4.2e8,first_limit_time:"11:10"},{symbol:"603232",name:"格尔软件",change_pct:9.98,consecutive_days:6,limit_order_amount:6.0e8,first_limit_time:"09:30"},{symbol:"600172",name:"黄河旋风",change_pct:10.07,consecutive_days:1,limit_order_amount:0.7e8,first_limit_time:"13:45"},{symbol:"000636",name:"风华高科",change_pct:10.02,consecutive_days:1,limit_order_amount:3.3e8,first_limit_time:"10:30"},{symbol:"600519",name:"贵州茅台",change_pct:5.30,consecutive_days:0,limit_order_amount:0,first_limit_time:"—"}],hot_sectors:[{sector_name:"人工智能",change_pct:3.52,leading_stock:"科大讯飞",leading_change:7.8},{sector_name:"新能源车",change_pct:2.85,leading_stock:"比亚迪",leading_change:5.2},{sector_name:"Chiplet",change_pct:2.40,leading_stock:"通富微电",leading_change:8.1},{sector_name:"创新药",change_pct:1.95,leading_stock:"百济神州",leading_change:4.5},{sector_name:"军工电子",change_pct:1.62,leading_stock:"中航光电",leading_change:3.8},{sector_name:"光伏设备",change_pct:-1.25,leading_stock:"隆基绿能",leading_change:-2.1},{sector_name:"房地产开发",change_pct:-0.85,leading_stock:"万科A",leading_change:-1.5},{sector_name:"白酒",change_pct:-0.52,leading_stock:"五粮液",leading_change:-1.2}],macro_indicators:{cpi_yoy:0.3,ppi_yoy:-2.5,pmi_manufacturing:50.2,m2_yoy:7.8,social_financing:4.8,foreign_reserves:3.25},ai_news:[{source:"arXiv",title:"Scaling RL for Reasoning: A Survey of Post-Training Methods for LLMs",date:"2026-05-21"},{source:"机器之心",title:"DeepSeek-V4 发布：全面超越 GPT-5，推理成本降低 90%",date:"2026-05-22"},{source:"HuggingFace",title:"Qwen3-235B 开源：首个超越 Llama-4 的国产全开源模型",date:"2026-05-20"},{source:"TheVerge",title:"Apple unveils on-device AI chip M6 with 40 TOPS Neural Engine",date:"2026-05-21"},{source:"GitHub",title:"browser-use/web-ui: AI agent for browser automation hits 50k stars",date:"2026-05-22"}]};
+
+function Q(s,e){return(e||document).querySelector(s)}
+function QA(s,e){return(e||document).querySelectorAll(s)}
+function F(n,d){d=d||2;return Number(n||0).toFixed(d)}
+function FB(n){n=Number(n||0);if(n>=1e12)return F(n/1e12,2)+'万亿';if(n>=1e8)return F(n/1e8,2)+'亿';if(n>=1e4)return F(n/1e4,1)+'万';return n.toLocaleString()}
+function C(v){return v>0?'up':v<0?'dn':''}
+function PL(v){var c=C(v||0);return'<span class="pl '+c+'">'+(v>0?'+':'')+F(v)+'%</span>'}
+
+var tab='dash',cSym='000001';
+
+function rDash(){
+  var d=DATA,a=d.a_share_sentiment,b=d.bond_snapshot,f=d.fx_snapshot,gi=d.global_indexes,c=d.crypto_snapshot,cm=d.commodity_snapshot,pm=d.polymarket_snapshot,lu=d.limit_up_pool,sc=d.hot_sectors;
+  var ih='<div class="ixs">';
+  for(var i=0;i<gi.length;i++){var x=gi[i];ih+='<div class="ix"><div class="xn">'+x.name+'</div><div class="xp mn '+C(x.change_pct)+'">'+(x.price?x.price.toLocaleString():'—')+'</div>'+PL(x.change_pct)+'</div>'}
+  ih+='</div>';
+  var h='';
+  h+='<div class="c"><div class="ct">🌏 全球指数 <span class="tag off">盘后</span></div>'+ih+'</div>';
+  h+='<div class="r4">';
+  h+='<div class="c"><div class="ct">📈 A股情绪 <span class="tag off">'+a.status+'</span></div><div class="mr"><span class="ml">上涨 / 下跌</span><span class="mv"><span class="up">'+a.up_count+'</span> <span style="color:var(--m)">/</span> <span class="dn">'+a.down_count+'</span></span></div><div class="mr"><span class="ml">涨停 / 跌停</span><span class="mv"><span class="up">'+a.limit_up_count+'</span> <span style="color:var(--m)">/</span> <span class="dn">'+a.limit_down_count+'</span></span></div><div class="mr"><span class="ml">总成交额</span><span class="mv mn">'+a.total_turnover_yi.toFixed(2)+' 万亿</span></div><div class="mr2"><div class="mr"><span class="ml">涨跌比</span><span class="mv mn">'+a.up_ratio+'%</span></div></div></div>';
+  h+='<div class="c"><div class="ct">🏦 债市利率 <span class="tag live">实时</span></div><div class="mr"><span class="ml">LPR 1年期</span><span class="mv mn">'+F(b.lpr_1y)+'%</span></div><div class="mr"><span class="ml">LPR 5年期</span><span class="mv mn">'+F(b.lpr_5y)+'%</span></div><div class="mr"><span class="ml">Shibor 隔夜</span><span class="mv mn">'+F(b.shibor_on,4)+'%</span></div><div class="mr2"><div class="mr"><span class="ml">中国10Y国债</span><span class="mv mn">'+F(b.cn_10y_yield)+'%</span></div></div></div>';
+  h+='<div class="c"><div class="ct">💱 汇率 <span class="tag info">'+f.source+'</span></div><div class="mr"><span class="ml">USD/CNY</span><span class="mv mn">'+F(f.usd_cny,4)+'</span></div><div class="mr"><span class="ml">EUR/USD</span><span class="mv mn">'+F(f.eur_usd,4)+'</span></div><div class="mr"><span class="ml">USD/JPY</span><span class="mv mn">'+F(f.usd_jpy,2)+'</span></div><div class="mr2"><div class="mr"><span class="ml">美元指数 DXY</span><span class="mv mn">'+F(f.usd_index,2)+'</span></div></div></div>';
+  var fg=c.fear_greed_value,fgc=fg>60?'var(--g)':fg<40?'var(--r)':'var(--y)';
+  h+='<div class="c"><div class="ct">🪙 币圈 <span class="tag live">实时</span></div><div class="mr"><span class="ml">BTC</span><span class="mv"><span class="mn">$'+Number(c.btc_price).toLocaleString()+'</span> '+PL(c.btc_change_24h)+'</span></div><div class="mr"><span class="ml">ETH</span><span class="mv"><span class="mn">$'+Number(c.eth_price).toLocaleString()+'</span> '+PL(c.eth_change_24h)+'</span></div><div class="mr"><span class="ml">BTC 市占率</span><span class="mv mn">'+F(c.btc_dominance,1)+'%</span></div><div class="mr2"><div class="mr"><span class="ml">恐惧贪婪</span><span class="mv mn" style="color:'+fgc+'">'+fg+' <span style="font-weight:400">'+c.fear_greed_classification+'</span></span></div></div></div>';
+  h+='</div><div class="r2">';
+  h+='<div class="c"><div class="ct">🛢️ 大宗商品 <span class="tag off">收盘</span></div><div class="cg">';
+  var ce=Object.entries(cm).slice(0,6);
+  for(var j=0;j<ce.length;j++){var v=ce[j],it=v[1];h+='<div class="cgi"><div class="cn">'+it.name+'</div><div class="cp mn '+C(it.change_pct)+'">'+F(it.price,1)+'</div>'+PL(it.change_pct)+'</div>'}
+  h+='</div></div>';
+  h+='<div class="c"><div class="ct">🎲 Polymarket 预测市场 <span class="tag live">实时</span></div>';
+  for(var k=0;k<pm.length;k++){var pp=pm[k];h+='<div class="poly-i"><div class="pq"><b>'+pp.question+'</b><br><span style="color:var(--m);font-size:8px">'+pp.outcomes+' · 24h Vol $'+(pp.volume_24h/1e6).toFixed(1)+'M</span></div><div class="pp mn" style="color:'+(pp.probability>60?'var(--g)':pp.probability<40?'var(--r)':'var(--y)')+'">'+pp.probability+'%</div></div>'}
+  h+='</div></div>';
+  h+='<div class="r2">';
+  h+='<div class="c"><div class="ct">🔥 涨停板 <span class="tag off">今日</span></div><div class="tb"><table><thead><tr><th>股票</th><th style="text-align:right">涨幅</th><th style="text-align:right">连板</th><th style="text-align:right">封单(亿)</th><th style="text-align:right">封板</th></tr></thead><tbody>';
+  for(var m=0;m<Math.min(lu.length,15);m++){var l=lu[m];h+='<tr><td><b>'+l.name+'</b><span style="color:var(--m);margin-left:4px">'+l.symbol+'</span></td><td style="text-align:right" class="up mn">'+F(l.change_pct,1)+'%</td><td style="text-align:right"><span style="color:'+(l.consecutive_days>=3?'var(--y)':'')+';font-weight:'+(l.consecutive_days>=3?'700':'400')+'">'+(l.consecutive_days>0?l.consecutive_days+'板':'—')+'</span></td><td style="text-align:right" class="mn">'+F((l.limit_order_amount||0)/1e8,2)+'</td><td style="text-align:right;color:var(--m)">'+l.first_limit_time+'</td></tr>'}
+  h+='</tbody></table></div></div>';
+  h+='<div class="c"><div class="ct">📊 热门板块 <span class="tag off">今日</span></div><div class="tb"><table><thead><tr><th>板块</th><th style="text-align:right">涨幅</th><th>领涨股</th><th style="text-align:right">领涨涨幅</th></tr></thead><tbody>';
+  for(var n=0;n<sc.length;n++){var s=sc[n];h+='<tr><td><b>'+s.sector_name+'</b></td><td style="text-align:right">'+PL(s.change_pct)+'</td><td>'+s.leading_stock+'</td><td style="text-align:right" class="mn '+C(s.leading_change||0)+'">'+(s.leading_change>0?'+':'')+F(s.leading_change,1)+'%</td></tr>'}
+  h+='</tbody></table></div></div>';
+  return h;
+}
+
+function rStocks(){
+  var W=['000001','600519','300750','601318','000858','002594'];
+  var h='<div class="c" style="margin-bottom:10px"><div class="sb"><span style="font-size:10px;color:var(--m)">快速查看</span>';
+  for(var i=0;i<W.length;i++)h+='<a class="bt'+(cSym===W[i]?' on':'')+'" onclick="selS(\''+W[i]+'\')">'+W[i]+'</a>';
+  h+='<input id="si" placeholder="输入股票代码..." value="'+cSym+'" onkeydown="if(event.key==\'Enter\')selS(this.value)" style="margin-left:auto"><a class="bt on" onclick="selS(Q(\'#si\').value)">查看</a></div></div>';
+  h+='<div class="c" style="padding:0"><div style="padding:12px 14px;display:flex;justify-content:space-between;align-items:center"><div><span style="font-size:13px;font-weight:600" id="cn">'+cSym+'</span></div><div style="text-align:right"><div class="mn" style="font-size:17px;font-weight:700;color:var(--g)" id="cp">—</div><div class="mn" style="font-size:11px" id="cc">—</div></div></div><div class="ch" id="ccont"></div></div>';
+  return h;
+}
+
+function rCrypto(){
+  var c=DATA.crypto_snapshot;
+  var h='<div class="r2">';
+  h+='<div class="c"><div class="ct">Bitcoin (BTC) <span class="tag live">实时</span></div><div class="mr"><span class="ml">价格</span><span class="mv mn" style="font-size:18px;font-weight:700">$'+Number(c.btc_price).toLocaleString()+'</span></div><div class="mr"><span class="ml">24h 涨跌</span><span class="mv">'+PL(c.btc_change_24h)+'</span></div><div class="mr"><span class="ml">市值占比</span><span class="mv mn">'+F(c.btc_dominance,1)+'%</span></div><div class="mr"><span class="ml">总市值</span><span class="mv mn">$'+(c.total_market_cap/1e12).toFixed(2)+'T</span></div></div>';
+  h+='<div class="c"><div class="ct">Ethereum (ETH) <span class="tag live">实时</span></div><div class="mr"><span class="ml">价格</span><span class="mv mn" style="font-size:18px;font-weight:700">$'+Number(c.eth_price).toLocaleString()+'</span></div><div class="mr"><span class="ml">24h 涨跌</span><span class="mv">'+PL(c.eth_change_24h)+'</span></div><div class="mr2"><div class="mr"><span class="ml">恐惧贪婪指数</span><span class="mv mn" style="font-size:16px;color:'+(c.fear_greed_value>60?'var(--g)':c.fear_greed_value<40?'var(--r)':'var(--y)')+'">'+c.fear_greed_value+' <span style="font-size:12px;font-weight:400">'+c.fear_greed_classification+'</span></span></div></div></div>';
+  h+='</div>';
+  return h;
+}
+
+function rMacro(){
+  var m=DATA.macro_indicators,b=DATA.bond_snapshot,f=DATA.fx_snapshot;
+  var h='<div class="r4">';
+  h+='<div class="c"><div class="ct">📊 物价</div><div class="mr"><span class="ml">CPI 同比</span><span class="mv mn">'+F(m.cpi_yoy,1)+'%</span></div><div class="mr"><span class="ml">PPI 同比</span><span class="mv mn">'+F(m.ppi_yoy,1)+'%</span></div><div class="mr"><span class="ml">PMI 制造业</span><span class="mv mn '+C(m.pmi_manufacturing-50)+'">'+F(m.pmi_manufacturing,1)+'</span></div></div>';
+  h+='<div class="c"><div class="ct">💰 货币</div><div class="mr"><span class="ml">M2 同比</span><span class="mv mn">'+F(m.m2_yoy,1)+'%</span></div><div class="mr"><span class="ml">社融增量</span><span class="mv mn">'+F(m.social_financing,1)+' 万亿</span></div><div class="mr"><span class="ml">外汇储备</span><span class="mv mn">$'+F(m.foreign_reserves,2)+'T</span></div></div>';
+  h+='<div class="c"><div class="ct">🏦 利率</div><div class="mr"><span class="ml">LPR 1Y</span><span class="mv mn">'+F(b.lpr_1y)+'%</span></div><div class="mr"><span class="ml">LPR 5Y</span><span class="mv mn">'+F(b.lpr_5y)+'%</span></div><div class="mr"><span class="ml">Shibor 隔夜</span><span class="mv mn">'+F(b.shibor_on,4)+'%</span></div></div>';
+  h+='<div class="c"><div class="ct">💱 汇率</div><div class="mr"><span class="ml">USD/CNY</span><span class="mv mn">'+F(f.usd_cny,4)+'</span></div><div class="mr"><span class="ml">EUR/USD</span><span class="mv mn">'+F(f.eur_usd,4)+'</span></div><div class="mr"><span class="ml">USD/JPY</span><span class="mv mn">'+F(f.usd_jpy,2)+'</span></div></div>';
+  h+='</div>';
+  h+='<div class="c"><div class="ct">🤖 AI 最新动向</div>';
+  var an=DATA.ai_news;
+  for(var i=0;i<an.length;i++){var n=an[i];h+='<div style="padding:5px 0;border-bottom:1px solid rgba(30,42,58,.3);font-size:10px"><span style="color:var(--blu);font-weight:600">['+n.source+']</span> <span style="color:var(--t)">'+n.title+'</span> <span style="color:var(--m);float:right">'+n.date+'</span></div>'}
+  h+='</div>';
+  return h;
+}
+
+var chartLoaded=false,chart=null,candle=null;
+function loadChartLib(cb){
+  if(typeof LightweightCharts!=='undefined'){chartLoaded=true;cb();return}
+  var s=document.createElement('script');
+  s.src='https://cdn.jsdelivr.net/npm/lightweight-charts@4.2.2/dist/lightweight-charts.standalone.production.js';
+  s.onload=function(){chartLoaded=true;cb()};
+  s.onerror=function(){Q('#ccont').innerHTML='<div style="text-align:center;padding:40px;color:var(--m)">📉 K线图需要网络加载图表库<br><span style="font-size:10px">其他数据不受影响</span></div>'};
+  document.head.appendChild(s);
+}
+function initChart(){
+  var c=Q('#ccont');if(!c)return;
+  loadChartLib(function(){
+    if(chart)try{chart.remove()}catch(e){}
+    chart=LightweightCharts.createChart(c,{width:c.clientWidth,height:420,layout:{background:{color:'#0a0e14'},textColor:'#5c6e80'},grid:{vertLines:{color:'#1e2a3a'},horzLines:{color:'#1e2a3a'}},crosshair:{mode:0},timeScale:{borderColor:'#1e2a3a'},rightPriceScale:{borderColor:'#1e2a3a'}});
+    candle=chart.addCandlestickSeries({upColor:'#00d4aa',downColor:'#ff4757',borderUpColor:'#00d4aa',borderDownColor:'#ff4757',wickUpColor:'#00d4aa',wickDownColor:'#ff4757'});
+    window.addEventListener('resize',function(){if(chart&&c)chart.applyOptions({width:c.clientWidth})});
+    updChart(cSym);
+  });
+}
+function updChart(sym){
+  var bp=15,data=[],p=bp,now=new Date();
+  for(var i=60;i>=0;i--){var d=new Date(now);d.setDate(d.getDate()-i);var ts=d.toISOString().split('T')[0];var ch=(Math.random()-0.48)*p*0.03,o=p,c2=p+ch,h=Math.max(o,c2)+Math.random()*p*0.01,l=Math.min(o,c2)-Math.random()*p*0.01;data.push({time:ts,open:+o.toFixed(2),high:+h.toFixed(2),low:+l.toFixed(2),close:+c2.toFixed(2)});p=c2}
+  if(candle)candle.setData(data);Q('#cn').textContent=sym;
+}
+function selS(sym){cSym=sym;updChart(sym);QA('.sb .bt').forEach(function(b){b.className='bt'+(b.textContent===sym?' on':'')})}
+
+function render(){
+  var m=Q('#main');
+  if(tab==='dash')m.innerHTML=rDash();
+  else if(tab==='stocks'){m.innerHTML=rStocks();setTimeout(initChart,200)}
+  else if(tab==='crypto')m.innerHTML=rCrypto();
+  else if(tab==='macro')m.innerHTML=rMacro();
+}
+
+QA('nav a').forEach(function(a){a.addEventListener('click',function(){QA('nav a').forEach(function(x){x.classList.remove('on')});a.classList.add('on');tab=a.dataset.tab;render()})});
+
+render();
+</script>
+</body>
+</html>

@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI HOT 日报 · 2026-05-23</title>
+<style>
+  :root {
+    --bg: #0f0f0f;
+    --card: #1a1a1a;
+    --card-hover: #222;
+    --text: #e0e0e0;
+    --text-dim: #999;
+    --accent: #ff6b35;
+    --accent2: #4ecdc4;
+    --border: #2a2a2a;
+    --tag-bg: #252525;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+  .container { max-width: 900px; margin: 0 auto; padding: 40px 20px 80px; }
+  
+  /* Header */
+  .header {
+    text-align: center;
+    padding: 60px 0 40px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 50px;
+  }
+  .header .logo {
+    font-size: 13px;
+    letter-spacing: 6px;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .header h1 {
+    font-size: 42px;
+    font-weight: 800;
+    letter-spacing: -1px;
+    background: linear-gradient(135deg, #fff 0%, #aaa 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .header .meta {
+    margin-top: 12px;
+    color: var(--text-dim);
+    font-size: 14px;
+  }
+  .header .meta span { margin: 0 10px; }
+
+  /* Section */
+  .section { margin-bottom: 50px; }
+  .section-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--accent2);
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--accent2);
+    margin-bottom: 25px;
+    letter-spacing: 2px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-title .count {
+    font-size: 12px;
+    background: var(--accent2);
+    color: #000;
+    padding: 2px 10px;
+    border-radius: 20px;
+    font-weight: 600;
+  }
+
+  /* Card */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    transition: all 0.25s ease;
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    min-height: 180px;
+  }
+  .card:hover {
+    background: var(--card-hover);
+    border-color: #444;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+  }
+  .card .card-img {
+    background: #111;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+  }
+  .card .card-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+  }
+  .card:hover .card-img img { transform: scale(1.05); }
+  .card .card-img .placeholder {
+    width: 60px;
+    height: 60px;
+    opacity: 0.15;
+  }
+  .card .card-img .placeholder svg { width: 100%; height: 100%; }
+  .card .card-body {
+    padding: 22px 26px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .card .card-num {
+    font-size: 11px;
+    color: var(--accent);
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+  }
+  .card .card-title {
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 1.4;
+    margin-bottom: 8px;
+    color: #fff;
+  }
+  .card .card-title a {
+    color: #fff;
+    text-decoration: none;
+  }
+  .card .card-title a:hover { color: var(--accent2); }
+  .card .card-summary {
+    font-size: 13.5px;
+    color: var(--text-dim);
+    line-height: 1.65;
+    margin-bottom: 10px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .card .card-source {
+    font-size: 12px;
+    color: #666;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .card .card-source .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    opacity: 0.5;
+  }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    padding: 40px 0;
+    color: var(--text-dim);
+    font-size: 12px;
+    border-top: 1px solid var(--border);
+    margin-top: 30px;
+  }
+
+  /* Stats bar */
+  .stats-bar {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-bottom: 50px;
+    flex-wrap: wrap;
+  }
+  .stat {
+    text-align: center;
+  }
+  .stat .num {
+    font-size: 36px;
+    font-weight: 800;
+    color: #fff;
+  }
+  .stat .label {
+    font-size: 12px;
+    color: var(--text-dim);
+    margin-top: 4px;
+  }
+
+  /* Responsive */
+  @media (max-width: 700px) {
+    .card { grid-template-columns: 1fr; }
+    .card .card-img { height: 180px; }
+    .header h1 { font-size: 28px; }
+    .stats-bar { gap: 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <div class="logo">AI HOT · Daily Report</div>
+    <h1>AI 日报</h1>
+    <div class="meta">
+      <span>📅 2026年5月23日</span>
+      <span>📰 共 28 条</span>
+      <span>🕐 北京时间 08:00</span>
+    </div>
+  </div>
+
+  <div class="stats-bar">
+    <div class="stat"><div class="num">1</div><div class="label">模型发布</div></div>
+    <div class="stat"><div class="num">8</div><div class="label">产品更新</div></div>
+    <div class="stat"><div class="num">8</div><div class="label">行业动态</div></div>
+    <div class="stat"><div class="num">3</div><div class="label">论文研究</div></div>
+    <div class="stat"><div class="num">8</div><div class="label">技巧观点</div></div>
+  </div>
+
+  <!-- 模型发布/更新 -->
+  <div class="section">
+    <div class="section-title">🧠 模型发布/更新 <span class="count">1</span></div>
+
+    <div class="card" id="card-1">
+      <div class="card-img">
+        <!--IMG:1-->
+        <div class="placeholder"><svg viewBox="0 0 60 60" fill="none" stroke="#555" stroke-width="1.5"><rect x="8" y="10" width="44" height="40" rx="4"/><path d="M18 30l8 8 16-16"/></svg></div>
+      </div>
+      <div class="card-body">
+        <div class="card-num">No. 1</div>
+        <div class="card-title"><a href="https://x.com/rohanpaul_ai/status/2057833050692800926" target="_blank">首个基于华为昇腾910B NPU全栈训练的1.58比特开源大模型BitCPM-CANN发布</a></div>
+        <div class="card-summary">ModelBest、清华大学与OpenBMB社区联合发布全球首个完全基于华为昇腾910B NPU训练的开源1.58比特三元大模型。模型家族（0.5B-8B）内存占用比BF16降低约6倍，可高效部署于手机、电脑、车载等边缘端，多项基准保持全精度模型95-97%的性能。</div>
+        <div class="card-source"><span class="dot"></span>X：Rohan Paul</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 产品发布/更新 -->
+  <div class="section">
+    <div class="section-title">🚀 产品发布/更新 <span class="count">8</span></div>
+
+    <div class="card" id="card-2">
+      <div class="card-img"><!--IMG:2--><div class="placeholder"><svg viewBox="0 0 60 60" fill="none" stroke="#555" stroke-width="1.5"><circle cx="30" cy="30" r="20"/><path d="M20 30l10-10 10 10"/></svg></div></div>
+      <div class="card-body">
+        <div class="card-num">No. 2</div>
+        <div class="card-title"><a href="https://x.com/GeminiApp/status/2057616371748651054" target="_blank">Gemini Omni发布，创意作品涌现</a></div>
+        <div class="card-summary">Gemini Omni来了，本周看到了许多令人惊叹的创作。</div>
+        <div class="card-source"><span class="dot"></span>X：Gemini</div>
+      </div>
+    </div>
+
+    <div class="card" id="card-3">
+      <div class="card-img"><!--IMG:3--><div class="placeholder"><svg viewBox="0 0 60 60" fill="none" stroke="#555" stroke-width="1.5"><circle cx="30" cy="30" r="20"/><path d="M20 30l10-10 10 10"/></svg></div></div>
+      <div class="card-body">
+        <div class="card-num">No. 3</div>
+        <div class="card-title"><a href="https://x.com/ViggleAI/status/2057947352195858568" target="_blank">动作捕捉与角色动画制作更轻松</a></div>
+        <div class="card-summary">动作捕捉和角色动画制作从未如此简单。Viggle AI持续构建，更多功能即将推出。</div>
+        <div class="card-source"><span class="dot"></span>X：Viggle AI</div>
+      </div>
+    </div>
+
+    <div class="card" id="card-4">
+      <div class="card-img"><!--IMG:4--><div class="placeholder"><svg viewBox="0 0 60 60" fill="none" stroke="#555" stroke-width="1.5"><circle cx="30" cy="30" r="20"/><path d="M20 30l10-10 10 10"/></svg></div></div>
+      <div class="card-body">
+        <div class="card-num">No. 4</div>
+        <div class="card-title"><a href="https://x.com/GoogleAI/status/2057871583843135978" target="_blank">谷歌I/O大会发布AI代理全套开发工具链</a></div>
+        <div class="card-summary">谷歌在I/O宣布系统性构建AI代理（Agent）开发与部署工具链：独立桌面应用Antigravity 2.0及命令行工具、SDK面世；AI Studio新增Kotlin支持一键开发安卓应用；Gemini API推出托管代理一键部署；WebMCP作为开放标准在Chrome 149推出；Chrome DevTools开放给AI代理自动化调试。</div>
+        <div class="card-source"><span class="dot"></span>X：Google AI</div>
+      </div>
+    </div>
+
+    <div class="card" id="card-5">
+      <div class="card-img"><!--IMG:5--><div class="placeholder"><svg viewBox="0 0 60 60" fill="none" stroke="#555" stroke-width="1.5"><circle cx="30" cy="30" r="20"/><path d="M20 30l10-10 10 10"/></svg></div></div>
+      <div class="card-body">
+        <div class="card-num">No. 5</div>
+        <div class="card-title"><a href="https://x.com/googleaidevs/status/2057679246085226965" target="_blank">Antigravity付费版Gemini配额再翻三倍</a></div>
+        <div class="card-summary">所有付费层级每周Gemini配额再次提升至三倍，配额已正式重置。</div>
+        <div class="card-source"><span class="dot"></span>X：Google AI for Developers</div>
+      </div>
+    </div>
+
+    <div class="card" id="card-6">
+      <div class="card-img"><!--IMG:6--><div class="placeholder"><svg viewBox="0 0 60 60" fill="none" stroke="#555" stroke-width="1.5"><circle cx="30" cy="30" r="20"/><path d="M20 30l10-10 10 10"/></svg></div></div>
+      <div class="card-body">
+        <div class="card-num">No. 6</div>
+        <div class="card-title"><a href="https://x.com/ClaudeDevs/status/2057946803685974482" target="_blank">Claude自动模式新增Pro计划与模型支持</a></div>
+        <div class="card-summary">自动模式现已在Pro计划中提供，支持Sonnet 4.6及Opus 4.7。</div>
+        <div class="card-source"><span class="dot"></span>X：Claude Devs</div>
+      </div>
+    </div>
+
+    <div class="card" id="card-7">
+      <div class="card-img"><!--IMG:7--><div class="placeholder"><svg viewBox="0 0 60 60" fill="none" stroke="#555" stroke-width="1.5"><circle cx="30" cy="30" r="20"/><path d="M20 30l10-10 10 10"/></svg></div></div>
+      <div class="card-body">
+        <div class="card-num">No. 7</div>
+        <div class="card-title"><a href="https://x.com/ChatGPTapp/status/2057908052968521902" target="_blank">ChatGPT语音模式实现表单语音填写</a></div>
+        <div class="card-summary">借助ChatGPT的图像功能和语音模式，上传表单后说出要填写的内容即可获得填写完成的版本。</div>
+        <div class="card-source"><span class="dot"></span>X：ChatGPT</div>
+      </div>
+    </div>
+
+    <div class="card" id="card-8">
+      <div class="card-img"><!--IMG:8--><div class="placeholder"><svg viewBox="0 0 60 60" fill="none" stroke="#555" stroke-width="1.5"><circle cx="30" cy="30" r="20"/><path d="M20 30l10-10 10 10"/></svg></div></div>
+      <div class="card-body">
+        <div class="card-num">No. 8</div>
+        <div class="card-title"><a href="https://x.com/OpenAIDevs/status/2057918624841728349" target="_blank">OpenAI新增差异标记样式设置选项</a></div>
+        <div class="card-summary">外观设置中新增差异标记样式，可在查看代码差异时选择经典的 +/- 标记方式。</div>
+        <div class="card-source"><span class="dot"></span>X：OpenAI Developers</div>
+      </div>
+    </div>
+
+    <div class="card" id="card-9">
+      <div class="card-img"><!--IMG:9--><div class="placeholder"><svg viewBox="0 0 60 60" fill="none" stroke="#555" stroke-width="1.5"><circle cx="30" cy="30" r="20"/><path d="M20 30l10-10 10 10"/></svg></div></div>
+      <div class="card-body">
+        <div class="card-num">No. 9</div>
+        <div class="card-title"><a href="https://x.com/GoogleDeepMind/status/2057842131142590512" target="_blank">Project Genie与谷歌街景合作推出交互式世界</a></div>
+        <div class="card-summary">可将真实的美国地点转化为全新的交互式世界。</div>
+        <div class="card-source"><span class="dot"></span>X：Google DeepMind</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 行业动态 -->
+  <div class="section">
+    <div class="section-title">📊 行业动态 <span class="count">8</span></div>
+
+    <div class="card" id="card-10">
+      <div class="card-img"><img src="https://www-cdn.anthropic.com/images/4zrzovbb/website/9f76163fe710723283a55b9f60d5caca6697dffd-1920x1080.jpg" alt="Project Glasswing" loading="lazy"></div>
+      <div class="card-body">
+        <div class="card-num">No. 10</div>
+        <div class="card-title"><a href="https://www.anthropic.com/research/glasswing-initial-update" target="_blank">Project Glasswing：初步更新</a></div>
+        <div class="card-summary">约50家合作伙伴使用Claude Mythos Preview模型，在关键系统中发现超10,000个高危或严重漏洞，漏洞发现效率提升超过十倍。独立验证准确率达90.6%。</div>
+        <div class="card-source"><span class="dot"></span>Anthropic Newsroom</div>
+      </div>
+    </div>
+
+    <div class="card" id="card-11">
+      <div class="card-img"><!--IMG:11--><div class="placeholder"><svg viewBox="0 0 60 60" fill="none" stroke="#555" stroke-width="1.5"><rect x="8" y="10" width="44" height="40" rx="4"/><path d="M18 30l8 8 16-16"/></svg></div></div>
+      <div class="card-body">
+        <div class="card-num">No. 11</div>
+        <div class="card-title"><a href="https://www.ithome.com/0/954/223.htm" target="_blank">黄仁勋：AI基建年度开支要冲到4万亿美元</a></div>
+        <div class="card-summary">英伟达2027财年Q1：营收816亿美元（+85%），净利583亿美元（翻两倍多），市值5.7万亿美元已超德国GDP预测。黄仁勋预测云厂商AI基建年度开支将增长至3-4万亿美元。</div>
+        <div class="card-source"><span class="dot"></span>IT之家</div>
+      </div>
+    </div>
+
+    <div class="card" id="card-12">
+      <div class="card-img"><!--IMG:12--><div class="placeholder"><svg viewBox="0 0 60 60" fill="none" stroke="#555" stroke-width="1.5"><rect x="8" y="10" width="44" height="40" rx="4"/><path d="M18 30l8 8 16-16"/></svg></div></div>
+      <div class="card-body">
+        <div class="card-num">No. 12</div>
+        <div class="card-title"><a href="https://www.ithome.com/0/953/832.htm" target="_blank">DeepSeek推进700亿元融资，梁文锋承诺坚持开源</a></div>
+        <div class="card-summary">估值约450亿美元，腾讯、IDG资本等接近参投，梁文锋个人可能注资200亿元。若成功将创中国科技初创首轮融资纪录。</div>
+        <div class="card-source"><span class="dot"></span>IT之家</div>
+      </div>
+    </div>
+
+    <div class="card" id="card-13">
+      <div class="card-img"><img src="https://ptht05hbb1ssoooe.public.blob.vercel-storage.com/assets/landing-pages/gartner-mq-2026.webp" alt="Cursor Gartner MQ 2026" loading="lazy"></div>
+      <div class="card-body">
+        <div class="card-num">No. 13</div>
+        <div class="card-title"><a href="https://cursor.com/blog/cursor-leads-gartner-mq-2026" target="_blank">Cursor被评为2026年Gartner企业级AI编码代理魔力象限领导者</a></div>
+        <div class="card-summary">超70%财富500强企业使用Cursor。未来一年聚焦：提升前沿模型智能、自动化全生命周期任务、增强企业级控制力。</div>
+        <div class="card-source"><span class="dot"></span>Cursor Blog</div>
+      </div>
+    </div>
+
+    <div class="card" id="card-14">
+      <div class="card-img"><!--IMG:14--><div class="placeholder"><svg viewBox="0 0 60 60" fill="none" stroke="#555" stroke-width="1.5"><circle cx="30" cy="30" r="20"/><path d="M20 30l10-10 10 10"/></svg></div></div>
+      <div class="card-body">
+        <div class="card-num">No. 14</div>
+        <div class="card-title"><a href="https://x.com/OpenRouter/status/2057703179882749985" target="_blank">DeepSeek V4 Flash登顶周榜</a></div>
+        <div class="card-summary">DeepSeek V4 Flash已登顶OpenRouter周排行榜。</div>
+        <div class="card-source"><span class="dot"></span>X：OpenRouter</div>
+      </div>
+    </div>
+
+    <div class="card" id="card-15">
+      <div class="card-img"><!--IMG:15--><div class="placeholder"><svg viewBox="0 0 60 60" fill="none" stroke="#555" stroke-width="1.5"><circle cx="30" cy="30" r="20"/><path d="M20 30l10-10 10 10"/></svg></div></div>
+      <div class="card-body">
+        <div class="card-num">No. 15</div>
+        <div class="card-title"><a href="https://x.com/suno/status/2057858423664894196" target="_blank">Suno AI创作夏日神曲《波多黎各》爆火</a></div>
+        <div class="card-summary">今年夏天的热门歌曲用Suno制作，病毒式传播的《Puerto Rico》获得广泛关注。</div>
+        <div class="card-source"><span class="dot"></span>X：Suno</div>
+      </div>
+    </div>
+
+    <div class="card" id="card-16">
+      <div class="card-img"><!--IMG:16--><div class="placeholder"><svg viewBox="0 0 60 60" fill="none" stroke="#555" stroke-width="1.5"><rect x="8" y="10" width="44" height="40" rx="4"/><path d="M18 30l8 8 16-16"/></svg></div></div>
+      <div class="card-body">
+        <div class="card-num">No. 16</div>
+        <div class="card-title"><a href="https://github.blog/ai-and-ml/github-copilot/github-recognized-as-a-leader-in-the-gartner-magic-quadrant-for-enterprise-ai-coding-agents-for-the-third-year-in-a-row" target="_blank">GitHub连续第三年被Gartner评为企业AI编程代理领导者</a></div>
+        <div class="card-summary">GitHub Copilot连续三年位列Gartner魔力象限"领导者"，巩固AI辅助开发工具市场领先地位。</div>
+        <div class="card-source"><span class="dot"></span>GitHub Blog</div>
+      </div>
+    </div>
+
+    <div class="card" id="card-17">
+      <div class="card-img"><img src="https://images.ctfassets.net/kftzwdyauwt9/3eQUoUMrZCv8o0ZlTXaPMy/719f41d233c5a03cd991731d3c082805/Gartner-MQ-CodingAgents.png" alt="OpenAI Gartner MQ 2026" loading="lazy"></div>
+      <div class="card-body">
+        <div class="card-num">No. 17</div>
+        <div class="card-title"><a href="https://openai.com/index/gartner-2026-agentic-coding-leader" target="_blank">OpenAI被Gartner评为企业AI编码代理领域领导者</a></div>
+        <div class="card-summary">Codex因技术创新和企业级部署表现突出获认可，与Cursor、GitHub Copilot一同进入领导者象限。</div>
+        <div class="card-source"><span class="dot"></span>OpenAI官网</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 论文研究 -->
+  <div class="section">
+    <div class="section-title">📄 论文研究 <span class="count">3</span></div>
+
+    <div class="card" id="card-18">
+      <div class="card-img"><!--IMG:18--><div class="placeholder"><svg viewBox="0 0 60 60" fill="none" stroke="#555" stroke-width="1.5"><rect x="8" y="10" width="44" height="40" rx="4"/><path d="M18 30l8 8 16-16"/></svg></div></div>
+      <div class="card-body">
+        <div class="card-num">No. 18</div>
+        <div class="card-title"><a href="https://www.ithome.com/0/953/705.htm" target="_blank">图灵测试76年后首现AI通过实证：GPT-4.5以73%判定率超越真人</a></div>
+        <div class="card-summary">加州大学圣地亚哥分校首次实证AI通过图灵测试。GPT-4.5在5-15分钟对话中被误判为人类的概率高达73%，LLaMa-3.1-405B与真人相当（56%），GPT-4o和ELIZA仅约20%。</div>
+        <div class="card-source"><span class="dot"></span>IT之家</div>
+      </div>
+    </div>
+
+    <div class="card" id="card-19">
+      <div class="card-img"><!--IMG:19--><div class="placeholder"><svg viewBox="0 0 60 60" fill="none" stroke="#555" stroke-width="1.5"><circle cx="30" cy="30" r="20"/><path d="M20 30l10-10 10 10"/></svg></div></div>
+      <div class="card-body">
+        <div class="card-num">No. 19</div>
+        <div class="card-title"><a href="https://x.com/rohanpaul_ai/status/2057954067146781151" target="_blank">AlphaProof Nexus：用形式化验证驱动AI数学证明搜索</a></div>
+        <div class="card-summary">Google DeepMind将LLM与Lean形式化验证工具结合，在353个Erdős问题和492个开放猜想测试中，成功解决9个Erdős问题并证明44个序列猜想。</div>
+        <div class="card-source"><span class="dot"></span>X：Rohan Paul</div>
+      </div>
+    </div>
+
+    <div class="card" id="card-20">
+      <div class="card-img"><!--IMG:20--><div class="placeholder"><svg viewBox="0 0 60 60" fill="none" stroke="#555" stroke-width="1.5"><rect x="8" y="10" width="44" height="40" rx="4"/><path d="M18 30l8 8 16-16"/></svg></div></div>
+      <div class="card-body">
+        <div class="card-num">No. 20</div>
+        <div class="card-title"><a href="https://machinelearning.apple.com/research/vsas-bench-streaming-assistant" target="_blank">VSAS-Bench：视觉流式辅助模型的实时评估基准</a></div>
+        <div class="card-summary">现有视觉语言模型主要在离线场景评估，VSAS-Bench专门针对流式视觉语言模型在实时交互任务中的表现，填补动态持续生成场景的评估空白。</div>
+        <div class="card-source"><span class="dot"></span>Apple ML Research</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 技巧与观点 -->
+  <div class="section">
+    <div class="section-title">💡 技巧与观点 <span class="count">8</span></div>
+
+    <div class="card" id="card-21">
+      <div class="card-img"><img src="https://opengraph.githubassets.com/1/perplexityai/bumblebee" alt="Bumblebee by Perplexity" loading="lazy"></div>
+      <div class="card-body">
+        <div class="card-num">No. 21</div>
+        <div class="card-title"><a href="https://github.com/perplexityai/bumblebee" target="_blank">Perplexity开源供应链安全扫描工具Bumblebee</a></div>
+        <div class="card-summary">适用于macOS和Linux的只读扫描器，检查开发者机器上的高风险软件包、扩展和AI工具配置，连接Computer后可触发深度扫描。</div>
+        <div class="card-source"><span class="dot"></span>X：Perplexity</div>
+      </div>
+    </div>
+
+    <div class="card" id="card-22">
+      <div class="card-img"><!--IMG:22--><div class="placeholder"><svg viewBox="0 0 60 60" fill="none" stroke="#555" stroke-width="1.5"><circle cx="30" cy="30" r="20"/><path d="M20 30l10-10 10 10"/></svg></div></div>
+      <div class="card-body">
+        <div class="card-num">No. 22</div>
+        <div class="card-title"><a href="https://x.com/SemiAnalysis_/status/2057869518295249373" target="_blank">智能体工作负载悄然重塑推理经济</a></div>
+        <div class="card-summary">从43.2万个真实编码智能体请求中提取数据，中位数输入为9.6万token——超过《了不起的盖茨比》全文长度。</div>
+        <div class="card-source"><span class="dot"></span>X：SemiAnalysis</div>
+      </div>
+    </div>
+
+    <div class="card" id="card-23">
+      <div class="card-img"><!--IMG:23--><div class="placeholder"><svg viewBox="0 0 60 60" fill="none" stroke="#555" stroke-width="1.5"><circle cx="30" cy="30" r="20"/><path d="M20 30l10-10 10 10"/></svg></div></div>
+      <div class="card-body">
+        <div class="card-num">No. 23</div>
+        <div class="card-title"><a href="https://x.com/vista8/status/2057726749723840918" target="_blank">ChatGPT插件改善X平台文章发布体验</a></div>
+        <div class="card-summary">开发者利用ChatGPT（codex/goal）开发Markdown转换插件，拖拽文件快速生成X文章格式，已开源并提供谷歌插件版本。</div>
+        <div class="card-source"><span class="dot"></span>X：Vista</div>
+      </div>
+    </div>
+
+    <div class="card" id="card-24">
+      <div class="card-img"><!--IMG:24--><div class="placeholder"><svg viewBox="0 0 60 60" fill="none" stroke="#555" stroke-width="1.5"><circle cx="30" cy="30" r="20"/><path d="M20 30l10-10 10 10"/></svg></div></div>
+      <div class="card-body">
+        <div class="card-num">No. 24</div>
+        <div class="card-title"><a href="https://x.com/swyx/status/2057876022553690327" target="_blank">Kakuna：自动化加固代码库的AI代理工具</a></div>
+        <div class="card-summary">将早期快速原型自动转化为可维护的生产级代码库，核心是"反熵增"与"反代码腐化"，一次约16小时运行生成上百次提交。</div>
+        <div class="card-source"><span class="dot"></span>X：swyx</div>
+      </div>
+    </div>
+
+    <div class="card" id="card-25">
+      <div class="card-img"><!--IMG:25--><div class="placeholder"><svg viewBox="0 0 60 60" fill="none" stroke="#555" stroke-width="1.5"><circle cx="30" cy="30" r="20"/><path d="M20 30l10-10 10 10"/></svg></div></div>
+      <div class="card-body">
+        <div class="card-num">No. 25</div>
+        <div class="card-title"><a href="https://x.com/AYi_AInotes/status/2057791192738283669" target="_blank">Karpathy的CLAUDE.md四条规则让AI编程准确率飙升至94%</a></div>
+        <div class="card-summary">仅65行、4条核心规则引爆GitHub（超22万星），将AI编程准确率从65%提升至94%。核心：深度思考、追求简洁、精准修改、目标驱动。</div>
+        <div class="card-source"><span class="dot"></span>X：阿易 AI Notes</div>
+      </div>
+    </div>
+
+    <div class="card" id="card-26">
+      <div class="card-img"><!--IMG:26--><div class="placeholder"><svg viewBox="0 0 60 60" fill="none" stroke="#555" stroke-width="1.5"><circle cx="30" cy="30" r="20"/><path d="M20 30l10-10 10 10"/></svg></div></div>
+      <div class="card-body">
+        <div class="card-num">No. 26</div>
+        <div class="card-title"><a href="https://x.com/dotey/status/2057672416071987378" target="_blank">OpenAI Codex /goal功能正式发布及使用指南</a></div>
+        <div class="card-summary">/goal模式结束实验成为稳定功能，设定里程碑后AI持续工作数小时甚至数天，支持随时检查、调整与暂停。</div>
+        <div class="card-source"><span class="dot"></span>X：宝玉</div>
+      </div>
+    </div>
+
+    <div class="card" id="card-27">
+      <div class="card-img"><!--IMG:27--><div class="placeholder"><svg viewBox="0 0 60 60" fill="none" stroke="#555" stroke-width="1.5"><rect x="8" y="10" width="44" height="40" rx="4"/><path d="M18 30l8 8 16-16"/></svg></div></div>
+      <div class="card-body">
+        <div class="card-num">No. 27</div>
+        <div class="card-title"><a href="https://www.tomtunguz.com/plastic-user-interfaces" target="_blank">"可塑界面"：AI驱动的未来软件形态</a></div>
+        <div class="card-summary">Salesforce已采用无头架构，AI直接更新数据。未来软件核心在于动态管理可塑化界面（音频/网页等），用户界面变得"可塑"，能按需变形。</div>
+        <div class="card-source"><span class="dot"></span>Tomer Tunguz 博客</div>
+      </div>
+    </div>
+
+    <div class="card" id="card-28">
+      <div class="card-img"><!--IMG:28--><div class="placeholder"><svg viewBox="0 0 60 60" fill="none" stroke="#555" stroke-width="1.5"><rect x="8" y="10" width="44" height="40" rx="4"/><path d="M18 30l8 8 16-16"/></svg></div></div>
+      <div class="card-body">
+        <div class="card-num">No. 28</div>
+        <div class="card-title"><a href="https://annas-archive.gl/blog/llms-txt.html" target="_blank">安娜的博客：致LLM的一封信</a></div>
+        <div class="card-summary">面向大型语言模型的文章《如果你是一个LLM，请阅读这篇文章》，在Hacker News获117分。</div>
+        <div class="card-source"><span class="dot"></span>Hacker News</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    数据来自 AI HOT (aihot.virxact.com) · 2026-05-23 · 共 28 条
+  </div>
+
+</div>
+</body>
+</html>

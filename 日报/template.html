@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>科技日报 | {{DATE}}</title>
+<!--
+  ╔══════════════════════════════════════╗
+  ║  科技日报 HTML 架构 v2.0            ║
+  ║  Design Token → Base → Layout →    ║
+  ║  Card System → Interactive → JS    ║
+  ╚══════════════════════════════════════╝
+-->
+<style>
+/* ═══════════════════════════════════════
+   LAYER 1: DESIGN TOKENS
+   ═══════════════════════════════════════ */
+:root {
+  /* ── 调色板 ── */
+  --c-bg:        #0d1117;
+  --c-surface:   #161b22;
+  --c-surface2:  #1c2333;
+  --c-border:    #30363d;
+  --c-text:      #c9d1d9;
+  --c-muted:     #8b949e;
+  --c-accent:    #58a6ff;
+  --c-warn:      #f78166;
+  --c-good:      #3fb950;
+  --c-purple:    #d2a8ff;
+  --c-tag-bg:    #1a2332;
+  --c-tag-text:  #79c0ff;
+  --c-divider:   #21262d;
+  --c-badge-g:   rgba(63,185,80,0.12);
+  --c-badge-w:   rgba(247,129,102,0.12);
+  --c-highlight: rgba(88,166,255,0.07);
+
+  /* ── 间距 ── */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 12px;
+  --space-lg: 16px;
+  --space-xl: 24px;
+  --space-2xl: 32px;
+  --space-3xl: 48px;
+
+  /* ── 圆角 ── */
+  --r-sm: 6px;
+  --r-md: 8px;
+  --r-lg: 10px;
+  --r-xl: 14px;
+  --r-full: 50%;
+
+  /* ── 阴影 ── */
+  --shadow-sm: 0 1px 3px rgba(0,0,0,.12);
+  --shadow-md: 0 4px 12px rgba(0,0,0,.15);
+
+  /* ── 过渡 ── */
+  --t-fast: .15s ease;
+  --t-base: .2s ease;
+  --t-slow: .3s ease;
+
+  /* ── 字体 ── */
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  --font-mono: "SF Mono", "Fira Code", "Cascadia Code", Consolas, monospace;
+  --fs-xs: 10px;
+  --fs-sm: 12px;
+  --fs-base: 14px;
+  --fs-md: 15px;
+  --fs-lg: 18px;
+  --fs-xl: 20px;
+  --fs-2xl: 28px;
+  --fw-bold: 600;
+  --fw-xbold: 800;
+}
+
+[data-theme="light"] {
+  --c-bg:        #ffffff;
+  --c-surface:   #f6f8fa;
+  --c-surface2:  #eef1f5;
+  --c-border:    #d0d7de;
+  --c-text:      #1f2328;
+  --c-muted:     #656d76;
+  --c-accent:    #0969da;
+  --c-warn:      #cf222e;
+  --c-good:      #1a7f37;
+  --c-purple:    #8250df;
+  --c-tag-bg:    #ddf4ff;
+  --c-tag-text:  #0969da;
+  --c-divider:   #d8dee4;
+  --c-badge-g:   rgba(26,127,55,0.1);
+  --c-badge-w:   rgba(207,34,46,0.08);
+  --c-highlight: rgba(9,105,218,0.06);
+  --shadow-sm: 0 1px 2px rgba(0,0,0,.04);
+  --shadow-md: 0 4px 10px rgba(0,0,0,.06);
+}
+
+/* ═══════════════════════════════════════
+   LAYER 2: BASE
+   ═══════════════════════════════════════ */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-sans);
+  background: var(--c-bg);
+  color: var(--c-text);
+  line-height: 1.7;
+  max-width: 880px;
+  margin: 0 auto;
+  padding: var(--space-xl) var(--space-xl) 100px;
+  transition: background var(--t-slow), color var(--t-slow);
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; }
+a:hover { color: var(--c-accent); }
+b, strong { color: var(--c-text); font-weight: var(--fw-bold); }
+img { max-width: 100%; display: block; }
+
+/* ═══════════════════════════════════════
+   LAYER 3: LAYOUT COMPONENTS
+   ═══════════════════════════════════════ */
+
+/* ── Topbar ── */
+.topbar {
+  position: sticky; top: 0; z-index: 100;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: var(--space-md) 20px;
+  margin: calc(-1 * var(--space-xl)) calc(-1 * var(--space-xl)) var(--space-xl);
+  background: var(--c-bg);
+  border-bottom: 1px solid var(--c-divider);
+  backdrop-filter: blur(12px);
+  gap: var(--space-md);
+  flex-wrap: wrap;
+}
+.topbar-logo { font-weight: var(--fw-xbold); font-size: var(--fs-lg); white-space: nowrap; }
+.topbar-nav { display: flex; gap: 2px; flex-wrap: wrap; }
+.topbar-nav a {
+  font-size: var(--fs-sm); color: var(--c-muted); text-decoration: none;
+  padding: 3px var(--space-sm); border-radius: var(--r-xl);
+  transition: all var(--t-base);
+}
+.topbar-nav a:hover,
+.topbar-nav a.is-active { color: var(--c-accent); background: var(--c-highlight); }
+
+/* ── Header ── */
+.header { text-align: center; padding: var(--space-xl) 0; }
+.header-date-zh { font-size: var(--fs-2xl); font-weight: var(--fw-xbold); letter-spacing: -0.5px; }
+.header-date-en { color: var(--c-muted); font-size: var(--fs-base); margin-top: 2px; }
+.header-sources { color: var(--c-muted); font-size: var(--fs-sm); margin-top: var(--space-sm); }
+.header-stats {
+  display: flex; gap: var(--space-md); justify-content: center;
+  margin-top: var(--space-lg); flex-wrap: wrap;
+}
+.stat-pill {
+  font-size: var(--fs-sm); color: var(--c-muted);
+  background: var(--c-surface); border: 1px solid var(--c-border);
+  border-radius: var(--r-xl); padding: 3px var(--space-md);
+}
+
+/* ── Section ── */
+.section { margin-bottom: var(--space-3xl); scroll-margin-top: 80px; }
+.section.is-empty { display: none; }
+.section-head {
+  font-size: var(--fs-sm); text-transform: uppercase; letter-spacing: 1.5px;
+  color: var(--c-accent); font-weight: 700;
+  margin-bottom: var(--space-lg); padding-bottom: var(--space-sm);
+  border-bottom: 2px solid var(--c-divider);
+  display: flex; align-items: center; gap: var(--space-sm);
+}
+.section-head .count { font-size: 11px; color: var(--c-muted); font-weight: 400; letter-spacing: 0; }
+
+/* ── Footer ── */
+.footer {
+  text-align: center; color: var(--c-muted); font-size: 11px;
+  margin-top: var(--space-3xl); padding-top: var(--space-xl);
+  border-top: 1px solid var(--c-divider);
+}
+
+/* ═══════════════════════════════════════
+   LAYER 4: CARD SYSTEM
+   ═══════════════════════════════════════ */
+
+/* ── 基类 .card ── */
+.card {
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-lg);
+  padding: var(--space-lg) 22px;
+  margin-bottom: var(--space-md);
+  transition: border-color var(--t-base), background var(--t-base), box-shadow var(--t-base);
+}
+.card:hover {
+  border-color: var(--c-accent);
+  background: var(--c-surface2);
+  box-shadow: var(--shadow-sm);
+}
+
+/* ── .card--banner 头条 ── */
+.card--banner {
+  background: linear-gradient(135deg, var(--c-surface), var(--c-surface2));
+  border-color: var(--c-warn);
+  padding: var(--space-xl) 28px;
+  margin-bottom: var(--space-2xl);
+  position: relative; overflow: hidden;
+}
+.card--banner::before {
+  content: ''; position: absolute;
+  top: -40px; right: -40px;
+  width: 140px; height: 140px;
+  background: var(--c-warn); opacity: .04; border-radius: var(--r-full);
+}
+.card--banner .card-label {
+  font-size: var(--fs-xs); text-transform: uppercase; letter-spacing: 2px;
+  color: var(--c-warn); font-weight: 700; margin-bottom: var(--space-sm);
+}
+.card--banner .card-title {
+  font-size: var(--fs-xl); line-height: 1.4; margin-bottom: var(--space-md);
+}
+.card--banner .card-title a { text-decoration: none; }
+.card--banner .card-title a:hover { text-decoration: underline; }
+.card--banner .card-body { color: var(--c-muted); font-size: var(--fs-base); line-height: 1.9; }
+.card--banner .card-body b { color: var(--c-text); }
+
+/* ── .card--repo GitHub 项目 ── */
+.card--repo {
+  display: grid;
+  grid-template-columns: 48px 1fr auto;
+  gap: var(--space-md);
+  align-items: start;
+}
+@media (max-width: 600px) {
+  .card--repo { grid-template-columns: 40px 1fr; }
+  .card--repo .card-aside { grid-column: 2; }
+}
+.card--repo .repo-avatar {
+  width: 48px; height: 48px; border-radius: var(--r-full);
+  border: 2px solid var(--c-border);
+}
+.card--repo .card-title { font-size: var(--fs-md); font-weight: var(--fw-bold); margin-bottom: 2px; }
+.card--repo .card-title a { text-decoration: none; }
+.card--repo .card-title a:hover { color: var(--c-accent); }
+.card--repo .repo-meta { font-size: 11px; color: var(--c-muted); margin-bottom: var(--space-sm); }
+.card--repo .repo-meta > * { margin-right: var(--space-sm); }
+.card--repo .repo-lang {
+  font-size: var(--fs-xs); color: var(--c-tag-text);
+  background: var(--c-tag-bg); padding: 1px 7px; border-radius: var(--r-md);
+}
+.card--repo .card-body { font-size: 13px; line-height: 1.6; }
+.card--repo .card-note {
+  font-size: var(--fs-sm); color: var(--c-muted);
+  margin-top: var(--space-sm); padding-top: var(--space-sm);
+  border-top: 1px solid var(--c-divider); line-height: 1.6;
+}
+
+/* ── .card--news 新闻 ── */
+.card--news .card-row {
+  display: flex; justify-content: space-between;
+  align-items: flex-start; gap: var(--space-md); flex-wrap: wrap;
+}
+.card--news .card-title { font-size: var(--fs-md); font-weight: var(--fw-bold); line-height: 1.4; flex: 1; }
+.card--news .card-title a { text-decoration: none; }
+.card--news .card-title a:hover { color: var(--c-accent); }
+.card--news .card-src { font-size: 11px; color: var(--c-muted); margin: 4px 0 var(--space-sm); }
+.card--news .card-src em { font-style: normal; color: var(--c-purple); }
+.card--news .card-body { font-size: 13px; line-height: 1.7; }
+.card--news .card-body b { color: var(--c-warn); }
+
+/* ── .card--product 产品 ── */
+.card--product { overflow: hidden; padding: 0; }
+.card--product .product-img {
+  width: 100%; height: 130px; object-fit: cover;
+  background: var(--c-divider); display: block;
+}
+.card--product .product-img.is-fallback {
+  display: flex; align-items: center; justify-content: center;
+  font-size: var(--fs-2xl); color: var(--c-muted);
+}
+.card--product .product-body { padding: var(--space-md) var(--space-lg); }
+.card--product .card-title { font-size: var(--fs-base); font-weight: var(--fw-bold); margin-bottom: 2px; }
+.card--product .card-title a { text-decoration: none; }
+.card--product .product-tagline { font-size: var(--fs-sm); color: var(--c-muted); }
+.card--product .product-why { font-size: var(--fs-sm); color: var(--c-good); margin-top: var(--space-sm); line-height: 1.5; }
+
+/* ── 标签行 ── */
+.tag-row { display: flex; gap: var(--space-xs); flex-wrap: wrap; margin-top: var(--space-sm); }
+.tag {
+  font-size: var(--fs-xs); padding: 2px 7px; border-radius: var(--r-md);
+  color: var(--c-purple); background: rgba(210,168,255,0.1);
+  border: 1px solid rgba(210,168,255,0.2);
+}
+
+/* ═══════════════════════════════════════
+   LAYER 5: INTERACTIVE COMPONENTS
+   ═══════════════════════════════════════ */
+
+/* ── 外链按钮 ── */
+.btn-source {
+  display: inline-flex; align-items: center; gap: 3px;
+  font-size: var(--fs-xs); color: var(--c-accent); text-decoration: none;
+  padding: 2px var(--space-sm); border: 1px solid var(--c-border);
+  border-radius: var(--r-lg); transition: all var(--t-base); white-space: nowrap;
+}
+.btn-source:hover { background: var(--c-highlight); border-color: var(--c-accent); color: var(--c-accent); }
+
+/* ── 主题切换按钮 ── */
+.btn-theme {
+  font-size: var(--fs-sm); color: var(--c-muted);
+  background: var(--c-surface); border: 1px solid var(--c-border);
+  border-radius: var(--r-xl); padding: 4px var(--space-md);
+  cursor: pointer; transition: all var(--t-base);
+}
+.btn-theme:hover { color: var(--c-accent); border-color: var(--c-accent); }
+
+/* ── 折叠组件 ── */
+.collapse-trigger {
+  font-size: 11px; color: var(--c-accent);
+  background: none; border: none; cursor: pointer;
+  padding: var(--space-xs) 0; margin-top: var(--space-sm);
+  display: inline-flex; align-items: center; gap: 4px;
+  transition: opacity var(--t-base);
+  font-family: var(--font-sans);
+}
+.collapse-trigger:hover { opacity: .7; }
+.collapse-trigger .icon-chevron { display: inline-block; transition: transform var(--t-base); font-size: 10px; }
+.collapse-trigger.is-open .icon-chevron { transform: rotate(180deg); }
+
+.collapse-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--t-base);
+  margin-top: var(--space-sm);
+}
+.collapse-panel.is-open { grid-template-rows: 1fr; }
+.collapse-panel-inner { overflow: hidden; }
+.collapse-panel-inner .en-block {
+  color: var(--c-muted); font-size: var(--fs-sm); line-height: 1.7;
+  margin-bottom: var(--space-sm); padding: var(--space-sm) var(--space-md);
+  background: var(--c-bg); border-radius: var(--r-sm);
+  border-left: 2px solid var(--c-divider);
+}
+.collapse-panel-inner .zh-block {
+  color: var(--c-text); font-size: 13px; line-height: 1.7;
+}
+.collapse-panel-inner .zh-block::before {
+  content: '📝 中文解读';
+  font-size: var(--fs-xs); color: var(--c-accent);
+  text-transform: uppercase; letter-spacing: 1px;
+  display: block; margin-bottom: var(--space-xs);
+}
+.collapse-divider { border: none; border-top: 1px solid var(--c-divider); margin-top: var(--space-sm); }
+
+/* ── 回到顶部 ── */
+.back-top {
+  position: fixed; bottom: var(--space-xl); right: var(--space-xl);
+  width: 40px; height: 40px; border-radius: var(--r-full);
+  background: var(--c-surface); border: 1px solid var(--c-border);
+  color: var(--c-muted); cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: var(--fs-lg); z-index: 99;
+  opacity: 0; transform: translateY(10px);
+  pointer-events: none;
+  transition: opacity var(--t-base), transform var(--t-base), border-color var(--t-base), color var(--t-base);
+}
+.back-top.is-visible { opacity: 1; transform: translateY(0); pointer-events: all; }
+.back-top:hover { border-color: var(--c-accent); color: var(--c-accent); }
+
+/* ── 星数徽章 ── */
+.badge-star {
+  font-size: var(--fs-sm); color: var(--c-good); font-weight: var(--fw-bold);
+  background: var(--c-badge-g); padding: 3px 10px; border-radius: var(--r-md);
+  white-space: nowrap; text-align: center;
+}
+.badge-trend {
+  font-size: var(--fs-xs); color: var(--c-warn);
+  background: var(--c-badge-w); padding: 2px 7px; border-radius: var(--r-md);
+  margin-left: var(--space-xs);
+}
+
+/* ── 图片加载失败回退 ── */
+img.is-broken { display: none !important; }
+img.is-broken + .img-fallback {
+  display: flex !important;
+  align-items: center; justify-content: center;
+  font-size: var(--fs-2xl); color: var(--c-muted);
+}
+
+/* ── 产品网格 ── */
+.product-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-md);
+}
+@media (max-width: 640px) { .product-grid { grid-template-columns: 1fr; } }
+
+/* ── 骨架屏（可选预留） ── */
+@keyframes shimmer { 0% { background-position: -400px 0; } 100% { background-position: 400px 0; } }
+.skeleton {
+  background: linear-gradient(90deg, var(--c-surface) 25%, var(--c-surface2) 50%, var(--c-surface) 75%);
+  background-size: 800px 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: var(--r-md);
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════ TOPBAR ═══════════ -->
+<nav class="topbar" aria-label="页面导航">
+  <span class="topbar-logo">🔭 科技日报</span>
+  <div class="topbar-nav">
+    <a href="#headline">头条</a>
+    <a href="#github">GitHub</a>
+    <a href="#intl">国际</a>
+    <a href="#cn">国内</a>
+    <a href="#products">新品</a>
+    <a href="#saibo">赛博禅心</a>
+  </div>
+  <button class="btn-theme" id="themeToggle" title="切换亮色/暗色模式">🌓 主题</button>
+</nav>
+
+<!-- ═══════════ HEADER ═══════════ -->
+<header class="header">
+  <h1 class="header-date-zh">{{DATE_ZH}}</h1>
+  <p class="header-date-en">{{DATE_EN}}</p>
+  <p class="header-sources">数据来源 — GitHub · Hacker News · 量子位 · 品玩 · 36氪 · Product Hunt · 赛博禅心</p>
+  <div class="header-stats">
+    <span class="stat-pill">📦 {{COUNT_GITHUB}} 个开源项目</span>
+    <span class="stat-pill">📰 {{COUNT_NEWS}} 条要闻</span>
+    <span class="stat-pill">🚀 {{COUNT_PRODUCTS}} 款新品</span>
+  </div>
+</header>
+
+<!-- ═══════════ BANNER ═══════════ -->
+<section class="card card--banner" id="headline" aria-label="头版头条">
+  <p class="card-label">📌 头版头条</p>
+  {{HEADLINE}}
+</section>
+
+<!-- ═══════════ GITHUB ═══════════ -->
+<section class="section" id="github" aria-label="GitHub 本周之星">
+  <h2 class="section-head">🔥 GitHub 本周之星 <span class="count">· {{COUNT_GITHUB}} projects</span></h2>
+  {{GITHUB_ITEMS}}
+</section>
+
+<!-- ═══════════ 国际要闻 ═══════════ -->
+<section class="section" id="intl" aria-label="国际科技要闻">
+  <h2 class="section-head">🌏 国际科技要闻 <span class="count">· {{COUNT_INTL}} stories</span></h2>
+  {{INTL_ITEMS}}
+</section>
+
+<!-- ═══════════ 国内要闻 ═══════════ -->
+<section class="section" id="cn" aria-label="国内科技要闻">
+  <h2 class="section-head">🇨🇳 国内科技要闻 <span class="count">· {{COUNT_CN}} stories</span></h2>
+  {{CN_ITEMS}}
+</section>
+
+<!-- ═══════════ AI 新品 ═══════════ -->
+<section class="section" id="products" aria-label="今日 AI 新品">
+  <h2 class="section-head">💡 今日 AI 新品 <span class="count">· {{COUNT_PRODUCTS}} launches</span></h2>
+  <div class="product-grid">{{PRODUCT_ITEMS}}</div>
+</section>
+
+<!-- ═══════════ 赛博禅心 ═══════════ -->
+<section class="section" id="saibo" aria-label="赛博禅心今日推文">
+  <h2 class="section-head">🖊️ 赛博禅心 · 今日推文</h2>
+  {{SAIBO_ITEMS}}
+</section>
+
+<!-- ═══════════ FOOTER ═══════════ -->
+<footer class="footer">
+  由 Hanako 自动生成 · 每日 08:00 · 数据来源见各条目链接 · D:\Hanako\日报\
+</footer>
+
+<!-- ═══════════ BACK TO TOP ═══════════ -->
+<button class="back-top" id="backTop" aria-label="回到顶部" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<!-- ═══════════════════════════════════════
+     LAYER 6: JAVASCRIPT MODULES
+     ═══════════════════════════════════════ -->
+<script>
+;(function(){
+'use strict';
+
+/* ─────────────────────────────────────
+   Module A: ThemeController
+   管理亮色/暗色切换，持久化到 localStorage
+   ───────────────────────────────────── */
+const ThemeController = {
+  KEY: 'techdaily-theme',
+  init() {
+    const saved = localStorage.getItem(this.KEY);
+    if (saved) document.documentElement.setAttribute('data-theme', saved);
+    document.getElementById('themeToggle').addEventListener('click', () => this.toggle());
+  },
+  toggle() {
+    const h = document.documentElement;
+    const next = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    h.setAttribute('data-theme', next);
+    localStorage.setItem(this.KEY, next);
+  }
+};
+
+/* ─────────────────────────────────────
+   Module B: ScrollSpy
+   监听滚动位置，高亮对应导航项
+   ───────────────────────────────────── */
+const ScrollSpy = {
+  init() {
+    this.sections = document.querySelectorAll('.section[id], .card--banner[id]');
+    this.links = document.querySelectorAll('.topbar-nav a');
+    this._onScroll = () => this.update();
+    window.addEventListener('scroll', this._onScroll, { passive: true });
+  },
+  update() {
+    let current = '';
+    const offset = 100;
+    this.sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - offset) current = s.id;
+    });
+    this.links.forEach(a => {
+      a.classList.toggle('is-active', a.getAttribute('href') === '#' + current);
+    });
+  }
+};
+
+/* ─────────────────────────────────────
+   Module C: CollapseController
+   委托式折叠面板管理，支持动画
+   ───────────────────────────────────── */
+const CollapseController = {
+  init() {
+    document.addEventListener('click', e => {
+      const trigger = e.target.closest('.collapse-trigger');
+      if (!trigger) return;
+      const targetId = trigger.getAttribute('aria-controls');
+      if (!targetId) return;
+      const panel = document.getElementById(targetId);
+      if (!panel) return;
+
+      const isOpen = panel.classList.toggle('is-open');
+      trigger.classList.toggle('is-open', isOpen);
+      trigger.setAttribute('aria-expanded', isOpen);
+      trigger.querySelector('.icon-text') && (
+        trigger.querySelector('.icon-text').textContent = isOpen ? '收起' : '展开原文与翻译'
+      );
+    });
+  }
+};
+
+/* ─────────────────────────────────────
+   Module D: BackToTop
+   回到顶部按钮的显示/隐藏
+   ───────────────────────────────────── */
+const BackToTop = {
+  init() {
+    this.btn = document.getElementById('backTop');
+    this._onScroll = () => {
+      this.btn.classList.toggle('is-visible', window.scrollY > 400);
+    };
+    window.addEventListener('scroll', this._onScroll, { passive: true });
+  }
+};
+
+/* ─────────────────────────────────────
+   Module E: ImageFallback
+   图片加载失败时隐藏，避免显示裂图
+   ───────────────────────────────────── */
+const ImageFallback = {
+  init() {
+    document.querySelectorAll('img').forEach(img => {
+      img.addEventListener('error', () => img.classList.add('is-broken'));
+    });
+  }
+};
+
+/* ─────────────────────────────────────
+   Bootstrap
+   ───────────────────────────────────── */
+ThemeController.init();
+ScrollSpy.init();
+CollapseController.init();
+BackToTop.init();
+ImageFallback.init();
+
+})();
+</script>
+
+</body>
+</html>

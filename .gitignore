@@ -19,7 +19,19 @@ Thumbs.db
 *.key
 *.pem
 
+# Large files
+*.pptx
+*.jpg
+*.png
+*.mp3
+*.wav
+podcast_audio/
+
+# NPM bundles
+*.bundle.cjs
+
 # Temp
 tmp/
 temp/
 *.tmp
+*.json

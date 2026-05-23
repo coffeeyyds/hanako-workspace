@@ -1,0 +1,63 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  background: #0a0e14;
+  color: #bfc7d5;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #12171f;
+}
+::-webkit-scrollbar-thumb {
+  background: #1e2a3a;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #2a3a4a;
+}
+
+/* Number formats */
+.mono-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Grid card styles */
+.dashboard-card {
+  background: #12171f;
+  border: 1px solid #1e2a3a;
+  border-radius: 8px;
+  padding: 16px;
+  overflow: hidden;
+}
+.dashboard-card:hover {
+  border-color: #2a3a4a;
+}
+
+.card-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: #5c6e80;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 12px;
+}
+
+/* Price colors */
+.price-up { color: #00d4aa; }
+.price-down { color: #ff4757; }
+.price-flat { color: #bfc7d5; }
