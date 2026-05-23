@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>金融看板 · 2026-05-23</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; background: #f5f0eb; color: #2c2c2c; padding: 40px 20px; }
+.container { max-width: 800px; margin: 0 auto; }
+.header { text-align: center; padding: 40px 0; }
+.header h1 { font-size: 2em; font-weight: 300; letter-spacing: 4px; color: #1a1a1a; }
+.header .date { color: #999; font-size: 0.9em; margin-top: 8px; }
+.header .source { color: #bbb; font-size: 0.75em; margin-top: 4px; }
+table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 20px rgba(0,0,0,0.06); }
+th { background: #1a1a1a; color: #fff; font-weight: 400; padding: 14px 16px; text-align: left; font-size: 0.85em; letter-spacing: 1px; }
+td { padding: 14px 16px; border-bottom: 1px solid #f0ebe3; font-size: 0.95em; }
+tr:last-child td { border-bottom: none; }
+.price { font-weight: 600; font-variant-numeric: tabular-nums; }
+.up { color: #c0392b; font-weight: 600; }
+.down { color: #27ae60; font-weight: 600; }
+.err { color: #ccc; font-style: italic; }
+.footer { text-align: center; margin-top: 40px; color: #bbb; font-size: 0.8em; }
+.footer a { color: #999; text-decoration: none; }
+</style>
+</head>
+<body>
+<div class="container">
+<div class="header">
+    <h1>📊 金融看板</h1>
+    <div class="date">2026-05-23 · 近5日趋势</div>
+    <div class="source">数据来源：新浪财经 · 由 Hanako 自动生成</div>
+</div>
+<table>
+    <thead><tr><th>代码</th><th>名称</th><th>最新价</th><th>日涨跌</th><th>换手率</th></tr></thead>
+    <tbody><tr>
+                <td>600519</td><td>贵州茅台</td>
+                <td class="price">1290.20</td>
+                <td class="down">-1.59%</td>
+                <td>0.0039%</td>
+            </tr><tr>
+                <td>000858</td><td>五粮液</td>
+                <td class="price">84.03</td>
+                <td class="down">-1.55%</td>
+                <td>0.0067%</td>
+            </tr><tr>
+                <td>300750</td><td>宁德时代</td>
+                <td class="price">411.16</td>
+                <td class="down">-0.11%</td>
+                <td>0.0065%</td>
+            </tr><tr>
+                <td>601318</td><td>中国平安</td>
+                <td class="price">53.68</td>
+                <td class="down">-0.15%</td>
+                <td>0.0063%</td>
+            </tr><tr>
+                <td>000001</td><td>平安银行</td>
+                <td class="price">10.68</td>
+                <td class="down">-0.19%</td>
+                <td>0.0049%</td>
+            </tr><tr><td>510300</td><td>沪深300ETF</td><td colspan="3" class="err">数据获取失败</td></tr></tbody>
+</table>
+<div class="footer">
+    <p>由 <a href="https://github.com/coffeeyyds/hanako-workspace">Hanako</a> 自动生成 · 数据仅供参考</p>
+</div>
+</div>
+</body>
+</html>
