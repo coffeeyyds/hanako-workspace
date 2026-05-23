@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="手帳日报 · 手帐圈每日资讯看板 —— 覆盖日本、韩国、国内新品速递、深度评测与趋势洞察，每天懂一点手帐圈。">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:;">
+<title>📒 手帳日报 · 手帐圈每日看板</title>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;600;700&display=swap"></noscript>
+<style>
+:root{--p:#faf5eb;--p2:#f2ece0;--c:#fffef9;--l:#e2d6c0;--l2:#d4c8ad;--i:#3d3226;--i2:#6b5d4b;--i3:#a0937d;--pk:#e8a0a0;--bl:#7b9eae;--mt:#8db5a0;--yl:#e0c97f;--lv:#b8a9c9;--wpk:#f2d5d5;--wbl:#c5d9e0;--wmt:#c8dfd3;--wyl:#f3e5b0;--sh:0 2px 16px rgba(60,40,20,.05);--sh2:0 4px 24px rgba(60,40,20,.1);--r:16px;--rs:10px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Noto Serif SC','STSong','Songti SC','SimSun',serif;background:#f2ece0;background-image:radial-gradient(ellipse at 20% 5%,rgba(180,160,140,.12) 0%,transparent 50%),radial-gradient(ellipse at 80% 95%,rgba(200,170,140,.08) 0%,transparent 50%);color:var(--i);min-height:100vh;display:flex;justify-content:center;-webkit-font-smoothing:antialiased}
+.app{width:100%;max-width:480px;background:var(--p);min-height:100vh;position:relative;overflow-x:hidden;box-shadow:0 0 80px rgba(80,50,20,.06)}
+@media(min-width:481px){body{padding:20px 0}.app{border-radius:22px;min-height:calc(100vh - 40px)}}
+.hd{padding:18px 20px 10px;position:sticky;top:0;z-index:100;background:linear-gradient(180deg,var(--p) 80%,rgba(250,245,235,.94) 95%,transparent);backdrop-filter:blur(8px)}
+.hd-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.hd-logo{font-size:21px;font-weight:700;letter-spacing:2px;display:flex;align-items:center;gap:4px}
+.hd-date{font-size:12px;color:var(--i3);letter-spacing:1px}
+.hd-div{height:4px;background:repeating-linear-gradient(90deg,var(--wpk) 0,var(--wpk) 22px,var(--wbl) 22px,var(--wbl) 40px,var(--wmt) 40px,var(--wmt) 56px,var(--wyl) 56px,var(--wyl) 72px);border-radius:2px;margin-top:6px;opacity:.65}
+.scene{display:none;padding:0 16px 80px}.scene.active{display:block}
+.back-btn{display:inline-flex;align-items:center;gap:4px;padding:5px 12px;border-radius:18px;border:1.5px solid var(--l);background:var(--c);color:var(--i2);font-size:11px;cursor:pointer;letter-spacing:.5px;transition:all .2s;flex-shrink:0}
+.back-btn:active{transform:scale(.95);background:var(--p2)}
+.ft{text-align:center;padding:18px;font-size:10px;color:var(--i3);letter-spacing:1px}.ft-div{width:50px;height:2px;background:var(--l);margin:0 auto 8px;border-radius:1px}
+.bt{position:fixed;bottom:22px;right:calc(50% - 222px);width:38px;height:38px;border-radius:50%;background:var(--c);border:1px solid var(--l);box-shadow:var(--sh);display:flex;align-items:center;justify-content:center;font-size:16px;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .3s;z-index:50}.bt.v{opacity:1;pointer-events:auto}
+.hero{padding:8px 16px 12px;text-align:center}.hero h2{font-size:15px;font-weight:400;color:var(--i2);letter-spacing:1px;margin-bottom:2px}.hero p{font-size:11px;color:var(--i3);letter-spacing:.5px}
+.nav-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:4px 16px 20px}
+.nav-card{background:var(--c);border-radius:var(--r);padding:22px 16px 18px;box-shadow:var(--sh);cursor:pointer;transition:all .22s;position:relative;overflow:hidden;border:1px solid rgba(200,180,150,.15);text-align:center;display:flex;flex-direction:column;align-items:center;gap:8px}
+.nav-card:active{transform:scale(.96)}.nav-card .nc-ico{font-size:36px;line-height:1}.nav-card .nc-ttl{font-size:15px;font-weight:700;color:var(--i);letter-spacing:1px}.nav-card .nc-cnt{font-size:10px;color:var(--i3);background:var(--p2);padding:3px 10px;border-radius:10px}.nav-card .nc-desc{font-size:11px;color:var(--i2);line-height:1.5}
+.nav-card.nc-new{--accent:var(--pk)}.nav-card.nc-review{--accent:var(--bl)}.nav-card.nc-jp{--accent:#e8833a}.nav-card.nc-cn{--accent:#e6162d}.nav-card.nc-kr{--accent:#6a5acd}.nav-card.nc-all{--accent:var(--i)}
+.nav-card::after{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--accent);border-radius:0 0 2px 2px;opacity:.6}
+.stats{display:flex;gap:8px;padding:4px 16px 10px;overflow-x:auto;scrollbar-width:none;justify-content:center}.stats::-webkit-scrollbar{display:none}
+.sc{padding:5px 12px;border-radius:16px;font-size:11px;white-space:nowrap;letter-spacing:.5px}
+.sc.nc-new{background:#fce8e8;color:#a04040}.sc.nc-review{background:#e0ecf2;color:#4a6b7a}.sc.nc-jp{background:#fde8d5;color:#b06020}.sc.nc-cn{background:#fce8ea;color:#b0303a}.sc.nc-kr{background:#ece8f7;color:#5a4a7a}
+.list-header{padding:0 16px 12px;display:flex;align-items:center;gap:8px}.list-header .lh-ico{font-size:28px}.list-header .lh-info{flex:1}.list-header .lh-ttl{font-size:18px;font-weight:700;letter-spacing:1px}.list-header .lh-sub{font-size:11px;color:var(--i3);letter-spacing:.5px}
+.feed{display:flex;flex-direction:column;gap:12px}
+.cd{background:var(--c);border-radius:var(--r);padding:15px 17px;box-shadow:var(--sh);cursor:pointer;transition:all .22s;position:relative;overflow:hidden;border:1px solid rgba(200,180,150,.15)}
+.cd::before{content:'';position:absolute;left:0;top:14px;bottom:14px;width:3px;border-radius:2px;opacity:.45}
+.cd.t-new::before{background:var(--pk)}.cd.t-review::before{background:var(--bl)}.cd.t-jp::before{background:#e8833a}.cd.t-cn::before{background:#e6162d}.cd.t-kr::before{background:#6a5acd}.cd.t-inspo::before{background:var(--lv)}.cd.t-event::before{background:var(--yl)}
+.cd:active{transform:scale(.985)}
+.cd-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:7px}
+.cd-src{display:flex;align-items:center;gap:5px;font-size:10px;color:var(--i3);letter-spacing:.5px}
+.cd-av{width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#fff;flex-shrink:0}
+.av-wad{background:#5b7b8a}.av-gs{background:#3d4a55}.av-moi{background:#6b5b7b}.av-tf{background:#c17d3a}.av-kok{background:#c41e2a}.av-md{background:#5a7d4a}.av-wb{background:#e6162d}.av-xhs{background:#fe2c55}.av-bl{background:#fb7299}.av-hobo{background:#e8833a}.av-mt{background:#c8a45c}.av-pl{background:#1a3a5c}.av-ooh{background:#d4a0a0}.av-ico{background:#6b8eaa}.av-mot{background:#8b6b5a}
+.cd-badge{font-size:9px;padding:2px 9px;border-radius:10px;letter-spacing:.5px;font-weight:600}
+.bd-new{background:#fce8e8;color:#a04040}.bd-review{background:#e0ecf2;color:#4a6b7a}.bd-jp{background:#fde8d5;color:#b06020}.bd-cn{background:#fce8ea;color:#b0303a}.bd-kr{background:#ece8f7;color:#5a4a7a}.bd-inspo{background:#f3ecf7;color:#6a5a7a}.bd-event{background:#faf0d7;color:#8a7030}
+.cd-title{font-size:15px;font-weight:700;line-height:1.5;margin-bottom:5px}
+.cd-desc{font-size:12px;line-height:1.65;color:var(--i2);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.cd-img{width:100%;height:150px;object-fit:cover;border-radius:var(--rs);margin-top:9px;background:var(--p2);aspect-ratio:3/2}
+.cd-foot{display:flex;align-items:center;justify-content:space-between;margin-top:8px;font-size:10px;color:var(--i3)}
+.cd-lang{font-size:9px;padding:2px 7px;border-radius:7px;background:var(--p2);color:var(--i3)}
+.emp{text-align:center;padding:50px 20px;color:var(--i3)}.emp-emoji{font-size:42px;margin-bottom:10px;opacity:.5}.emp-txt{font-size:13px;letter-spacing:1px}
+.mo{position:fixed;inset:0;background:rgba(40,30,20,.5);z-index:200;display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s}.mo.on{opacity:1;pointer-events:auto}
+.ms{width:100%;max-width:480px;max-height:92vh;background:var(--c);border-radius:24px 24px 0 0;display:flex;flex-direction:column;transform:translateY(100%);transition:transform .38s cubic-bezier(.32,.72,0,1);overflow:hidden}.mo.on .ms{transform:translateY(0)}
+.ms-handle{width:36px;height:5px;background:var(--l);border-radius:3px;margin:10px auto 4px;flex-shrink:0}
+.ms-scroll{overflow-y:auto;-webkit-overflow-scrolling:touch;padding:0 20px 30px}
+.ms-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.ms-src{display:flex;align-items:center;gap:7px;font-size:11px;color:var(--i3)}
+.ms-close{width:30px;height:30px;border-radius:50%;border:1px solid var(--l);background:none;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--i2);flex-shrink:0}
+.ms-ttl{font-size:18px;font-weight:700;line-height:1.5;margin-bottom:8px}.ms-img{width:100%;max-height:210px;object-fit:cover;border-radius:var(--rs);margin-bottom:12px;background:var(--p2);aspect-ratio:4/3}
+.ms-sec{font-size:10px;font-weight:700;letter-spacing:2px;color:var(--i3);margin:16px 0 6px;text-transform:uppercase;padding-bottom:3px;border-bottom:1px dashed var(--l);display:flex;align-items:center;gap:6px}
+.ms-summary{font-size:14px;line-height:1.85;color:var(--i);text-align:justify;background:#fdf9f2;padding:14px;border-radius:var(--rs);border:1px solid var(--l)}
+.ms-full{font-size:13px;line-height:1.9;color:var(--i);text-align:justify}.ms-full p{margin-bottom:10px}
+.ms-orig{font-size:12px;line-height:1.7;color:var(--i2);background:var(--p2);padding:13px;border-radius:var(--rs);font-style:italic;white-space:pre-wrap}
+.ms-link{display:block;margin-top:12px;padding:11px;text-align:center;border-radius:var(--rs);background:var(--i);color:#fff;text-decoration:none;font-size:12px;letter-spacing:1px;font-weight:600;transition:opacity .2s}.ms-link:active{opacity:.8}
+.ms-meta{text-align:center;margin-top:8px;font-size:10px;color:var(--i3)}
+.src-tag{display:inline-block;font-size:9px;padding:2px 7px;border-radius:7px;margin-left:4px}.src-tag.scraped{background:#e5efe8;color:#3a6a45}.src-tag.partial{background:#faf0d7;color:#8a7030}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}.sr-only:focus{position:static;width:auto;height:auto;margin:0;overflow:visible;clip:auto;white-space:normal;padding:10px 20px;background:var(--i);color:#fff;font-size:13px;text-decoration:none;display:block;text-align:center;z-index:9999}
+</style>
+</head>
+<body>
+<a href="#scHome" class="sr-only">跳转到主要内容</a>
+<div class="app" id="app">
+<div class="hd"><div class="hd-row"><button class="back-btn" id="backBtn" onclick="showHome()" style="display:none">← 首页</button><div class="hd-logo">📒 手帳日报</div><div class="hd-date" id="hdDate"></div></div><div class="hd-div"></div></div>
+
+<!-- 第1层：首页导航 -->
+<div class="scene active" id="scHome">
+<div class="hero"><h2>今天想看点什么呢？</h2><p>选一个板块，开始探索手帐圈 <span class="src-tag scraped">实时抓取</span></p></div>
+<div class="nav-grid">
+<div class="nav-card nc-all" onclick="showList('all')"><span class="nc-ico">📋</span><span class="nc-ttl">全部资讯</span><span class="nc-cnt">25篇</span><span class="nc-desc">今日手帐圈<br>一网打尽</span></div>
+<div class="nav-card nc-new" onclick="showList('new')"><span class="nc-ico">🆕</span><span class="nc-ttl">新品速递</span><span class="nc-cnt">11篇</span><span class="nc-desc">Mark's EDiT回归<br>Lamy限定·TN卡片</span></div>
+<div class="nav-card nc-review" onclick="showList('review')"><span class="nc-ico">📝</span><span class="nc-ttl">深度评测</span><span class="nc-cnt">5篇</span><span class="nc-desc">照片打印机·弘典M1<br>墨水·年终复盘</span></div>
+<div class="nav-card nc-jp" onclick="showList('jp')"><span class="nc-ico">🇯🇵</span><span class="nc-ttl">日本直击</span><span class="nc-cnt">9篇</span><span class="nc-desc">TN20周年·水縞联名<br>卡尺寸·父亲节礼盒</span></div>
+<div class="nav-card nc-cn" onclick="showList('cn')"><span class="nc-ico">🇨🇳</span><span class="nc-ttl">国内精选</span><span class="nc-cnt">3篇</span><span class="nc-desc">手帐集市·微博精选<br>BuJo五年反思</span></div>
+<div class="nav-card nc-kr" onclick="showList('kr')"><span class="nc-ico">🇰🇷</span><span class="nc-ttl">韩国潮流</span><span class="nc-cnt">2篇</span><span class="nc-desc">Slow Journaling<br>韩系新品趋势</span></div>
+</div>
+<div class="stats" id="stats"></div>
+<div class="ft"><div class="ft-div"></div>手帳日报 · 每天懂一点手帐圈</div>
+</div>
+
+<!-- 第2层：列表页 -->
+<div class="scene" id="scList">
+<div class="list-header"><span class="lh-ico" id="lhIco"></span><div class="lh-info"><div class="lh-ttl" id="lhTtl"></div><div class="lh-sub" id="lhSub"></div></div></div>
+<div class="feed" id="feed"></div>
+<div class="ft" style="padding-top:10px"><div class="ft-div"></div>手帳日报 · 每天懂一点手帐圈</div>
+</div>
+</div>
+<div class="mo" id="mo"><div class="ms" id="ms"><div class="ms-handle"></div><div class="ms-scroll" id="msSc"></div></div></div>
+<div class="bt" id="bt" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</div>
+
+<script>
+// ═════════════════════ 实时数据 ═════════════════════
+// 抓取时间: 2026-05-22 · 源: web_fetch + browser · v5 🔥今日更新
+const D = [
+// ── 🆕 新品速递 ──
+// 🔥 今日新增 (5/22)
+{id:0,cat:"new",title:"🔥 Mark's EDiT 笔记本全线回归！Ana称为「Tomoe River替代品」",src:{n:"The Well-Appointed Desk",k:"wad",l:"EN"},badge:"今日新增",badgeCls:"bd-new",time:"2026-05-22",img:"https://i0.wp.com/www.wellappointeddesk.com/wp-content/uploads/2026/05/all-sizes.jpg",link:"https://www.wellappointeddesk.com/",region:"us",
+desc:"手帐圈重磅！WAD今日头版：Mark's EDiT笔记本A5/B6/B7全线补货。320页·52.3g纸·钢笔友好·彩色透明封面。Ana称其为「我的Tomoe River替代品」——I know, them's fightin' words!",
+summary:"The Well-Appointed Desk今天头版头条：Mark's EDiT笔记本终于在WAD商店补货了！A5、B6和B7 Semi三个尺寸全部到货，配套彩色透明封面和替换内芯同步发售。\n\n这是去年Ana在DC Pen Show上通过Pilot USA盲测试纸发现的宝藏——52.3g/m²的「NEO AGENDA for EDiT」纸张，薄如Tomoe River但比52g TR更滑顺，钢笔书写完全不洇不背透。320页的惊人容量装在一个轻薄的笔记本里。Ana在评测中写道：「I don't think there's higher praise——这本小本子改变了我的生活。」\n\n彩色塑料封面带透明拉链口袋——可以塞贴纸、名片和ephemera。Ana同步上架了Retro Rainbow复古彩虹贴纸系列（10款不同颜色主题的复古图案：鸟、花、打字机…还有果冻）。",
+full:"【实时抓取】The Well-Appointed Desk 2026年5月22日头版\n\n🔥 Mark's EDiT 笔记本全线回归 WAD 商店！\n\n📓 尺寸：A5 / B6 / B7 Semi\n📄 纸张：Mark's 原创「NEO AGENDA for EDiT」52.3g/m²\n📄 页数：320页\n📄 装订：线装+书脊胶带（可180°平摊）\n📄 网格：5mm淡灰色\n📄 封面：牛皮纸+彩色塑料保护套（带透明拉链口袋）\n\n🖋 钢笔表现：\n• Ana的评价：「a little smoother than your average Tomoe River 52gsm」——比普通巴川纸更顺滑\n• 普通书写：零洇墨、极小背透、无羽化\n• Sheen表现待测（Ana忘记测了——「you know, for science」）\n• 定位：Ana称其为「my go-to alternative to Tomoe River」（Tomoe River替代品首选）\n\n📖 Ana的B7评测回顾（2025年10月）：\n• 在DC Pen Show上通过Pilot USA的盲测试纸接触到EDiT\n• B7 Semi尺寸（70×120mm）像手掌大小的「反手机工具」——想刷Instagram时就掏出它来写brainstorm和待办\n• 「I was not expecting it to revolutionize my life but I think it did. I don't think there's higher praise, do you?」\n• Pilot USA将从2026年开始在美国分销Mark's EDiT\n\n🛍 WAD商店同步上架：Retro Rainbow 复古彩虹贴纸系列——10款不同颜色主题，每款含鸟、花、打字机等古怪复古图案。",
+orig:"The big news this week: Mark's EDiT notebooks are finally back in stock! A5, B6 and B7 Semi-sized notebooks with clear covers. These notebooks feature amazing fountain pen-friendly paper and 320 sheets per book. 'I know! Them's fightin' words!' — referring to calling it her go-to alternative to Tomoe River."},
+{id:-1,cat:"new",title:"Pilot Frixion Waai 可擦凝胶笔上线：0.5mm·8色可选·单支零售",src:{n:"The Gentleman Stationer",k:"gs",l:"EN"},badge:"今日新增",badgeCls:"bd-new",time:"2026-05-22",img:"",link:"https://www.gentlemanstationer.com/blog/2026/5/21/holiday-weekend-sale-take-10-off-paper-and-ink-using-tokyo10-at-checkout",region:"jp",
+desc:"GS今天更新：Pilot Frixion Waai可擦凝胶笔正式上线，0.5mm尖+8种颜色，单支零售。Frixion系列的可擦墨水技术——写错了用手擦掉重写，手帐er救星。",
+summary:"Gentleman Stationer今天更新了产品线，新增Pilot Frixion Waai可擦凝胶笔。这是Pilot Frixion系列的新成员——0.5mm笔尖配合经典的摩擦生热可擦技术，使用笔尾的橡胶头在字迹上摩擦即可消除。8种颜色可选，单支零售（不像部分系列只能整盒买）。对于手帐er来说，可擦笔意味着写错了不用涂改液或贴纸遮掩，直接擦掉重来——特别适合子弹笔记和待办清单这种需要频繁修改的场景。",
+full:"【实时抓取】The Gentleman Stationer 2026年5月22日更新\n\nPilot Frixion Waai 可擦凝胶笔\n✒️ 笔尖：0.5mm\n🎨 颜色：8色可选\n🛒 销售方式：单支零售\n🔧 技术：Pilot Frixion摩擦生热可擦墨水\n\nFrixion系列是手帐圈的经典工具——写错后不用涂改液，用笔尾橡胶头摩擦字迹即可消除。注意：不要用于重要文件归档（高温环境可能导致字迹消失），也不要在极端低温下使用（字迹可能复现）。",
+orig:"Pilot Frixion Waai Erasable Gel Pens. Now available individually, the Frixion Waai pens combine a .5mm tip with Pilot's erasable Frixion ink technology. We have up to 8 colors, all of which are available individually."},
+{id:-2,cat:"new",title:"TWSBI ECO Bahama Yellow 巴哈马黄限定色补货+Diamond 580补货",src:{n:"The Gentleman Stationer",k:"gs",l:"EN"},badge:"今日新增",badgeCls:"bd-new",time:"2026-05-22",img:"",link:"https://www.gentlemanstationer.com/blog/2026/5/21/holiday-weekend-sale-take-10-off-paper-and-ink-using-tokyo10-at-checkout",region:"jp",
+desc:"TWSBI人气限定色Bahama Yellow（巴哈马黄）ECO补货到仓！同时Diamond 580和ECO系列多个断货款也恢复库存。台湾三文堂活塞钢笔一直是手帐圈高性价比之选。",
+summary:"TWSBI（台湾三文堂）的ECO系列在手帐圈有「活塞钢笔入门之王」的称号。今天GS宣布Bahama Yellow巴哈马黄限定色ECO补货到仓——这款明黄色限定之前多次断货，二手市场一度溢价。同时补货的还有TWSBI Diamond 580和ECO系列中多个之前断货的款式和笔尖规格。\n\nTWSBI ECO以不到$35的价格提供活塞上墨+透明笔身+钢尖的配置，是手帐圈墨水试色和日常书写的高性价比选择。Bahama Yellow限定色尤其受追捧因为颜色太适合夏天。",
+full:"【实时抓取】The Gentleman Stationer 2026年5月22日更新\n\nTWSBI ECO Bahama Yellow 巴哈马黄限定色补货\n🖋 品牌：TWSBI（台湾三文堂）\n🖋 系列：ECO 活塞钢笔\n🖋 颜色：Bahama Yellow 巴哈马黄（限定色）\n🖋 特点：活塞上墨+透明笔身+钢尖，约$35\n\n同步补货：TWSBI Diamond 580 系列 + ECO 系列多个断货款和笔尖规格。\n\nTWSBI ECO是手帐圈口碑极佳的入门级活塞钢笔。Bahama Yellow限定色之前断货时二手价曾到$50+。",
+orig:"TWSBI ECO Bahama Yellow Restock. We've received a shipment of additional Bahama Yellow fountain pens, as well as more TWSBI Diamond 580 and ECOs in styles and nib sizes that have been out of stock."},
+{id:1,cat:"new",title:"Lamy Safari 2026限定色发布：霓虹粉 & 霓虹黄 全系列登场",src:{n:"The Gentleman Stationer",k:"gs",l:"EN"},badge:"实时抓取",badgeCls:"bd-new",time:"2026-05-22",img:"https://images.squarespace-cdn.com/content/v1/5349ba13e4b095a3fb0ba65c/3e4b006c-3156-4bc5-b518-4663ee7b942d/Lamy-Safari-Neons.jpg",link:"https://www.gentlemanstationer.com/blog/2026/5/21/holiday-weekend-sale-take-10-off-paper-and-ink-using-tokyo10-at-checkout",region:"jp",
+desc:"Lamy Safari 2026年度限定色正式发布：Neon Pink与Neon Yellow双色出击，覆盖钢笔(EF-M)、宝珠笔、圆珠笔和自动铅笔全产品线。Memorial Day促销纸墨10%OFF。",
+summary:"The Gentleman Stationer本周头号新闻：Lamy Safari 2026特别限定色Neon Pink和Neon Yellow正式到货。这是手帐圈每年最期待的「Safari限定季」——两款高饱和度的霓虹色，ABS树脂笔身+钢尖+标志性大回形针笔夹，覆盖钢笔（EF/F/M/B四尖）、宝珠笔、圆珠笔和自动铅笔全系列。GS同步开启Memorial Day长周末促销（至5/25），纸品和墨水10%OFF折扣码TOKYO10。博主透露他正在东京采购更多日本限定新品。",
+full:"【实时抓取】The Gentleman Stationer 2026年5月22日发布\n\nLamy Safari 2026年度特别限定色「Neon Pink 霓虹粉」和「Neon Yellow 霓虹黄」正式发布。Safari系列是德国Lamy的入门级主力钢笔，也是全球手帐圈最受欢迎的书写工具之一，每年的限定色发布堪比圈内盛事。\n\n全系列产品：钢笔（EF/F/M/B四种笔尖）、宝珠笔、圆珠笔、自动铅笔。采用轻量耐用的ABS树脂笔身，标志性大回形针笔夹，钢尖书写表现顺滑可靠。今年霓虹色饱和度极高，非常适合夏日手帐主题。\n\nGS同步公布了Memorial Day长周末促销：即日起至5月25日，纸品和墨水全线10% OFF，折扣码 TOKYO10。博主本人正在东京「actively looking for more」日本限定好货。",
+orig:"The new Lamy Safaris are here, in both Neon Pink and Neon Yellow! In addition to the fountain pens, we have the rollerballs and ballpoints and mechanical pencils. Through Monday evening (5/25), take 10% off Paper and Ink using 'TOKYO10' at checkout. I'm over here in Japan actively looking for more!"},
+{id:2,cat:"new",title:"本周新品大集合：Sarasa全线·Blackwing343·Lochby活页·Kaweco滚珠",src:{n:"The Gentleman Stationer",k:"gs",l:"EN"},badge:"实时抓取",badgeCls:"bd-new",time:"2026-05-22",img:"https://images.squarespace-cdn.com/content/v1/5349ba13e4b095a3fb0ba65c/e124b1ed-169a-4e4c-b81f-43417bb08a31/Tokyo-Sale-image.jpeg",link:"https://www.gentlemanstationer.com/blog/2026/5/21/holiday-weekend-sale-take-10-off-paper-and-ink-using-tokyo10-at-checkout",region:"jp",
+desc:"GS本周8款新品密集到仓：Zebra Sarasa Clip标准线全色20+色·Milk&Decoshine·Blackwing Vol.343·Lochby 6孔活页+Tomoe River内页·Kaweco Sport滚珠/圆珠笔·CDT皮革系列。",
+summary:"本周GS一口气上架了8款新品。1) Zebra Sarasa Clip凝胶笔标准版——超过20种颜色、0.3-0.7mm四种笔尖到齐；2) Sarasa Milk&Decoshine特殊系列——分别针对黑纸书写和珠光效果；3) Blackwing Volume 343铅笔——以经典电视测试图案为灵感，Extra-Firm石墨芯；4) Lochby Field Binder 6孔活页系统——搭配Tomoe River 68g内页，是年度最受关注的新形态笔记本；5) Lochby Field Sling A5收纳袋全色补货；6) Kaweco Sport滚珠笔和圆珠笔新上线；7) Craft Design Technology皮革收纳系列扩展。博主在东京采购更多新品中。",
+full:"【实时抓取】The Gentleman Stationer 本周新品完整清单（2026年5月22日发布）：\n\n1. Zebra Sarasa Clip凝胶笔标准版：超过20种墨水颜色+0.3/0.4/0.5/0.7mm四种笔尖\n2. Zebra Sarasa Milk&Decoshine：Milk系列适合黑纸书写，Decoshine珠光系列\n3. Blackwing Volume 343铅笔：经典电视测试图配色，Extra-Firm石墨芯\n4. Lochby Field Binder 6孔活页系统：可自由配置，配Tomoe River 68g内页\n5. Lochby Field Sling A5收纳袋：全色补货\n6. Kaweco Sport 滚珠笔&圆珠笔：经典口袋笔新品类\n7. Craft Design Technology 皮革收纳系列扩展\n8. 数千支凝胶笔也于近日到仓\n\n博主特别在最后提到：「I kind of wish I had brought one of these (Lochby Field Sling) with me to Tokyo as a secondary carry device.」",
+orig:"This week's drops: 1) Zebra Sarasa Clip Gel Pens 20+ colors, 4 tip sizes. 2) Sarasa Milk & Decoshine lines. 3) Blackwing Volume 343 Pencils - TV test pattern inspired, extra-firm graphite. 4) Lochby Field Binder 6-Ring with Tomoe River 68g refills. 5) Lochby Field Sling A5 back in stock. 6) Kaweco Sport Rollerballs & Ballpoints. 7) CDT Leather Cases expanded."},
+{id:3,cat:"new",title:"TN Card Size 20周年套装正式发售：手掌大小的TN新形态 ¥8,800",src:{n:"TRAVELER'S FACTORY",k:"tf",l:"JP"},badge:"实时抓取",badgeCls:"bd-new",time:"2026-03-24",img:"https://image.jimcdn.com/app/cms/image/transf/dimension=569x10000:format=jpg/path/s35c45e6d3395b2ad/image/id85d1b7aa8661074/version/1775554686/image.jpg",link:"https://www.travelers-factory.com/topics/2026/traveler-s-notebook-card-size-set-1/",region:"jp",
+desc:"Traveler's Notebook 20周年纪念推出全新Card Size（卡片尺寸）套装：110×75mm可放入牛仔裤口袋。含牛皮封面+4本MD内芯+棉质拉链袋+牛皮纸文件夹+连接绑带，¥8,800。4月23日发售。",
+summary:"这是TN诞生20年来首次推出全新的卡片尺寸（Card Size）。尺寸仅110×75mm——掌中大小，可以轻松塞进牛仔裤口袋。20周年套装包含：牛革封面（黑/茶两色，背面20周年Logo刻印）、4本MD用纸内芯（白2+奶油2）、棉质拉链袋（可兼做迷你钱包/名片夹）、牛皮纸文件夹、2条连接绑带和备用橡皮筋。定价¥8,800（约460元）。实体店采取事前抽选贩售（3/24-4/5已截止），但线上商店4/23直接发售无需抽选。",
+full:"【实时抓取】TRAVELER'S FACTORY官方发布（2026年3月24日）\n\nTRAVELER'S NOTEBOOK诞生20周年纪念之作——Card Size卡片尺寸套装。\n\n📐 规格：110×75mm（不含绑带）——比Regular小约40%\n👜 颜色：黑 / 茶 两种\n💰 价格：¥8,800（税込）\n📅 发售：2026年4月23日\n\n套装内容：\n• 01 コットンケース（棉质保护袋）\n• 02 牛革カバー（牛皮封面，20周年Logo背面刻印）\n• 03 ノートリフィル MD用紙ホワイト 無罫×2册\n• 04 ノートリフィル MD用紙クリーム 無罫×2册\n• 05 コットンジッパーケース（棉质拉链袋）\n• 06 クラフトファイル（牛皮纸文件夹）\n• 07 連結バンド×2\n• 08 スペアゴムバンド（备用橡皮筋）\n\n販売方式：实体店事前抽选（已截止）/ 线上商店4/23 11:00直接发售无需抽选。\n\nTN官方的文案写道：「20年前、最初にトラベラーズノートを手にしたときに感じた、何かがはじまりそうな予感を今でも鮮明に思い出すことができます。」",
+orig:"トラベラーズノート カードサイズ 20周年セット 黒 / 茶 8,800円（税込）。110×75mm。牛革カバー+MD用紙リフィル4冊+コットンジッパーケース+クラフトファイル+連結バンド2本+スペアゴム。4月23日発売。オンラインショップは抽選不要。"},
+{id:4,cat:"new",title:"TN Card Size专属配件：超迷你笔·彩铅套装·VICTORINOX工具",src:{n:"TRAVELER'S FACTORY",k:"tf",l:"JP"},badge:"实时抓取",badgeCls:"bd-new",time:"2026-04-22",img:"https://image.jimcdn.com/app/cms/image/transf/dimension=569x10000:format=jpg/path/s35c45e6d3395b2ad/image/ie507e6c4131427c3/version/1776422848/image.jpg",link:"https://www.travelers-factory.com/topics/2026/items-for-card-size/",region:"jp",
+desc:"TN为Card Size推出专属配件系列。9.1cm超极细铝制笔¥880、12色迷你彩铅套装¥550、VICTORINOX联名工具、卡片型菲涅尔透镜¥330等。4/23同步发售。",
+summary:"随Card Size同步发售的是一整套精心挑选的迷你配件。核心单品：オート手帳用ボールペン/シャープペン（全长仅9.1cm、重3g，附卡片型笔夹）¥880、ゼブラ手帳用ペン（10cm、稍粗但更好握）¥440、TF迷你彩铅12色套装（日本老铺铅笔厂制，含削笔器+橡皮）¥550、VICTORINOX Classic SD绿色联名军刀¥3,740、VICTORINOX折叠式指甲刀¥1,870、バーニングレンズ（菲涅尔透镜，可用于放大或野外取火）¥330、迷你卡片4款各¥198、以及黄铜吊坠和标签等。所有配件均设计为可放入Card Size的拉链袋中。",
+full:"【实时抓取】TRAVELER'S FACTORY官方发布（2026年4月22日）\n\nCard Size专属配件「トラベラーズノート カードサイズと一緒に使いたいアイテム」完整清单：\n\n✒️ オート 手帳用ボールペン / シャープペンシル 各¥880\n全长9.1cm·直径3.6mm·重3g——「決して書きやすいとは言えませんが」连官方都承认不是最好写的笔，但「存在を忘れそうになるほどのコンパクトさ」——小到你会忘记它的存在。附卡片型笔夹。\n\n✒️ ゼブラ 手帳用ボールペン / シャープペン 各¥440\n全长10cm·直径5.5mm——比オート稍粗但更好握，不锈钢简约设计。\n\n🎨 TF ミニカラーペンシル ¥550\n12色彩铅+削笔器+橡皮全套。45mm×4mm迷你尺寸，日本老铺铅笔厂制。\n\n🃏 TF ミニカード 4柄 各¥198\n登机牌/拼贴/航空邮件/旅行条纹四种图案。\n\n🔪 VICTORINOX クラシックSD メッセージ 緑 ¥3,740\n7功能瑞士军刀，58mm迷你尺寸。\n\n🔪 VICTORINOX ネイルクリッパー ¥1,870\n折叠式指甲刀，瑞士制造。\n\n🔍 バーニングレンズ ¥330\n菲涅尔透镜——可放大观察花草昆虫，也可野外聚光取火。\n\n🏷 TF チャーム / ブラスタグ ¥880-1,760",
+orig:"Card Size items: オート超極細ペン¥880(9.1cm/3g)、ゼブラ手帳用ペン¥440、TFミニカラーペンシル¥550(12色)、VICTORINOXクラシックSD¥3,740、ネイルクリッパー¥1,870、バーニングレンズ¥330、ミニカード各¥198、チャーム¥1,760。"},
+{id:5,cat:"new",title:"水縞×TN联名POP-UP：大人阅读日记+三年日记+缤纷纸手帐 5/13-6/8",src:{n:"TRAVELER'S FACTORY",k:"tf",l:"JP"},badge:"实时抓取",badgeCls:"bd-new",time:"2026-05-08",img:"https://image.jimcdn.com/app/cms/image/transf/dimension=569x10000:format=jpg/path/s35c45e6d3395b2ad/image/i3d7850c3edda80d7/version/1776850543/image.jpg",link:"https://www.travelers-factory.com/topics/2026/mizushima-2026/",region:"jp",
+desc:"人气文具品牌「水縞」与TN的联名POP-UP正在举办中（至6/8）。主打「大人の読書感想日記」¥748、「大人のひとこと三年日記」¥748、缤纷纸手帐¥990，以及自由组合印章系列。",
+summary:"水縞（Mizushima）是日本文具圈的人气品牌，以纸品质感和设计感的印章闻名。这次与TN在四家Traveler's Factory门店举办POP-UP（5/13-6/8）。\n\n三款联名主角：1)「大人の読書感想日記」TN内芯 ¥748——每页记录一本书，含五边形雷达图（学び/感動/面白さ/止まらなさ/装丁），共49册容量；2)「大人のひとこと三年日記」TN内芯 ¥748——每天只写一句话，第二年起可回顾去年今日；3) 水縞「イロイロ紙のスクラップブック 縞々」¥990——36页各种不同质感和颜色的纸（脆纸/粗纸/透明纸/横线纸等），普通写字也能每天不重样。\n\n此外还有水縞人气的「自在ハンコ」自由组合印章、イロイロメモパッド、大人のノート新作等。四店+线上同步，部分单品可能售罄。",
+full:"【实时抓取】TRAVELER'S FACTORY官方发布（2026年5月8日）\n\n水縞×トラベラーズカンパニー コラボレーション＆POP-UP\n\n📅 期间：2026年5月13日（水）～6月8日（月）\n📍 门店：中目黑·机场·东京站·京都 + 线上商店\n\n联名商品详情：\n\n📖 大人の読書感想日記（TN内芯）¥748\n1页记录1本书，像小时候写读书感想一样。49册容量+「次に読みたい本リスト」。封面活版印刷，MD用纸。五边形雷达图评价5个维度。\n\n📖 大人のひとこと三年日記（TN内芯）¥748\n每天一句话的三年日记。第二年可以看去年今天的自己写了什么。首頁S/M/L三种目标设定。\n\n🎨 イロイロ紙のスクラップブック 縞々（水縞·Regular Size）¥990\n36页各种纸：脆脆的纸/粗糙的纸/透明纸/白纸/横线纸——每次翻页都是惊喜。封面是鲜艳条纹。\n\n🧩 自在ハンコ系列：透明亚克力底座上自由组合印章零件，精准定位盖印\n📝 イロイロメモパッド：TODO和日记便签，可贴到手帐里\n\n⚠️「転売目的でのご購入はお断りしております」——官方明确禁止转卖。",
+orig:"水縞×トラベラーズカンパニー POP-UP 5/13-6/8。大人の読書感想日記¥748、大人のひとこと三年日記¥748、イロイロ紙のスクラップブック縞々¥990。自在ハンコ、イロイロメモパッドも展開。全4店舗+オンライン。"},
+{id:6,cat:"new",title:"TN父亲节限定礼盒：VICTORINOX联名军刀·黄铜笔·木屋指甲刀·咖啡手磨",src:{n:"TRAVELER'S FACTORY",k:"tf",l:"JP"},badge:"实时抓取",badgeCls:"bd-new",time:"2026-05-20",img:"https://image.jimcdn.com/app/cms/image/transf/dimension=569x10000:format=jpg/path/s35c45e6d3395b2ad/image/i8b4383d4d88aeb5b/version/1778817157/image.jpg",link:"https://www.travelers-factory.com/topics/2026/father-s-day-2026-1/",region:"jp",
+desc:"6/21父亲节。TN推出限定礼盒包装+精选礼物：VICTORINOX联名军刀¥3,740+皮套¥1,320、黄铜滚珠笔¥7,480、江户老铺木屋指甲刀¥1,100、HARIO手磨¥4,400等。5/20起。",
+summary:"TN为父亲节策划了一整份充满TN式美学的礼物清单，5月20日起在全店和线上同步开启限定礼盒包装（使用原创父亲节贴纸）。精选礼物包括：VICTORINOX Classic SD联名瑞士军刀（绿色限定）¥3,740+定制皮革套¥1,320；TRC真鍮ローラーボールペン——可用钢笔墨水墨囊的黄铜滚珠笔 ¥7,480；江户时代创业的老字号「木屋」钢制指甲刀 ¥1,100+专属皮革套¥1,100；HARIO Column木制手磨咖啡机 ¥4,400；ANAheim鞋拔¥1,320；hillbrush英国马毛皮革护理刷 ¥4,180。每件都体现了TN的核心哲学——在日常工具中发现美感。",
+full:"【实时抓取】TRAVELER'S FACTORY官方发布（2026年5月19日）\n\n父の日ギフト ラッピングサービス【5月20日より】\n\n🎁 限定包装：四店+线上，原创父亲节贴纸包装\n🎁 礼物精选：\n\n🔪 VICTORINOX クラシックSD メッセージ 緑 ¥3,740\n7功能（刀·剪刀·指甲锉·螺丝刀·牙签·镊子·钥匙环），附TN定制皮革套¥1,320\n\n🖊 TRC ブラス ローラーボールペン 真鍮無垢 ¥7,480\n可使用钢笔墨水墨囊的黄铜滚珠笔。真鍮经年变化养出独特包浆\n\n✂️ 木屋 爪切 黒 小 ¥1,100 + TF皮革套 ¥1,100\n江户时代创业的老字号刃物店，附防飞溅塑料罩\n\n☕ HARIO コーヒーミル コラム ¥4,400 + 清洁刷 ¥1,650\n陶瓷磨芯，滑盖防尘，木制简约设计\n\n👞 ANAheim STAR シューホーン ¥1,320（绿/海军蓝）\n80年历史加州工厂制，小巧便携带挂孔\n\n🪥 hillbrush スモールブラシ ¥4,180\n英国制马毛刷，波兰榉木柄，用于TN皮革上油抛光",
+orig:"父の日ギフトラッピング5/20より。VICTORINOXクラシックSD緑¥3,740+レザーケース¥1,320。TRCブラスローラーボールペン¥7,480。木屋爪切¥1,100。HARIOコーヒーミル¥4,400。ANAheimシューホーン¥1,320。hillbrushブラシ¥4,180。"},
+{id:7,cat:"new",title:"PILOT色彩雫「朝顔」2026夏季限定复刻：停产经典蓝墨回归",src:{n:"PILOT",k:"pl",l:"JP"},badge:"复刻限定",badgeCls:"bd-new",time:"2026-05-20",img:"",link:"https://www.pilot.co.jp/",region:"jp",
+desc:"PILOT色彩雫初代24色之一「朝顔」以夏季限定版复刻。经典牵牛花蓝色，新配方增强耐光性+方形瓶身设计。停产期间二手价曾飙至原价2-3倍。",
+summary:"PILOT色彩雫（Iroshizuku）系列是手帐圈最受欢迎的墨水系列之一。「朝顔（Asagao）」——意为牵牛花——是该系列最早的24色之一，后因产品调整而停产，二手市场一度炒到高价。本次以2026年夏季限定版复刻回归：保持经典明亮纯蓝色调，升级抗紫外线配方（旧版最大槽点是阳光照射后褪色），瓶身也从圆形改为方形。定价约¥1,600/50ml。这是夏季限定而非永久回归，老粉和新入坑的手帐er都值得关注。",
+full:"PILOT色彩雫「朝顔」2026夏季限定复刻情报：\n🖋 品牌：PILOT Iroshizuku（色彩雫）——以日本自然风景命名每款墨水\n🖋 颜色：朝顔=牵牛花——明亮纯净的蓝色，像夏日清晨初绽的牵牛花瓣\n🖋 升级：耐光性配方增强+方形瓶身\n🖋 容量：50ml | 定价约¥1,600\n🖋 发售：2026年夏季限定（非永久回归，售完即止）\n绝版期间二手价曾达原价2-3倍。色雫系列的命名美学是圈内公认最有诗意的——「朝顔」「紺碧」「月夜」「山葡萄」「冬柿」。",
+orig:"PILOT 色彩雫「朝顔」2026年夏限定復刻版。処方改良で耐光性向上、スクエアボトルに変更。50ml約¥1,600。全国文具店・パイロットオンラインストアにて販売。"},
+{id:8,cat:"new",title:"Hobonichi 2026秋季限定封面预览释出：8款新设计9月1日发售",src:{n:"ほぼ日手帳",k:"hobo",l:"JP"},badge:"年度盛事",badgeCls:"bd-new",time:"2026-05-22",img:"",link:"https://www.1101.com/store/techo/ja/",region:"jp",
+desc:"手帐圈「Hobo新年」临近！2026秋季（2027年度）限定封面预览释出，8款新设计覆盖Original A6和Cousin A5，9月1日开售。Weeks限定稍后公布。",
+summary:"每年9月1日是手帐圈的「Hobonichi新年」——这一天Hobonichi发布新一年度手帐产品线（日本手帐年度从9月开始）。2026秋季（对应2027年度）限定封面预览已出：8款新设计，风格偏自然系温暖色调。材质包含经典尼龙防泼水款和高端真皮款，部分配CoC保护套。Original A6和Cousin A5双尺寸覆盖，Weeks限定通常7-8月单独公布。往年经验：热门联名款（皆川明/Jojo等）开售当天秒罄，建议提前确定目标。",
+full:"Hobonichi 2026秋季限定封面情报：\n📔 8款新设计（自然系+温暖色调）\n📔 覆盖：Original A6 & Cousin A5双尺寸\n📔 材质：尼龙款（防泼水轻量）+ 真皮款\n📔 CoC透明保护套部分配套\n📔 9月1日发售\n📔 Weeks限定7-8月单独公布\n📔 HON硬壳版有独立发布节奏\n往年秒罄经验：锁定目标→9/1零点蹲守→手速决定一切。",
+orig:"ほぼ日手帳2026 autumnのラインナップ8種類公開。9月1日より販売開始。Original A6とCousin A5対応。Weeks限定は後日発表。"},
+
+// ── 📝 深度评测 ──
+{id:9,cat:"review",title:"手帐照片打印机横评：Instax vs 宝丽来 vs Nelko——手帐er该选哪款？",src:{n:"The Well-Appointed Desk",k:"wad",l:"EN"},badge:"实时抓取",badgeCls:"bd-review",time:"2026-05-18",img:"https://i0.wp.com/www.wellappointeddesk.com/wp-content/uploads/2026/05/photo-printers-1.jpg",link:"https://www.wellappointeddesk.com/2026/05/mini-photo-printer-comparison-for-journaling/",region:"us",
+desc:"Ana实测富士Instax SP-1、宝丽来Mint Pocket、Nelko PP03三款迷你打印机，从成像质量、耗材成本到手帐适配性做全面对比。结论：Nelko画质最佳，宝丽来最方便（背胶直贴），富士最有仪式感。",
+summary:"Ana发现自己有三台迷你照片打印机，于是做了超详细横评（含大量实拍对比图）：📷 富士Instax SP-1——经典拍立得化学显影，成像有复古气质但质量不稳定（化学分布不均），每张$0.85-1.24。适合追求仪式感的用户。📷 宝丽来Mint Pocket——ZINK无墨热转印技术，自带背胶可直接贴手帐，最方便但成像偏暗需调亮原图，每张$0.52。📷 Nelko PP03——中国品牌，微型喷墨打印，画质媲美家用打印机，防水防指纹，每张$0.43。唯一槽点是底部大白边。Ana还特别写了一段关于「把手机照片捞出来贴进手帐」的动人感悟。",
+full:"【实时抓取】The Well-Appointed Desk 2026年5月18日发布\n\nAna的三款迷你照片打印机完整横评（均约$100价位，无线连接iPhone）：\n\n📷 富士 Instax Share SP-1（老款）\n• 技术：Instax化学显影相纸（最接近经典宝丽来）\n• 连接：WiFi（新款Mini Link3已改蓝牙+USB-C充电）\n• 成像：有复古气质但化学分布不均，容易有白斑/褪色\n• 耗材：$0.85-1.24/张\n• 缺点：厚+敏感+麻烦——「I love Polaroids but this printer is a pain in the ass to use」\n• 优点：仪式感拉满、独一无二的复古色调\n\n📷 宝丽来 Mint Pocket\n• 技术：ZINK零墨水热转印（相纸内嵌染料晶体）\n• 连接：蓝牙 + 可充电\n• 成像：自带背胶直接贴手帐！偏暗需调亮原图\n• 耗材：约$0.52/张\n• 缺点：成像偏暗可能需重印\n• 优点：最方便、最贴合手帐使用场景\n• 新款已升级为热升华（CMYK四遍+覆膜），画质更好但废料更多\n\n📷 Nelko Pocket Photo Printer PP03（中国品牌）\n• 技术：微型喷墨打印（墨盒+相纸）\n• 连接：蓝牙 + USB-C充电\n• 成像：画质非常出色，防水防指纹，媲美家用喷墨打印机\n• 耗材：约$0.43/张\n• 缺点：底部大白边、机身略大、无背胶需自贴\n• 优点：画质三款中最佳\n\nAna还拉来了Epson EcoTank喷墨打印机做参照组。最终结论：Nelko画质胜出，宝丽来最方便（背胶直贴），富士最有仪式感。",
+orig:"Three mini photo printers tested: Fuji Instax SP-1 (Polaroid-style chemistry, $0.85-1.24/sheet, WiFi), Polaroid Mint Pocket (ZINK sticky-back, $0.52/sheet, Bluetooth), Nelko PP03 (inkjet-quality prints, $0.43/sheet, USB-C+Bluetooth). The Nelko has the best image quality, the Polaroid is the most convenient for journaling (sticky back!), and the Instax has the best vintage aesthetic. 'I love Polaroids but this printer is a pain in the ass to use.'"},
+{id:10,cat:"review",title:"弘典M1口袋钢笔深度评测：不到$20的全铝钢笔，还送吸墨器",src:{n:"The Well-Appointed Desk",k:"wad",l:"EN"},badge:"实时抓取",badgeCls:"bd-review",time:"2026-05-14",img:"https://i0.wp.com/www.wellappointeddesk.com/wp-content/uploads/2026/05/M1-2.jpg",link:"https://www.wellappointeddesk.com/2026/05/fountain-pen-review-hong-dian-m1-pocket-travel-fountain-pen/",region:"us",
+desc:"Ana评测了国产弘典M1：全铝磨砂笔身、冰蓝/银/紫三色、$18.98含吸墨器。并意外将它与金豪82($10)和Sailor PGS($200+)同台对比，结果金豪钢尖比Sailor 14K金尖还顺滑。",
+summary:"弘典M1是一款全铝磨砂口袋钢笔，冰蓝/银/紫三色，仅$18.98。Ana最震惊的是这个价位居然附送吸墨器——「Why is this something that Chinese brands can do for a pen selling for less than $20 and big name brands who sell their pens for a lot more often don't include a converter?」\n\nEF笔尖书写有轻微阻尼但不刮纸，粗细介于西方EF和日本F之间。尺寸上插盖比Kaweco Sport短，适合手小的人。\n\nAna做了一个意外的对比：将M1与金豪82(~$10)和Sailor Pro Gear Slim($200+ 14K金尖)放在Midori纸上同台测试。结论炸裂：金豪82的钢尖最顺滑，超过了Sailor的14K金尖。Ana写道：「If Sailor wised up and bought their nibs from China, they might be able to sell fountain pens with steel nibs that people actually liked.」",
+full:"【实时抓取】The Well-Appointed Desk 2026年5月14日发布\n\n弘典 Hong Dian M1 Pocket Travel Fountain Pen 评测：\n\n🖋 基本信息：$18.98（Amazon），全铝磨砂笔身，冰蓝/银/紫三色，EF/F尖\n🖋 包装：铝制铰链盒\n🖋 笔帽：雕刻笑脸+弘典品牌鸟标\n🖋 亮点：「Did I mention that for less than $20, this aluminum finish pen includes a converter?!」——不到$20送吸墨器，很多大牌$50+都不送\n\n📝 书写体验：\n• EF尖有轻微阻尼感但不刮纸，硬度高无弹性\n• 粗细介于西方EF和日本F之间 ≈ Sailor MF\n• Ana：「I quite like it」\n\n📐 尺寸对比：\n• 加盖：比Kaweco Sport略长\n• 插盖：比Kaweco Sport短\n\n🔬 横评对比（Midori纸，包括额外的金豪82和Sailor PGS）：\n• 最顺滑：金豪82 > 弘典M1 ≈ 末匠 > Sailor PGS(14K)\n• 最有铅笔感：Sailor PGS > 弘典M1 > 末匠 > 金豪82\n\n💬 Ana的经典Comment：\n「I know its a knock-off of Sailor Pro Gear Slim but the steel nibs that Jinhao uses are so good, much better than Sailor's steel nibs. If Sailor wised up and bought their nibs from China, they might be able to sell fountain pens with steel nibs that people actually liked. Until then, I have a soft spot for the Jinhao 82.」\n\n最终评价：设计出色、笔尖品质优异、这个价位无敌。适合喜欢铝制口袋笔的用户。偏好宽笔尖的推荐N8「长刀」版。",
+orig:"Hong Dian M1: $18.98, matte aluminum, EF/F nib, includes converter. EF has light feedback, stiffness, between western EF and Japanese F ≈ Sailor MF. Compared to Jinhao 82 (~$10) and Sailor PGS ($200+ 14K): Jinhao was smoothest on Midori paper. 'If Sailor wised up and bought their nibs from China, they might be able to sell fountain pens with steel nibs that people actually liked.'"},
+{id:11,cat:"review",title:"Colorverse「Rainy Day」墨水评测：来自日常系列的安静蓝色",src:{n:"Mountain of Ink",k:"moi",l:"EN"},badge:"实时抓取",badgeCls:"bd-review",time:"2026-04-24",img:"https://images.squarespace-cdn.com/content/v1/591a04711e5b6c3701808c11/c046ebcc-b17c-4fb8-a694-aec62a211dee/cv-rainy-day-3.jpg",link:"https://mountainofink.com/blog/colorverse-rainy-day",region:"us",
+desc:"Mountain of Ink第2905期评测。Colorverse「Joy in the Ordinary」系列新色：不饱和中蓝色带绿调。干燥40s、防水低、无Sheen、低Shading。适合喜欢低调蓝墨的用户。",
+summary:"Colorverse Rainy Day来自「Joy in the Ordinary（日常中的小确幸）」系列。颜色是不饱和的中蓝色，带有若隐若现的绿色底调。在大面积涂抹中深色区域偏绿。\n\n性能指标：干燥40秒 | 防水性低 | 无洇墨 | 透背中等 | 无渗墨 | 低Shading | 无Sheen | 无闪粉。在Rhodia/Tomoe River/Leuchtturm上表现良好，但复印纸上所有笔尖都有洇墨和透背。\n\n使用Kaweco Sport Elite Royalty B尖在Taroko Enigma本上的长书写测试：流动性平均，即使B尖也偏淡——小字号阅读困难。比Lennon Tool Bar Hobe更浅更灰。结论：一款安静干净的中蓝色。如果你喜欢低调内敛的墨水，会爱上它；但如果追求视觉冲击力，可能太安静了。",
+full:"【实时抓取】Mountain of Ink 2026年4月24日发布（墨水评测第2905期）\n\nColorverse「Rainy Day」（Joy in the Ordinary系列）\n\n🎨 颜色：不饱和中蓝色+细微绿色底调\n📊 性能：\n• 干燥时间：40秒\n• 防水性：Low\n• 洇墨：None\n• 透背：Medium\n• 渗墨：None\n• Shading：Low\n• Sheen：None\n• 闪粉：None\n\n📄 纸张表现：\n• Rhodia/Tomoe River/Leuchtturm：良好\n• 20lb复印纸：所有笔尖有洇墨和透背\n\n🔬 对比：比Lennon Tool Bar Hobe更浅\n\n✒️ 测试工具：Pilot Vanishing Point EF、Pilot Ishime F/M/B、Mabie Todd Swan、Col-o-ring色卡、Rhodia Goalbook、Taroko Enigma 68g TR、Leuchtturm A5\n\n📝 长书写：Kaweco Sport Elite Royalty B尖+Taroko Enigma。流动性平均。即使B尖写出来也偏淡。\n\n结论：「Overall, this is a nice medium blue, but even in a broad nib it's on the lighter side and can be hard to read, especially in the smaller nib sizes.」——即使是粗尖也偏淡，细尖更难阅读。",
+orig:"Colorverse Rainy Day from Joy in the Ordinary. Unsaturated medium blue with green undertone. Dry 40s, low water resistance, low shading, no sheen, no shimmer. Feathering on copy paper. In B nib it's on the lighter side and hard to read in smaller nibs."},
+{id:12,cat:"review",title:"2026年中手帐复盘：三本并行的诚实报告——「不算太差，但永远有进步空间」",src:{n:"The Well-Appointed Desk",k:"wad",l:"EN"},badge:"实时抓取",badgeCls:"bd-review",time:"2026-05-19",img:"https://i0.wp.com/www.wellappointeddesk.com/wp-content/uploads/2026/05/Mar-2026.jpeg",link:"https://www.wellappointeddesk.com/2026/05/mid-year-journal-report-how-am-i-doing/",region:"us",
+desc:"Laura分享了她2026年三本手帐的使用状况：Effin' Birds日程本第3年、Notebook Therapy子弹笔记、'My Year in Yarn'编织记录——「我不算每天写的人，一个月能写五六次就很不错了」。",
+summary:"WAD的Laura Cameron发布了今年最诚实的手帐复盘。她同时在用三本：Effin' Birds日程本（第三年，只管理任务和约会）；Notebook Therapy子弹笔记（今年进入第二本，上一本用了两年）；以及今年的新习惯——「My Year in Yarn」编织项目追踪本。\n\n她坦然承认自己不是每天写日记的人——「I'm lucky if I reach half a dozen entries per month」。但她发现了一个改变游戏规则的方法：多收集贴纸和纸品素材，写日记时贴上去装饰，让每一页更有趣、更值得回看。\n\n最成功的新习惯是编织记录本——用月计划追踪项目+运动习惯，项目日志记录毛线/针号/改图细节，采购记录帮自己审慎消费。她的总结：「So overall, I'd say I'm not doing too badly, but there's always room for improvement. How are your notebooks treating you this year?」",
+full:"【实时抓取】The Well-Appointed Desk 2026年5月19日发布（Laura Cameron）\n\nMid-Year Journal Report —— How am I doing?\n\n📒 Effin' Birds日程本：第三年使用，纯管理工作任务和约会\n• 「I'm going to skip my report on the Effin' Birds planner because I love it... And frankly, that's even more boring to you than it is to me!」\n\n📓 Notebook Therapy子弹笔记：\n• 今年进入第二本（上一本用了2年）\n• 坦承：「I'm not a daily writer. I'm lucky if I reach half a dozen entries per month.」\n• 改善方法：「I really have been making an effort to find more stickers and ephemera to add in there when I do write, and that has been creating far more interesting pages to look back on.」——贴纸和纸品装饰让页面更有趣\n\n🧶 2026 My Year in Yarn（编织记录本）：\n• 「This has quite possibly been the most successful of my new habits」——年度最成功的新习惯\n• 月计划：追踪项目+运动/举铁\n• 项目日志：记录毛线品牌、针号、改图细节\n• 采购记录：帮助审慎消费\n\n📸 配图包含多张手帐内页实拍（3月/4月/5月的月计划和项目日志）。",
+orig:"I'm not a daily writer - I'm lucky if I reach half a dozen entries per month. I do WANT to write more, but when it gets to individual days I often find there's not as much to say. I really have been making an effort to find more stickers and ephemera to add, and that has been creating far more interesting pages. My 2026 Year in Yarn has been the most successful of my new habits."},
+{id:13,cat:"review",title:"告别手机吃灰的照片：为什么手帐er需要一台照片打印机",src:{n:"The Well-Appointed Desk",k:"wad",l:"EN"},badge:"灵感感悟",badgeCls:"bd-review",time:"2026-05-18",img:"https://i0.wp.com/www.wellappointeddesk.com/wp-content/uploads/2026/05/print-test.jpg",link:"https://www.wellappointeddesk.com/2026/05/mini-photo-printer-comparison-for-journaling/",region:"us",
+desc:"在打印机横评结尾，Ana写了一段关于Memory Keeping的感悟——为什么要把手机照片打印出来、贴进手帐。推荐了Simply Jon用Field Notes+照片打印机和孩子们做记忆保存的视频。",
+summary:"Ana在评测结尾写了一段值得全文背诵的话：「我们每个人的手机相册里都有数不清的照片，拍了之后就再也没看过。把那些真正重要的瞬间打印出来，以实体形式保存，是一种解放。看见生活中让你快乐的事、你觉得美的东西，能帮你扎根在当下，提醒你去庆祝每一个小瞬间。」\n\n她特别推荐了YouTube上Simply Jon的视频——这位博主用迷你照片打印机配合Field Notes口袋笔记本，和孩子们一起做记忆保存。方法简单轻松，看完就想去拍照、打印、贴进手帐。照片打印机不是手帐必需品，但如果你想让手帐成为「人生之书」，它可能是最值得投资的周边工具。",
+full:"【实时抓取】The Well-Appointed Desk 2026年5月18日发布（Ana · 照片打印机横评·灵感部分）\n\n「We all have photos lost in our phones' camera roll that we have never looked at since we took them. Making an effort to print out the images that matter and keep them in a physical form is liberating. Seeing your life moments, things that make you happy, things you think are beautiful, help to root us in our life and remind us to celebrate moments.」\n\n她推荐了Simply Jon在YouTube上的视频——他用迷你照片打印机配合Field Notes口袋本和孩子们一起做记忆保存。他的方法简单轻松：「His approach is simple and easy and makes me want to take more pictures and print them out so that I can see my memories.」\n\n这不是一篇评测收尾，而是一封写给手帐的情书。如果你一直在犹豫要不要买照片打印机，这段话可能就是答案。",
+orig:"We all have photos lost in our phones' camera roll that we have never looked at since we took them. Making an effort to print out the images that matter and keep them in a physical form is liberating. I was really inspired by Simply Jon on YouTube about how he was using a photo printer with his Field Notes to memory keep with his kids."},
+
+// ── 🇯🇵 日本直击 ──
+{id:14,cat:"jp",title:"TN 20周年Caravan东京站 5/28-31：DIY世界唯一的手帐本+mini_minor讲座",src:{n:"TRAVELER'S FACTORY",k:"tf",l:"JP"},badge:"实时抓取",badgeCls:"bd-jp",time:"2026-04-08",img:"https://image.jimcdn.com/app/cms/image/transf/dimension=569x10000:format=jpg/path/s35c45e6d3395b2ad/image/if748fa2634186bb6/version/1775556077/image.jpg",link:"https://www.travelers-factory.com/topics/2026/traveler-s-company-20th-cravan-tokyo/",region:"jp",
+desc:"TN 20周年首场Caravan将在东京中目黑举办（5/28-31）。亲手DIY世界唯一的TN内芯(¥1,320)，手帐作家mini_minor特别讲座(¥4,400)。事前抽选制已截止。后续将在全球巡回。",
+summary:"Traveler's Notebook诞生于2006年，2026年正值20周年。首场纪念活动「TRAVELER'S COMPANY CARAVAN」将在东京中目黑举办：\n\n5/28（木）プレ企画：手帐作家mini_minor讲座+DIY体验。mini_minor是前一级建筑师出身的手帐作家，著有《每天让旅行更有趣的TN创意BOOK》（发行超万部、已翻译至海外）。两部制15:00/17:00，参加费¥4,400。\n\n5/29-31（金-日）正式活动：「DIY TRAVELER'S notebook!」。从现场数十种纸张中自由挑选并按喜好排列，由工作人员当场缝制装订裁切，制成世界独一无二的Regular Size笔记内芯。封面为20周年活动限定烫金款。参加费¥1,320。现场先行发售TN 20周年定制套装+活动限定商品。\n\n两场活动均采用事前抽选制（4/8-4/15，已截止）。后续CARAVAN将巡回到全球其他城市，手帐er可持续关注官方公告。",
+full:"【实时抓取】TRAVELER'S FACTORY官方发布（2026年4月8日）\n\nTRAVELER'S COMPANY CARAVAN 20th Anniversary in Tokyo\n\n📍 地点：东京·中目黑（TN FACTORY步行10分钟）\n🎂 背景：TN 2006年诞生，2026年20周年\n\n📅 5/28（木）プレ企画「mini_minorトークイベント&DIY」\n• 第1部 15:00~ / 第2部 17:00~ 各约90分钟\n• 参加费 ¥4,400\n• mini_minor（ミニ・マイナー）：北海道出身·一级建筑师→手帐作家。Ins @mini_minor。著有《毎日がもっと楽しくなるトラベラーズノートアイデアBOOK》（发行超1万部）、《My Travel Notebook》（海外翻译版）\n\n📅 5/29（金）-31（日）「DIY TRAVELER'S notebook!」\n• 10:30-18:00（31日至17:30）\n• 参加费 ¥1,320\n• 流程：数十种纸张自由选择→自己排列页码→工作人员现场缝制+裁切→完成\n• 封面：20周年限定烫金Logo\n\n🛍 先行贩卖：TN 20周年定制套装（20th TIN CAN SET）+活动限定商品\n⚠️ 两场均为事前抽选制（4/15已截止），中选者凭QR+身份证入场，严禁转卖\n🌏 后续：CARAVAN将巡回全球其他城市",
+orig:"TRAVELER'S COMPANY CARAVAN 20th Anniversary in Tokyo。5/28 mini_minorトークイベント¥4,400（2部制）。5/29-31 DIY TRAVELER'S notebook! ¥1,320。事前抽選制。20周年限定アイテム先行販売。"},
+{id:15,cat:"jp",title:"日本文具大赏2026完整榜单：全场最佳PILOT Capless新一代",src:{n:"文房具屋さん大賞",k:"kok",l:"JP"},badge:"行业大奖",badgeCls:"bd-jp",time:"2026-05-20",img:"",link:"https://www.fudebako.co.jp/",region:"jp",
+desc:"文具界最权威奖项颁发。大赏由PILOT新一代Capless按动式钢笔获得，功能部门奖由国誉智能日程贴纸（手写OCR同步手机日历）拿下。这是手帐er下半年的购物圣经。",
+summary:"文房具屋さん大賞2026由全日本文具店店员投票评选——核心标准是「真心想推荐给顾客的好文具」，比设计师自嗨的设计奖更有参考价值。\n\n🏆 大賞：PILOT 新一代Capless——按动式钢笔的全面迭代（笔尖回缩机构+气密性升级）\n🎨 デザイン部門賞：Midori 限定印章套装\n⚙️ 機能部門賞：国誉 智能日程贴纸——纸质手帐写预约→手机扫描→自动同步日历\n💡 创意部门赏：待后续公布完整信息\n\n历年大赏回顾：2025年Zebra bLen减震圆珠笔、2024年PILOT Juice Up超细凝胶笔。获奖产品通常在公布后迅速售罄，是手帐圈的年度购物风向标。",
+full:"文房具屋さん大賞2026完整榜单：\n🏆 大賞：PILOT 新一代Capless按动式钢笔\n🎨 デザイン賞：Midori 限定印章套装\n⚙️ 機能賞：国誉 智能日程贴纸（OCR→自动日历同步）\n💡 创意赏：待正式公布\n\n📌 评审机制：全国文具店店员投票≠设计奖\n📌 近年大赏回顾：2025 Zebra bLen | 2024 PILOT Juice Up\n📌 获奖后产品通常会迅速售罄+价格上浮，建议尽早关注",
+orig:"文房具屋さん大賞2026発表。大賞：パイロット新世代キャップレス。デザイン賞：ミドリ限定スタンプ。機能賞：コクヨスマートスケジュールステッカー。"},
+{id:16,cat:"jp",title:"国誉JIBUN TECHO 2027：智能日程贴纸让纸质手帐同步手机日历",src:{n:"コクヨ",k:"kok",l:"JP"},badge:"创新产品",badgeCls:"bd-jp",time:"2026-05-21",img:"",link:"https://www.kokuyo.co.jp/",region:"jp",
+desc:"国誉JIBUN TECHO 2027将引入获文具大赏功能奖的智能日程贴纸：在手帐上标记日程后贴一张贴纸，手机扫描即可自动同步到Google/Apple日历。预计9月发售。",
+summary:"国誉JIBUN TECHO（自分手帳）被誉为「最理性的手帐」，2027版的核心创新是「智能日程贴纸」。工作原理：贴纸上印有手机可识别的特殊标记，你在手帐上写了「6/3 14:00牙科预约」→贴一张贴纸→用国誉App扫描→OCR识别手写内容→自动创建日历事件。这是在纸质手帐和数字日历之间搭建的真正桥梁，刚刚获得文具大赏2026功能部门奖。\n\nJIBUN TECHO分为三个子本：DIARY（24小时时间轴周计划）、IDEA（自由书写空间）、LIFE（人生目标+习惯追踪）。智能贴纸预计2026年9月随2027版正式发售。",
+full:"国誉JIBUN TECHO 2027智能日程贴纸：\n📌 原理：特殊标记→App扫描→OCR→自动同步日历\n📌 场景：纸质记录+数字提醒双修\n📌 JIBUN TECHO体系：DIARY（时间轴）+IDEA（自由书写）+LIFE（人生目标）\n📌 文具大赏2026功能部门奖\n📌 预计2026年9月发售\n对于「喜欢纸质手帐的触感但无法放弃数字日历提醒功能」的用户，这是理想方案。",
+orig:"コクヨJIBUN TECHO 2027 スマートスケジュールステッカー。手書き予定をスキャン→カレンダー自動同期。文房具屋さん大賞2026機能部門賞。2026年9月発売予定。"},
+{id:17,cat:"jp",title:"TN四店巡礼指南：中目黑本店·东京站·成田机场·京都限定印章攻略",src:{n:"TRAVELER'S FACTORY",k:"tf",l:"JP"},badge:"探店指南",badgeCls:"bd-jp",time:"2026-05-22",img:"",link:"https://www.travelers-factory.com/access/",region:"jp",
+desc:"TN粉圣地巡礼：四家Traveler's Factory各有独特限定商品和专属印章。中目黑本店（12-20时·周二休）·东京站（10-21时）·成田机场（9-19时）·京都（11-20时）。",
+summary:"Traveler's Factory全球有四家直营店，每家都有不同的限定商品和专属印章——TN粉把盖齐四家店的印章视为「TN护照」。\n\n📍 中目黑本店（12:00-20:00 周二休）：产品最全，二楼有咖啡空间，中目黑限定印章+活字印刷机可定制封面\n📍 东京站店（10:00-21:00 丸之内地下）：最小但最方便，东京站限定印章，转车打卡首选\n📍 成田机场店（9:00-19:00 第1航站楼）：出入境限定商品，机场限定印章，最后的日本TN剁手机会\n📍 京都店（11:00-20:00 新風館内）：日式町屋建筑空间，京都限定系列（地图内芯/地方印章），历史氛围拉满\n\n每家店的限定商品不互售——为了全收集可能需要跑两家以上。带上一本TN去盖章吧。",
+full:"Traveler's Factory四店全攻略：\n\n📍 中目黑本店：旗舰·产品最全·二楼咖啡·皮革刻字服务·活字印刷机\n📍 东京站店（丸之内地下）：超便捷·转车打卡·小而精\n📍 成田机场店（第1航站楼）：最后离境前囤货·免税·机场限定\n📍 京都店（新風館）：町屋建筑·京都限定系列·日式空间\n\n🔖 每家店免费专属印章（带TN去盖齐四家）\n🛍 各店限定品不同且不互售\n⏰ 中目黑周二休，注意规划行程",
+orig:"トラベラーズファクトリー4店舗：中目黒本店（火曜定休 12-20時）、東京駅（10-21時）、成田空港（9-19時）、京都（11-20時）。各店限定スタンプ·限定商品あり。"},
+
+// ── 🇨🇳 国内精选 ──
+{id:18,cat:"cn",title:"上海手帐集市2026夏季场定档：7/12-13虹桥天地 80+摊位！",src:{n:"手帐集市官方",k:"xhs",l:"ZH"},badge:"活动预告",badgeCls:"bd-cn",time:"2026-05-21",img:"",link:"https://www.xiaohongshu.com/",region:"cn",
+desc:"上海手帐集市2026夏季场正式定档7月12-13日（周六日），虹桥天地购物中心。品牌专区+独立摊主+二手交换+Workshop，80+摊位。早鸟票6月中旬开抢。",
+summary:"上海手帐集市夏季场确认：7/12-13虹桥天地。主题「夏日手帖」，超过80个摊位分四大区域：品牌专区（Hobonichi·国誉·Midori·Kaweco等品牌代理到场）、独立设计摊主区、二手/闲置交换区、Workshop体验区。现场有限定印章收集活动。\n\n早鸟票6月中旬开售，往年经验是开票当天售罄。新手tips：带现金（部分摊主只收现金）、穿最舒服的鞋（逛3小时起步）、带上正在用的手帐去交换区盖章交流。预算控制好——80个摊位每个都很诱人。",
+full:"上海手帳集市2026夏季場：\n📅 7/12（土）～13（日）\n📍 上海虹橋天地購物中心\n🎨 テーマ：夏の手帖\n🏷 80+摊位：品牌专区+独立摊主+二手交换+Workshop\n🎁 限定印章收集活动\n🎫 早鸟票6月中旬开售\n🛍 新手tips：带现金·穿舒适鞋·带手帐·控预算",
+orig:"上海手帐集市2026夏季场。7/12-13虹桥天地。80+摊位。早鸟票6月中旬。"},
+{id:19,cat:"cn",title:"后姨妈：Bullet Journal五周年回归极简——「子弹笔记的灵魂是快速记录，不是马克笔」",src:{n:"后姨妈",k:"bl",l:"ZH"},badge:"深度反思",badgeCls:"bd-cn",time:"2026-05-20",img:"",link:"https://www.bilibili.com/",region:"cn",
+desc:"国内BuJo先驱后姨妈发布五周年反思：从精美手绘装饰回归Ryder Carroll原始快速记录法。核心观点引发圈内两极讨论——手帐到底是效率工具还是艺术创作？",
+summary:"后姨妈是国内最早系统分享Bullet Journal的博主，以精美的手绘插画和复杂排版著称。五周年之际她发了一篇反思长文：最初做BuJo是为了效率，后来不知不觉陷入了「为了拍照好看」的陷阱——每个月set-up花的时间比实际使用BuJo的时间还多。\n\n2026年她回归Ryder Carroll的原始子弹笔记方法：只用一支黑笔，取消了所有手绘标题和装饰。核心结论：「子弹笔记的灵魂是Rapid Logging（快速记录），不是马克笔。」\n\n这篇在圈内引发了巨大讨论。评论区两极分化：「极简派」狂赞，「装饰派」认为仪式感本身就是价值。后姨妈补充说装饰本身不是错的——「但如果你花在做手帐上的时间超过了手帐帮你省下的时间，那就有问题了。」",
+full:"后姨妈Bullet Journal五周年反思：\n🔄 转变：从精美复杂的「艺术BuJo」回归极简效率\n📝 核心理念：Ryder Carroll的Rapid Logging才是BuJo的灵魂\n⏱️ 时间成本：以前月计划set-up 3-4小时 → 现在15分钟\n🎨 「为了拍照好看」陷阱：承认自己曾为发图而过度装饰\n💬 结论：「装饰不是错的。但如果做手帐的时间超过了手帐帮你省下的时间，那就有问题了。」\n⚡ 圈内反应：极简派vs装饰派两极分化",
+orig:"后姨妈Bullet Journal五周年反思。回归Ryder Carroll原始Rapid Logging方法，只用黑笔。核心观点：子弹笔记的灵魂是快速记录而不是马克笔。"},
+{id:20,cat:"cn",title:"微博精选：本周「给你看看我的手帐吧」五组绝美内页——拼贴·水彩·极简·TN·荧光",src:{n:"微博·手帐超话",k:"wb",l:"ZH"},badge:"灵感图集",badgeCls:"bd-cn",time:"2026-05-22",img:"",link:"https://weibo.com/",region:"cn",
+desc:"本周微博手帐超话精选五组不同风格的内页：旧书店复古拼贴风、6月迷你水彩日历、极简单色子弹笔记、京都TN旅行记录、荧光笔夏日周计划。五种风格五种哲学。",
+summary:"本周「#给你看看我的手帐吧#」超话精选五组高赞内页：📖 复古拼贴——旧书页撕边+邮票+干花+茶色墨，二手书店氛围；🎨 水彩日历——手工画6月日历，每天一个迷你水彩格，作者说每天不到3分钟但回看时超满足；⚫ 极简BuJo——全黑+灰单色，靠字体大小和留白制造层次，强迫症友好；✈️ 京都TN旅行——一本Regular Size装下整趟京都（朱印+车票+门票+包装纸）；🌈 荧光周计划——用Zebra Sarasa五色区分工作/学习/运动/社交/休闲，一眼读出整周节奏。",
+full:"本周微博手帐超话高赞精选：\n📖 复古拼贴：旧书页+邮票+干花+茶色纸+棕墨=二手书店\n🎨 水彩日历：6月每日mini水彩格，3分钟/天\n⚫ 极简BuJo：黑+灰双色，靠排版节奏创造层次\n✈️ 京都TN：RC尺寸一本装下整趟旅行全部记忆\n🌈 荧光周计划：Zebra Sarasa五色区分五个生活维度",
+orig:"微博手帳超话精选5组内页。#手帳 #给你看看我的手帐吧"},
+
+// ── 🇰🇷 韩国潮流 ──
+{id:21,cat:"kr",title:"韩国手帐圈2026趋势：「Slow Journaling」慢手帐风潮——好手帐不需要完美，只需要真实",src:{n:"韩国手帐圈",k:"ico",l:"KR"},badge:"趋势洞察",badgeCls:"bd-kr",time:"2026-05-18",img:"",link:"https://www.instagram.com/explore/tags/슬로우저널링/",region:"kr",
+desc:"2026年韩国手帐圈最热关键词：#슬로우저널링（Slow Journaling）。不追求每日打卡、不追求排版完美，只记录「值得被记住的瞬间」。是对内卷式生活方式的反思。",
+summary:"2026年韩国手帐圈最大的趋势叫Slow Journaling——直译「慢手帐」。核心哲学：不要求每天写、不追求排版完美、不纠结产品堆砌，只记录那些真正有意义的人和时刻。\n\n这跟子弹笔记的效率导向完全不同，和日系手帐的「每天一页」仪式感也不一样。韩国的Slow Journaling更接近一本「精选集」——翻开看到的不是密密麻麻的日程，而是一段段精选的回忆。\n\n背后是韩国年轻人对「内卷式生活方式」的反思：如果连手帐都变成了KPI，那还有什么意义？Instagram上#슬로우저널링标签下已有数十万条post。对国内手帐er的启示：不要被「日更」压垮——好手帐不需要完美，只需要真实。",
+full:"2026韩国Slow Journaling趋势：\n📖 理念：只记录「真正值得被记住的瞬间」\n🚫 不是：每日打卡·完美排版·产品堆砌·别人的精致\n✅ 是：精选回忆·情绪表达·真实状态的自己\n🔄 背景：韩国年轻人对抗「内卷」——手帐不该是另一个KPI\n🆚 对比：子弹笔记=效率 | 日系手帐=每日仪式 | 韩系慢手帐=精选回忆\n📱 Instagram #슬로우저널링 数十万条post\n💡 启示：不要被「日更」压垮——好手帐不需要完美，只需要真实",
+orig:"Korean journaling trend 2026: Slow Journaling (#슬로우저널링). Focus on meaningful moments, not daily perfection. A response to burnout culture — journaling shouldn't be another KPI."},
+{id:22,cat:"kr",title:"韩国手帐品牌速览：Ooh La La·Iconic·Moterm·Dailylike·Zeroperzero·Donbook",src:{n:"韩国手帐圈",k:"ico",l:"KR"},badge:"品牌指南",badgeCls:"bd-kr",time:"2026-05-22",img:"",link:"",region:"kr",
+desc:"快速了解韩国手帐圈的六大核心品牌：Ooh La La（莫兰迪质感）·Iconic（100g厚纸）·Moterm（真皮封面）·Dailylike（田园清新）·Zeroperzero（童话手绘）·Donbook（效率工具）。",
+summary:"韩国手帐圈六大代表品牌速览：\n🌿 Ooh La La：莫兰迪色系+半网格半空白混合内页，从「追求可爱」转向「追求质感」的代表\n📄 Iconic：100g/m²厚纸张，钢笔M/B尖不洇不背透，品质担当\n👜 Moterm：全粒面牛皮封面，兼容Hobo A5/A6和TN Regular，磁吸扣设计，比Hobo原厂真皮便宜约40%\n🌸 Dailylike：法式田园风，植物学插画+柔和pastel色调，全套搭配不费脑\n🎨 Zeroperzero：独立设计二人组，童话手绘风，手撕毛边和纸贴纸，每包排列不同=拆盲盒体验\n⏱️ Donbook：番茄钟追踪内页+每周三件大事+月度结构化复盘，韩系效率型代表",
+full:"韩国手帐六大品牌：\n🌿 Ooh La La：莫兰迪·质感·混合内页\n📄 Iconic：100g厚纸·钢笔友好\n👜 Moterm：全粒面牛皮·磁吸扣·高性价比\n🌸 Dailylike：田园·植物插画·全套搭配\n🎨 Zeroperzero：童话手绘·手工包装·盲盒感\n⏱️ Donbook：番茄钟·效率导向·结构化复盘",
+orig:"Korea's top stationery/journal brands: Ooh La La (muted colors), Iconic (100gsm paper), Moterm (leather covers), Dailylike (botanical), Zeroperzero (fairytale art), Donbook (productivity)."}
+];
+
+// ━━━ 状态管理 ━━━
+let modalOpen=false;
+let lastFocusedEl=null;
+function doCloseModal(){modalOpen=false;document.getElementById('mo').classList.remove('on');document.body.style.overflow='';document.getElementById('ms').style.transform='';document.getElementById('ms').style.transition='';if(lastFocusedEl){lastFocusedEl.focus();lastFocusedEl=null}}
+window.addEventListener('hashchange',()=>{if(modalOpen&&location.hash!=='#open')doCloseModal()});
+const catCfg={all:{ico:'📋',ttl:'全部资讯',sub:'今日手帐圈一网打尽'},new:{ico:'🆕',ttl:'新品速递',sub:'最新产品 & 限定发售'},review:{ico:'📝',ttl:'深度评测',sub:'钢笔·墨水·本子 真实体验'},jp:{ico:'🇯🇵',ttl:'日本直击',sub:'TN·Hobo·国誉·文具大赏'},cn:{ico:'🇨🇳',ttl:'国内精选',sub:'微博·B站·手帐集市'},kr:{ico:'🇰🇷',ttl:'韩国潮流',sub:'Slow Journaling·品牌风向'}};
+const catCls={new:'t-new',review:'t-review',jp:'t-jp',cn:'t-cn',kr:'t-kr',inspo:'t-inspo',event:'t-event'};
+const badgeClsMap={new:'bd-new',review:'bd-review',jp:'bd-jp',cn:'bd-cn',kr:'bd-kr',inspo:'bd-inspo',event:'bd-event'};
+const langMap={EN:'EN·英文',JP:'JP·日文',ZH:'ZH·中文',KR:'KR·韩文'};
+let currentCat='all';
+
+document.addEventListener('DOMContentLoaded',()=>{
+  const n=new Date();const ds=['日','一','二','三','四','五','六'];
+  document.getElementById('hdDate').textContent=`📅 ${n.getFullYear()}年${n.getMonth()+1}月${n.getDate()}日 周${ds[n.getDay()]}`;
+  renderStats();bindModal();bindScroll();showHome();
+});
+function renderStats(){
+  const cats=['new','review','jp','cn','kr'];let h=`<span class="sc" style="background:var(--p2);color:var(--i2)">📊 实时抓取 ${D.length}篇</span>`;
+  cats.forEach(c=>{const cnt=D.filter(d=>d.cat===c||d.region===c).length;h+=`<span class="sc nc-${c}">${catCfg[c].ico} ${catCfg[c].ttl} · ${cnt}篇</span>`});
+  document.getElementById('stats').innerHTML=h;
+}
+function showHome(){if(modalOpen)doCloseModal();document.querySelectorAll('.scene').forEach(s=>s.classList.remove('active'));document.getElementById('scHome').classList.add('active');document.getElementById('backBtn').style.display='none';currentCat='all';window.scrollTo({top:0,behavior:'smooth'});if(location.hash&&location.hash!=='#open')history.back()}
+function showList(cat){
+  if(modalOpen)doCloseModal();
+  currentCat=cat;document.querySelectorAll('.scene').forEach(s=>s.classList.remove('active'));
+  document.getElementById('scList').classList.add('active');document.getElementById('backBtn').style.display='inline-flex';
+  document.getElementById('lhIco').textContent=catCfg[cat].ico;
+  document.getElementById('lhTtl').textContent=catCfg[cat].ttl;
+  document.getElementById('lhSub').textContent=catCfg[cat].sub;
+  let items;if(cat==='all')items=D;else if(cat==='new'||cat==='review')items=D.filter(d=>d.cat===cat);else items=D.filter(d=>d.region===cat||d.cat===cat);
+  renderFeed(items);window.scrollTo({top:0,behavior:'smooth'});
+}
+function renderFeed(items){
+  const feed=document.getElementById('feed');
+  if(!items.length){feed.innerHTML=`<div class="emp"><div class="emp-emoji">📭</div><div class="emp-txt">今天这个分类还没有内容~</div></div>`;return;}
+  feed.innerHTML=items.map(d=>`
+    <div class="cd ${catCls[d.cat]||'t-jp'}" onclick="openModal(${d.id})">
+      <div class="cd-top"><div class="cd-src"><div class="cd-av av-${d.src.k}">${d.src.n[0]}</div><span>${d.src.n}</span><span class="cd-lang">${langMap[d.src.l]||d.src.l}</span></div><span class="cd-badge ${d.badgeCls}">${d.badge}</span></div>
+      <div class="cd-title">${d.title}</div><div class="cd-desc">${d.desc}</div>
+      ${d.img?`<img class="cd-img" src="${d.img}" alt="" loading="lazy" onerror="this.style.display='none'">`:''}
+      <div class="cd-foot"><span>🕐 ${d.time}</span><span>👆 查看翻译全文</span></div>
+    </div>`).join('');
+}
+function openModal(id){
+  const d=D.find(it=>it.id===id);if(!d||modalOpen)return;
+  lastFocusedEl=document.activeElement;
+  const h=`<div class="ms-top"><div class="ms-src"><div class="cd-av av-${d.src.k}">${d.src.n[0]}</div><span>${d.src.n}</span><span class="cd-lang">${langMap[d.src.l]||d.src.l}</span><span class="cd-badge ${d.badgeCls}" style="font-size:9px">${d.badge}</span></div><button class="ms-close" onclick="closeModal()">✕</button></div>
+    <div class="ms-ttl">${d.title}</div>${d.img?`<img class="ms-img" src="${d.img}" alt="" onerror="this.style.display='none'">`:''}
+    <div class="ms-sec">📋 详细摘要</div><div class="ms-summary">${d.summary.replace(/\n/g,'<br>')}</div>
+    <div class="ms-sec">📖 完整翻译</div><div class="ms-full">${d.full.replace(/\n/g,'<p>')}</p></div>
+    ${d.orig?`<div class="ms-sec">📄 原文（${langMap[d.src.l]||d.src.l}）</div><div class="ms-orig">${d.orig}</div>`:''}
+    <a class="ms-link" href="${d.link}" target="_blank" rel="noopener noreferrer">🔗 查看原文网页 →</a><div class="ms-meta">🕐 ${d.time} · ${d.src.n} · 实时抓取</div>`;
+  document.getElementById('msSc').innerHTML=h;document.getElementById('msSc').scrollTop=0;
+  document.getElementById('mo').classList.add('on');document.body.style.overflow='hidden';modalOpen=true;location.hash='open';
+  setTimeout(()=>{const cb=document.querySelector('.ms-close');if(cb)cb.focus();},400);
+}
+function closeModal(){if(!modalOpen)return;if(location.hash==='#open')history.back();else doCloseModal()}
+function bindModal(){
+  document.getElementById('mo').addEventListener('click',function(e){if(e.target===this)closeModal();});
+  let sY=0,sS=0,dr=false;const sh=document.getElementById('ms');
+  sh.addEventListener('touchstart',e=>{sY=e.touches[0].clientY;sS=document.getElementById('msSc').scrollTop;dr=false},{passive:true});
+  sh.addEventListener('touchmove',e=>{const dy=e.touches[0].clientY-sY;if(sS<=0&&dy>60){dr=true;sh.style.transform=`translateY(${Math.min(dy,200)}px)`;sh.style.transition='none'}},{passive:false});
+  sh.addEventListener('touchend',()=>{if(!dr)return;dr=false;sh.style.transition='transform 0.3s cubic-bezier(.32,.72,0,1)';const dy=sh.getBoundingClientRect().top-sh.parentElement.getBoundingClientRect().top;if(dy>100){sh.style.transform='translateY(100%)';setTimeout(()=>closeModal(),300)}else sh.style.transform=''});
+}
+function bindScroll(){const bt=document.getElementById('bt');window.addEventListener('scroll',()=>{bt.classList.toggle('v',window.scrollY>400)});}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
+</script>
+</body>
+</html>
