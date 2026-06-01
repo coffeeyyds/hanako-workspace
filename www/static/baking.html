@@ -859,7 +859,7 @@ async function submitAiRecipe() {
 
   const body = {
     title: parsedRecipeData.title || '未命名配方',
-    description: parsedRecipeData.recipe_md ? parsedRecipeData.recipe_md.split('\n')[0].replace(/^#+\s*/,'').substring(0,100) : '',
+    description: recipeDescription(parsedRecipeData),
     source_url: parsedRecipeData.source_url || '',
     source_type: parsedRecipeData.source_type || 'manual',
     ingredients: parsedRecipeData.ingredients || [],
@@ -883,6 +883,14 @@ async function submitAiRecipe() {
     loadAllTags();
     navigate('#/detail/' + result.recipe_id);
   } catch(e) { showToast('提交失败: ' + e.message); }
+}
+
+function recipeDescription(data) {
+  const desc = (data.description || '').trim();
+  if (desc && !/^(材料|步骤|提示|做法|配方)$/i.test(desc)) return desc.substring(0, 120);
+  const text = (data.raw_text || '').replace(/\s+/g, ' ').trim();
+  if (text) return text.substring(0, 80);
+  return '';
 }
 
 async function renderUploadForm(editId) {

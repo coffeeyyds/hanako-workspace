@@ -217,6 +217,7 @@ async def _ai_parse_recipe(raw_text: str, source_url: str = "") -> dict:
 
 规则：
 - 只提取确实存在的信息，没有的字段留空字符串或空数组
+- description 是给配方卡片用的一句话简介，必须由你概括成 20-60 个中文字，写出口味、特点或适用场景；不要输出「材料」「步骤」这类栏目名
 - recipe_md 是一段完整可读的配方（markdown），包含你能找到的所有内容
 - 如果内容完全不包含配方，返回 {{"has_recipe": false}}
 - title 必须是一个正经的配方名称，从材料/做法推断，不要保留「好吃到跺脚」「绝了」「必做」等营销文案，也不要保留烤箱品牌名或页标题后缀（如「- 小红书」）
@@ -225,6 +226,7 @@ JSON 格式：
 {{
   "has_recipe": true,
   "title": "配方名称",
+  "description": "一句话简介，说明这个配方的风味、特点或适合谁做",
   "recipe_md": "## 材料\\n- 面粉 200g\\n- 糖 80g\\n\\n## 步骤\\n1. 第一步\\n2. 第二步\\n\\n## 提示\\n- 注意事项",
   "ingredients": [{{"name": "材料名", "amount": "用量"}}],
   "steps": [{{"text": "步骤"}}],
@@ -286,6 +288,7 @@ async def _ai_reintegrate(current_recipe: dict, supplement: str) -> dict:
 请重新整理并输出（不要遗漏补充内容中的信息）：
 {{
   "title": "配方名称",
+  "description": "一句话简介，说明这个配方的风味、特点或适合谁做",
   "recipe_md": "完整的 markdown 配方",
   "ingredients": [{{"name": "材料", "amount": "用量"}}],
   "steps": [{{"text": "步骤"}}],
@@ -452,6 +455,7 @@ async def _parse_link_content(url: str) -> dict:
                 ai_result = await _ai_parse_recipe(body_text, url)
                 if ai_result:
                     result["title"] = ai_result.get("title") or result["title"]
+                    result["description"] = ai_result.get("description") or result["description"]
                     result["recipe_md"] = ai_result.get("recipe_md") or ""
                     result["ingredients"] = ai_result.get("ingredients") or []
                     result["steps"] = ai_result.get("steps") or []
@@ -562,6 +566,7 @@ async def _parse_link_content(url: str) -> dict:
                 ai_result = await _ai_parse_recipe(result["raw_text"], result.get("source_url", ""))
                 if ai_result:
                     result["title"] = ai_result.get("title") or result.get("title", "")
+                    result["description"] = ai_result.get("description") or result.get("description", "")
                     result["recipe_md"] = ai_result.get("recipe_md") or ""
                     result["ingredients"] = ai_result.get("ingredients") or []
                     result["steps"] = ai_result.get("steps") or []
