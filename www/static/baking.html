@@ -1,0 +1,1320 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>广东拼粉群 · 烘焙配方库</title>
+<style>
+/* ─── Reset & Base ─── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px;scroll-behavior:smooth}
+body{
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+  background: #faf8f5; color: #3a3226; line-height:1.7;
+  min-height:100vh;
+}
+
+/* ─── Nav ─── */
+nav.topbar{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:12px 20px;background:#fff;border-bottom:1px solid #e8e0d5;
+  position:sticky;top:0;z-index:100;
+}
+nav.topbar .logo{font-size:1.1rem;font-weight:700;color:#8b5e3c;cursor:pointer;display:flex;align-items:center;gap:6px}
+nav.topbar .logo span{font-size:1.4rem}
+nav.topbar .nav-links{display:flex;gap:16px;align-items:center}
+nav.topbar .nav-links a,.nav-btn{
+  color:#6b5a4a;text-decoration:none;font-size:.9rem;cursor:pointer;
+  padding:6px 12px;border-radius:6px;transition:all .15s;border:none;background:none;
+}
+.nav-btn:hover,nav.topbar .nav-links a:hover{background:#f5f0e8;color:#8b5e3c}
+.nav-btn.primary{background:#8b5e3c;color:#fff}
+.nav-btn.primary:hover{background:#6b4530;color:#fff}
+.nav-btn.admin-btn{font-size:.8rem;color:#9a8b70}
+
+/* ─── Containers ─── */
+.container{max-width:900px;margin:0 auto;padding:24px 16px}
+.page{display:none}
+.page.active{display:block}
+
+/* ─── Hero Section ─── */
+.hero-section{
+  text-align:center;padding:32px 16px 24px;margin-bottom:24px;
+  background:linear-gradient(180deg,#fff 0%,#faf8f5 100%);
+  border-radius:12px;border:1px solid #e8e0d5;
+}
+.hero-title{font-size:1.3rem;color:#3a3226;margin-bottom:4px}
+.hero-sub{font-size:.88rem;color:#8a7b6b;margin-bottom:20px}
+.quick-submit{
+  display:flex;gap:8px;max-width:600px;margin:0 auto;
+}
+.quick-link-input{
+  flex:1;padding:12px 14px;border:2px solid #c4a882;border-radius:8px;
+  font-size:.92rem;font-family:inherit;background:#fff;color:#3a3226;
+  outline:none;min-width:0;
+}
+.quick-link-input:focus{border-color:#8b5e3c;box-shadow:0 0 0 3px rgba(139,94,60,.1)}
+.quick-link-input::placeholder{color:#b0a090;font-size:.85rem}
+.random-wrap{text-align:center;margin-top:14px}
+
+@media(max-width:640px){
+  .hero-section{padding:24px 12px 20px;border-radius:0;border-left:none;border-right:none}
+  .hero-title{font-size:1.15rem}
+  .quick-submit{flex-direction:column}
+  .quick-link-input{width:100%}
+}
+
+/* ─── Search Bar ─── */
+.search-bar{
+  display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap;
+}
+.search-input{
+  flex:1;min-width:200px;padding:10px 14px;
+  border:1px solid #e0d5c5;border-radius:8px;font-size:.95rem;
+  background:#fff;color:#3a3226;outline:none;
+}
+.search-input:focus{border-color:#c4a882;box-shadow:0 0 0 3px rgba(139,94,60,.1)}
+.tag-filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px}
+.tag-chip{
+  padding:4px 12px;border:1px solid #e0d5c5;border-radius:20px;
+  font-size:.8rem;cursor:pointer;background:#fff;color:#6b5a4a;
+  transition:all .15s;white-space:nowrap;
+}
+.tag-chip:hover,.tag-chip.active{background:#8b5e3c;color:#fff;border-color:#8b5e3c}
+
+/* ─── Recipe Cards ─── */
+.recipe-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+  gap:16px;margin-bottom:32px;
+}
+.recipe-card{
+  background:#fff;border-radius:8px;overflow:hidden;
+  border:1px solid #e8e0d5;cursor:pointer;transition:all .2s;
+  box-shadow:0 1px 4px rgba(0,0,0,.04);
+}
+.recipe-card:hover{box-shadow:0 4px 16px rgba(0,0,0,.08);transform:translateY(-2px)}
+.recipe-card .card-img{
+  width:100%;height:160px;object-fit:cover;background:#f5f0e8;
+  display:flex;align-items:center;justify-content:center;color:#c4a882;font-size:2rem;
+}
+.recipe-card .card-body{padding:14px 16px}
+.recipe-card .card-title{font-size:1.05rem;font-weight:600;color:#3a3226;margin-bottom:4px}
+.recipe-card .card-meta{font-size:.78rem;color:#8a7b6b;display:flex;gap:10px;flex-wrap:wrap}
+.recipe-card .card-desc{font-size:.84rem;color:#6b5a4a;margin-top:6px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.recipe-card .card-tags{display:flex;gap:4px;flex-wrap:wrap;margin-top:8px}
+.recipe-card .card-tags .mini-tag{
+  padding:2px 8px;border-radius:12px;font-size:.7rem;
+  background:#f5f0e8;color:#8b5e3c;
+}
+.empty-state{text-align:center;padding:60px 20px;color:#9a8b70}
+.empty-state .icon{font-size:3rem;margin-bottom:12px}
+
+/* ─── Detail Page ─── */
+.recipe-detail{background:#fff;border-radius:8px;padding:24px;border:1px solid #e8e0d5}
+.recipe-detail .detail-header{margin-bottom:20px}
+.recipe-detail .detail-cover{
+  width:100%;max-height:360px;object-fit:cover;border-radius:8px;margin-bottom:16px;
+  background:#f5f0e8
+}
+.recipe-detail h1{font-size:1.5rem;color:#3a3226;margin-bottom:8px}
+.recipe-detail .detail-meta{
+  display:flex;gap:16px;flex-wrap:wrap;font-size:.85rem;color:#8a7b6b;margin-bottom:8px;
+}
+.recipe-detail .source-link{
+  display:inline-block;color:#8b5e3c;font-size:.85rem;text-decoration:underline;
+  margin-bottom:16px;word-break:break-all;
+}
+.recipe-detail .section{margin-bottom:20px}
+.recipe-detail .section h3{
+  font-size:1.1rem;color:#6b4530;margin-bottom:8px;
+  padding-bottom:6px;border-bottom:1px solid #f0e8d8;
+}
+.recipe-detail .ingredient-list{list-style:none;padding:0}
+.recipe-detail .ingredient-list li{
+  padding:6px 0;border-bottom:1px dashed #f0e8d8;font-size:.92rem;
+  display:flex;justify-content:space-between;
+}
+.recipe-detail .step-item{
+  display:flex;gap:10px;padding:8px 0;border-bottom:1px solid #f5f0e8;
+}
+.recipe-detail .step-num{
+  min-width:28px;height:28px;background:#f5f0e8;color:#8b5e3c;
+  border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-size:.8rem;font-weight:700;flex-shrink:0;
+}
+.recipe-detail .step-text{font-size:.92rem;line-height:1.6}
+.recipe-detail .info-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
+  gap:10px;margin-top:8px;
+}
+.recipe-detail .info-item{
+  background:#faf8f5;padding:10px 12px;border-radius:6px;text-align:center;
+}
+.recipe-detail .info-item .label{font-size:.75rem;color:#8a7b6b}
+.recipe-detail .info-item .value{font-size:.95rem;font-weight:600;color:#3a3226}
+
+/* ─── Buttons ─── */
+.btn{
+  display:inline-flex;align-items:center;gap:4px;padding:8px 16px;
+  border-radius:6px;font-size:.9rem;cursor:pointer;border:none;
+  transition:all .15s;font-family:inherit;
+}
+.btn:active{transform:scale(.97)}
+.btn-primary{background:#8b5e3c;color:#fff}
+.btn-primary:hover{background:#6b4530}
+.btn-outline{background:#fff;color:#8b5e3c;border:1px solid #c4a882}
+.btn-outline:hover{background:#faf5ee}
+.btn-danger{background:#b85c4a;color:#fff}
+.btn-danger:hover{background:#9a4030}
+.btn-ghost{background:none;color:#6b5a4a;border:1px solid #e0d5c5}
+.btn-ghost:hover{background:#f5f0e8}
+.btn-sm{padding:4px 10px;font-size:.78rem}
+.btn-group{display:flex;gap:8px;flex-wrap:wrap}
+
+/* ─── Forms ─── */
+.form-group{margin-bottom:14px}
+.form-group label{display:block;font-size:.85rem;font-weight:600;color:#6b5a4a;margin-bottom:4px}
+.form-input,.form-textarea,.form-select{
+  width:100%;padding:10px 12px;border:1px solid #e0d5c5;border-radius:6px;
+  font-size:.9rem;font-family:inherit;background:#fff;color:#3a3226;outline:none;
+}
+.form-input:focus,.form-textarea:focus,.form-select:focus{
+  border-color:#c4a882;box-shadow:0 0 0 3px rgba(139,94,60,.1)}
+.form-textarea{min-height:80px;resize:vertical}
+.form-hint{font-size:.78rem;color:#9a8b70;margin-top:4px}
+.form-error{font-size:.8rem;color:#b85c4a;margin-top:4px}
+.ingredient-row,.step-row{
+  display:flex;gap:8px;margin-bottom:6px;align-items:center;
+}
+.ingredient-row input,.step-row input{flex:1}
+.upload-mode-tabs{display:flex;gap:0;margin-bottom:20px;border:1px solid #e0d5c5;border-radius:8px;overflow:hidden}
+.upload-mode-tab{
+  flex:1;padding:10px;text-align:center;cursor:pointer;font-size:.85rem;
+  background:#fff;color:#6b5a4a;border:none;font-family:inherit;transition:all .15s;
+}
+.upload-mode-tab:hover{background:#faf5ee}
+.upload-mode-tab.active{background:#8b5e3c;color:#fff}
+.upload-panel{display:none}
+.upload-panel.active{display:block}
+
+/* ─── Comments ─── */
+.comment-section{margin-top:32px}
+.comment-section h3{font-size:1.1rem;color:#6b4530;margin-bottom:16px}
+.comment-form{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px}
+.comment-form input{flex:1;min-width:120px}
+.comment-form textarea{flex:3;min-width:200px}
+.comment-list{list-style:none}
+.comment-item{
+  padding:12px 0;border-bottom:1px solid #f0e8d8;
+}
+.comment-item .comment-header{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:4px;
+}
+.comment-item .comment-nickname{font-size:.85rem;font-weight:600;color:#6b4530}
+.comment-item .comment-time{font-size:.75rem;color:#9a8b70}
+.comment-item .comment-content{font-size:.9rem;color:#3a3226;line-height:1.6}
+.comment-item.hidden{opacity:.5}
+.comment-actions{display:flex;gap:8px;margin-top:4px}
+
+/* ─── Admin Panel ─── */
+.admin-panel{
+  background:#2c2416;color:#e8d5b0;border-radius:8px;padding:16px;margin-bottom:20px;
+  display:none;font-size:.85rem;animation:fadeIn .2s ease;
+}
+.admin-panel.show{display:block}
+.admin-panel .admin-actions{display:flex;gap:8px;flex-wrap:wrap}
+
+/* ─── Modal ─── */
+.modal-overlay{
+  display:none;position:fixed;top:0;left:0;right:0;bottom:0;
+  background:rgba(0,0,0,.4);z-index:200;align-items:center;justify-content:center;
+  animation:fadeIn .15s ease;
+}
+.modal-overlay.show{display:flex}
+.modal-box{
+  background:#fff;border-radius:12px;padding:24px;max-width:420px;width:90%;
+  box-shadow:0 8px 32px rgba(0,0,0,.15);
+}
+.modal-box h3{margin-bottom:12px;color:#3a3226}
+.modal-box .btn-group{justify-content:flex-end;margin-top:16px}
+
+/* ─── Leaderboard ─── */
+.leaderboard{margin-top:40px;padding-top:20px;border-top:1px solid #e8e0d5}
+.leaderboard h3{font-size:1.1rem;color:#6b4530;margin-bottom:12px}
+.leaderboard-list{display:flex;flex-wrap:wrap;gap:8px}
+.leaderboard-item{
+  background:#fff;padding:8px 14px;border-radius:8px;border:1px solid #e8e0d5;
+  display:flex;align-items:center;gap:8px;font-size:.85rem;
+}
+.leaderboard-item .rank{font-weight:700;color:#8b5e3c;min-width:20px}
+.leaderboard-item .count{color:#8a7b6b;font-size:.8rem}
+
+/* ─── Toast ─── */
+.toast{
+  position:fixed;bottom:24px;left:50%;transform:translateX(-50%);
+  background:#3a3226;color:#faf8f5;padding:10px 20px;border-radius:8px;
+  font-size:.85rem;z-index:300;opacity:0;transition:opacity .3s;
+  pointer-events:none;
+}
+.toast.show{opacity:1}
+
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+
+/* ─── Helpers ─── */
+.hidden{display:none!important}
+.text-center{text-align:center}
+.mt-16{margin-top:16px}
+.mb-16{margin-bottom:16px}
+.gap-8{display:flex;gap:8px;flex-wrap:wrap}
+
+/* ─── Responsive ─── */
+@media(max-width:640px){
+  .container{padding:16px 12px}
+  .recipe-grid{grid-template-columns:1fr}
+  .recipe-detail{padding:16px}
+  .recipe-detail h1{font-size:1.25rem}
+  nav.topbar{padding:10px 12px}
+  nav.topbar .logo{font-size:1rem}
+  .upload-mode-tab{font-size:.78rem;padding:8px 4px}
+  .comment-form{flex-direction:column}
+  .comment-form input,.comment-form textarea{min-width:100%}
+  .info-grid{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+</head>
+<body>
+
+<!-- ─── Nav ─── -->
+<nav class="topbar">
+  <div class="logo" onclick="navigate('#/')"><span>🥐</span> 拼粉烘焙配方库</div>
+  <div class="nav-links">
+    <button class="nav-btn admin-btn" onclick="showAdminLogin()">管理员</button>
+  </div>
+</nav>
+
+<!-- ─── Admin Panel ─── -->
+<div class="admin-panel" id="adminPanel">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+    <strong>🔧 管理员模式</strong>
+    <button class="btn btn-ghost btn-sm" onclick="exitAdmin()" style="color:#e8d5b0;border-color:#5a4a30">退出</button>
+  </div>
+  <div id="adminContext" style="font-size:.8rem;color:#c4a070"></div>
+</div>
+
+<!-- ─── Main Content ─── -->
+<div class="container" id="app">
+  <!-- Home Page -->
+  <div class="page active" id="page-home">
+    <!-- Hero Section -->
+    <div class="hero-section">
+      <h2 class="hero-title">群友烘焙配方库</h2>
+      <p class="hero-sub">分享你的拿手配方，发现更多烘焙灵感</p>
+      <div class="quick-submit">
+        <input type="url" id="quickLinkInput" class="quick-link-input" placeholder="粘贴链接 / 拖拽或粘贴图片…">
+        <button class="btn btn-primary" id="quickParseBtn" onclick="quickParseLink()">🔍 导入</button>
+        <button class="btn btn-outline" onclick="navigate('#/upload')">✍️ 手动填写</button>
+      </div>
+      <div class="random-wrap">
+        <button class="btn btn-outline" onclick="randomRecipe()">🎲 今天做什么</button>
+      </div>
+    </div>
+
+    <div class="search-bar">
+      <input type="text" class="search-input" id="searchInput" placeholder="搜索标题、材料、上传者…" oninput="searchRecipes()">
+    </div>
+    <div class="tag-filters" id="tagFilters"></div>
+    <div class="recipe-grid" id="recipeGrid"></div>
+    <div class="empty-state hidden" id="emptyState">
+      <div class="icon">🍞</div>
+      <p>还没有配方，快来上传第一个吧！</p>
+    </div>
+    <div class="leaderboard" id="leaderboard"></div>
+  </div>
+
+  <!-- Detail Page -->
+  <div class="page" id="page-detail">
+    <div style="margin-bottom:16px">
+      <button class="btn btn-ghost btn-sm" onclick="navigate('#/')">← 返回列表</button>
+    </div>
+    <div class="recipe-detail" id="recipeDetail"></div>
+    <div class="comment-section" id="commentSection"></div>
+  </div>
+
+  <!-- Upload Page -->
+  <div class="page" id="page-upload">
+    <div style="margin-bottom:16px">
+      <button class="btn btn-ghost btn-sm" onclick="navigate('#/')">← 返回列表</button>
+    </div>
+    <div class="recipe-detail" id="uploadForm"></div>
+  </div>
+</div>
+
+<!-- ─── Modal ─── -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal-box" id="modalBox"></div>
+</div>
+
+<!-- ─── Toast ─── -->
+<div class="toast" id="toast"></div>
+
+<!-- ─── Honeypot (hidden, anti-bot) ─── -->
+<input type="text" id="honeypot" style="position:absolute;left:-9999px;top:-9999px" tabindex="-1" autocomplete="off">
+
+<script>
+/* ─── State ─── */
+let currentPage = 'home';
+let currentRecipeId = null;
+let isAdmin = false;
+let adminToken = null;
+let allRecipes = [];
+let allTags = [];
+let activeTag = '';
+let pendingParseResult = null;
+
+/* ─── Router ─── */
+function navigate(hash) {
+  const parts = hash.replace('#/', '').split('/');
+  const route = parts[0];
+  const id = parts[1] || null;
+
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+
+  if (route === 'detail' && id) {
+    currentPage = 'detail';
+    currentRecipeId = id;
+    document.getElementById('page-detail').classList.add('active');
+    loadRecipeDetail(id);
+  } else if (route === 'upload') {
+    currentPage = 'upload';
+    currentRecipeId = null;
+    document.getElementById('page-upload').classList.add('active');
+    renderUploadForm();
+  } else if (route === 'edit' && id) {
+    currentPage = 'upload';
+    currentRecipeId = id;
+    document.getElementById('page-upload').classList.add('active');
+    renderUploadForm(id);
+  } else {
+    currentPage = 'home';
+    currentRecipeId = null;
+    document.getElementById('page-home').classList.add('active');
+    loadRecipes();
+    loadLeaderboard();
+  }
+
+  window.scrollTo(0, 0);
+}
+
+window.addEventListener('hashchange', () => navigate(location.hash || '#/'));
+window.addEventListener('DOMContentLoaded', () => {
+  adminToken = sessionStorage.getItem('bakingAdminToken');
+  if (adminToken) {
+    isAdmin = true;
+    document.getElementById('adminPanel').classList.add('show');
+  }
+  navigate(location.hash || '#/');
+  loadAllTags();
+});
+
+/* ─── API Helpers ─── */
+async function api(path, opts = {}) {
+  const headers = opts.headers || {};
+  if (isAdmin && adminToken) headers['X-Admin-Token'] = adminToken;
+  const res = await fetch(path, { ...opts, headers });
+  const data = await res.json();
+  if (!res.ok && data.detail) throw new Error(data.detail);
+  return data;
+}
+
+/* ─── Toast ─── */
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+/* ─── Modal ─── */
+function showModal(title, content, onConfirm) {
+  const overlay = document.getElementById('modalOverlay');
+  const box = document.getElementById('modalBox');
+  box.innerHTML = `
+    <h3>${title}</h3>
+    <div>${content}</div>
+    <div class="btn-group" style="margin-top:16px;justify-content:flex-end">
+      <button class="btn btn-ghost btn-sm" onclick="closeModal()">取消</button>
+      ${onConfirm ? '<button class="btn btn-primary btn-sm" id="modalConfirm">确认</button>' : ''}
+    </div>`;
+  overlay.classList.add('show');
+  if (onConfirm) {
+    document.getElementById('modalConfirm').onclick = () => { onConfirm(); closeModal(); };
+  }
+}
+
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('show');
+}
+
+/* ─── Admin ─── */
+function showAdminLogin() {
+  if (isAdmin) { exitAdmin(); return; }
+  showModal('管理员登录',
+    '<input type="password" id="adminPinInput" class="form-input" placeholder="请输入管理员密码" style="margin-top:8px">',
+    async () => {
+      const pin = document.getElementById('adminPinInput').value;
+      try {
+        const res = await fetch('/api/baking/admin/verify', {
+          method:'POST', headers:{'Content-Type':'application/json'},
+          body: JSON.stringify({ pin })
+        });
+        const data = await res.json();
+        if (data.valid) {
+          isAdmin = true;
+          adminToken = data.token;
+          sessionStorage.setItem('bakingAdminToken', adminToken);
+          document.getElementById('adminPanel').classList.add('show');
+          showToast('管理员模式已开启');
+          if (currentPage === 'home') loadRecipes();
+          else if (currentPage === 'detail') loadRecipeDetail(currentRecipeId);
+        } else {
+          showToast('密码错误');
+        }
+      } catch(e) { showToast('验证失败: ' + e.message); }
+    }
+  );
+}
+
+function exitAdmin() {
+  isAdmin = false;
+  adminToken = null;
+  sessionStorage.removeItem('bakingAdminToken');
+  document.getElementById('adminPanel').classList.remove('show');
+  showToast('已退出管理员模式');
+  if (currentPage === 'home') loadRecipes();
+  else if (currentPage === 'detail') loadRecipeDetail(currentRecipeId);
+}
+
+/* ─── Recipes ─── */
+async function loadRecipes() {
+  try {
+    const status = isAdmin ? 'all' : 'public';
+    const q = document.getElementById('searchInput')?.value || '';
+    const params = new URLSearchParams({ q, status });
+    if (activeTag) params.set('tag', activeTag);
+
+    allRecipes = await api('/api/baking/recipes?' + params.toString());
+    renderRecipeCards();
+  } catch(e) {
+    showToast('加载配方失败');
+    console.error(e);
+  }
+}
+
+function searchRecipes() {
+  loadRecipes();
+}
+
+async function loadAllTags() {
+  try {
+    const recipes = await api('/api/baking/recipes?status=public');
+    const tagSet = new Set();
+    recipes.forEach(r => (r.tags || []).forEach(t => tagSet.add(t)));
+    allTags = [...tagSet].sort();
+    renderTagFilters();
+  } catch(e) {}
+}
+
+function renderTagFilters() {
+  const container = document.getElementById('tagFilters');
+  container.innerHTML = allTags.map(t =>
+    `<span class="tag-chip${t === activeTag ? ' active' : ''}" onclick="filterByTag('${t.replace(/'/g, "\\'")}')">${t}</span>`
+  ).join('');
+}
+
+function filterByTag(tag) {
+  activeTag = activeTag === tag ? '' : tag;
+  renderTagFilters();
+  loadRecipes();
+}
+
+function renderRecipeCards() {
+  const grid = document.getElementById('recipeGrid');
+  const empty = document.getElementById('emptyState');
+
+  if (allRecipes.length === 0) {
+    grid.innerHTML = '';
+    empty.classList.remove('hidden');
+    return;
+  }
+  empty.classList.add('hidden');
+
+  grid.innerHTML = allRecipes.map(r => {
+    const cover = r.cover_image
+      ? `<div class="card-img"><img src="${coverSrc(r.cover_image)}" alt="${esc(r.title)}" loading="lazy" style="width:100%;height:100%;object-fit:cover" onerror="this.parentElement.innerHTML='🧁'"></div>`
+      : `<div class="card-img">🧁</div>`;
+    const tags = (r.tags || []).slice(0,3).map(t => `<span class="mini-tag">${esc(t)}</span>`).join('');
+    const sourceLabel = r.source_type === 'wechat' ? '📱 公众号' : r.source_type === 'xiaohongshu' ? '📕 小红书' : '✍️ 手动';
+    const statusBadge = r.status !== 'public' && isAdmin
+      ? `<span style="color:#b85c4a;font-size:.7rem">[${r.status === 'deleted' ? '已删除' : '已隐藏'}]</span> `
+      : '';
+
+    return `
+      <div class="recipe-card" onclick="navigate('#/detail/${r.recipe_id}')">
+        ${cover}
+        <div class="card-body">
+          <div class="card-title">${statusBadge}${esc(r.title)}</div>
+          <div class="card-meta">
+            <span>${esc(r.uploader_nickname)}</span>
+            <span>${sourceLabel}</span>
+          </div>
+          ${r.description ? `<div class="card-desc">${esc(r.description)}</div>` : ''}
+          <div class="card-tags">${tags}</div>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+function esc(s) { return (s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+function coverSrc(path) {
+  if (!path) return '';
+  if (path.startsWith('http://') || path.startsWith('https://')) return path;
+  return '/' + path;
+}
+
+/* ─── Recipe Detail ─── */
+async function loadRecipeDetail(id) {
+  try {
+    const r = await api('/api/baking/recipes/' + id);
+    const container = document.getElementById('recipeDetail');
+
+    const cover = r.cover_image
+      ? `<img class="detail-cover" src="${coverSrc(r.cover_image)}" alt="${esc(r.title)}" onerror="this.style.display='none'">`
+      : '';
+
+    const ingredients = (r.ingredients || []).map(i =>
+      `<li><span>${esc(i.name || '')}</span><span style="color:#6b5a4a">${esc(i.amount || '')}</span></li>`
+    ).join('');
+
+    const steps = (r.steps || []).map((s, idx) =>
+      `<div class="step-item"><div class="step-num">${idx + 1}</div><div class="step-text">${esc(typeof s === 'string' ? s : s.text || '')}</div></div>`
+    ).join('');
+
+    const tips = (r.tips || []).map(t => `<li style="margin-bottom:4px;font-size:.9rem">${esc(typeof t === 'string' ? t : t)}</li>`).join('');
+
+    const tags = (r.tags || []).map(t => `<span class="tag-chip">${esc(t)}</span>`).join('');
+
+    const sourceLabel = r.source_type === 'wechat' ? '微信公众号' : r.source_type === 'xiaohongshu' ? '小红书' : '手动填写';
+
+    // Edit button for everyone + admin actions
+    let actionBtns = '';
+    // Always show edit button
+    actionBtns = `<div class="btn-group" style="margin-top:16px">
+      <button class="btn btn-outline btn-sm" onclick="editRecipe('${r.recipe_id}')">✏️ 编辑配方</button>
+    `;
+    if (isAdmin) {
+      actionBtns += `
+        ${r.status === 'deleted'
+          ? `<button class="btn btn-primary btn-sm" onclick="restoreRecipe('${r.recipe_id}')">恢复配方</button>`
+          : `<button class="btn btn-danger btn-sm" onclick="deleteRecipe('${r.recipe_id}')">删除配方</button>`
+        }
+        <button class="btn btn-ghost btn-sm" onclick="showRecipeHistory('${r.recipe_id}')">历史/回滚</button>
+      `;
+    }
+    actionBtns += '</div>';
+
+    container.innerHTML = `
+      ${cover}
+      <h1>${esc(r.title)}</h1>
+      <div class="detail-meta">
+        <span>👩‍🍳 ${esc(r.uploader_nickname)}</span>
+        <span>📌 ${sourceLabel}</span>
+        <span>🕐 ${r.created_at ? new Date(r.created_at).toLocaleDateString('zh-CN') : ''}</span>
+      </div>
+      ${r.source_url ? `<a class="source-link" href="${esc(r.source_url)}" target="_blank" rel="noopener">🔗 查看原文</a>` : ''}
+      ${tags ? `<div class="gap-8" style="margin-bottom:16px">${tags}</div>` : ''}
+      ${r.description ? `<p style="color:#6b5a4a;font-size:.92rem;margin-bottom:16px;line-height:1.7">${esc(r.description)}</p>` : ''}
+
+      ${(r.temperature || r.time || r.servings) ? `
+        <div class="section"><h3>📋 基本信息</h3>
+          <div class="info-grid">
+            ${r.temperature ? `<div class="info-item"><div class="label">温度</div><div class="value">${esc(r.temperature)}</div></div>` : ''}
+            ${r.time ? `<div class="info-item"><div class="label">时间</div><div class="value">${esc(r.time)}</div></div>` : ''}
+            ${r.servings ? `<div class="info-item"><div class="label">份量</div><div class="value">${esc(r.servings)}</div></div>` : ''}
+          </div>
+        </div>` : ''}
+
+      ${ingredients ? `<div class="section"><h3>🥚 材料</h3><ul class="ingredient-list">${ingredients}</ul></div>` : ''}
+      ${steps ? `<div class="section"><h3>👩‍🍳 步骤</h3>${steps}</div>` : ''}
+      ${tips ? `<div class="section"><h3>💡 提示</h3><ul style="padding-left:20px">${tips}</ul></div>` : ''}
+
+      ${actionBtns}
+    `;
+
+    // Load comments
+    loadComments(id);
+  } catch(e) {
+    document.getElementById('recipeDetail').innerHTML = `<p style="color:#b85c4a">加载失败：${e.message}</p>`;
+  }
+}
+
+/* ─── Comments ─── */
+async function loadComments(recipeId) {
+  const section = document.getElementById('commentSection');
+  try {
+    const comments = await api('/api/baking/recipes/' + recipeId + '/comments');
+    section.innerHTML = `
+      <h3>💬 评论 (${comments.length})</h3>
+      <div class="comment-form">
+        <input type="text" id="commentNickname" class="form-input" placeholder="你的昵称" maxlength="30">
+        <textarea id="commentContent" class="form-textarea" placeholder="写下你的评论…" maxlength="500" style="min-height:50px"></textarea>
+        <button class="btn btn-primary btn-sm" onclick="submitComment('${recipeId}')">发布</button>
+      </div>
+      <div class="comment-list">
+        ${comments.length === 0 ? '<p style="color:#9a8b70;text-align:center;padding:20px">暂无评论，来坐沙发吧 ☕</p>' : ''}
+        ${comments.map(c => `
+          <div class="comment-item${c.status === 'hidden' ? ' hidden' : ''}">
+            <div class="comment-header">
+              <span class="comment-nickname">${esc(c.nickname)}${c.status === 'hidden' ? ' <span style="color:#b85c4a;font-size:.7rem">[已隐藏]</span>' : ''}${c.status === 'deleted' ? ' <span style="color:#b85c4a;font-size:.7rem">[已删除]</span>' : ''}</span>
+              <span class="comment-time">${c.created_at ? new Date(c.created_at).toLocaleDateString('zh-CN') : ''}</span>
+            </div>
+            <div class="comment-content">${esc(c.content)}</div>
+            ${isAdmin ? `
+              <div class="comment-actions">
+                ${c.status === 'public'
+                  ? `<button class="btn btn-ghost btn-sm" onclick="hideComment('${c.comment_id}')">隐藏</button>`
+                  : `<button class="btn btn-ghost btn-sm" onclick="showComment('${c.comment_id}')">显示</button>`
+                }
+                <button class="btn btn-danger btn-sm" onclick="deleteComment('${c.comment_id}')">删除</button>
+              </div>` : ''}
+          </div>
+        `).join('')}
+      </div>`;
+  } catch(e) { section.innerHTML = `<p style="color:#b85c4a">加载评论失败</p>`; }
+}
+
+async function submitComment(recipeId) {
+  const nickname = document.getElementById('commentNickname').value.trim();
+  const content = document.getElementById('commentContent').value.trim();
+  if (!nickname) { showToast('请填写昵称'); return; }
+  if (!content) { showToast('请填写评论内容'); return; }
+  if (content.length < 2) { showToast('评论至少2个字'); return; }
+
+  try {
+    await api('/api/baking/recipes/' + recipeId + '/comments', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ nickname, content, _website: document.getElementById('honeypot').value })
+    });
+    showToast('评论发布成功');
+    loadComments(recipeId);
+  } catch(e) { showToast('发布失败: ' + e.message); }
+}
+
+async function hideComment(id) {
+  try { await api('/api/baking/comments/' + id, { method:'PATCH', headers:{'Content-Type':'application/json'}, body:JSON.stringify({status:'hidden'}) }); loadComments(currentRecipeId); } catch(e) { showToast(e.message); }
+}
+async function showComment(id) {
+  try { await api('/api/baking/comments/' + id, { method:'PATCH', headers:{'Content-Type':'application/json'}, body:JSON.stringify({status:'public'}) }); loadComments(currentRecipeId); } catch(e) { showToast(e.message); }
+}
+async function deleteComment(id) {
+  try { await api('/api/baking/comments/' + id, { method:'DELETE' }); showToast('评论已删除'); loadComments(currentRecipeId); } catch(e) { showToast(e.message); }
+}
+
+/* ─── Recipe Actions (Admin) ─── */
+async function deleteRecipe(id) {
+  showModal('确认删除', '<p>此操作将软删除配方，可恢复。</p>', async () => {
+    try { await api('/api/baking/recipes/' + id, { method:'DELETE' }); showToast('配方已删除'); navigate('#/'); } catch(e) { showToast(e.message); }
+  });
+}
+async function restoreRecipe(id) {
+  try {
+    await api('/api/baking/recipes/' + id + '/restore', { method:'POST' });
+    showToast('配方已恢复');
+    loadRecipeDetail(id);
+  } catch(e) { showToast(e.message); }
+}
+function editRecipe(id) { navigate('#/edit/' + id); }
+
+async function showRecipeHistory(id) {
+  try {
+    const history = await api('/api/baking/recipes/' + id + '/history');
+    const content = history.length
+      ? `<div style="max-height:360px;overflow:auto">${history.map(h => `
+          <div style="border-bottom:1px solid #f0e8d8;padding:10px 0">
+            <div style="font-size:.86rem;color:#3a3226">${esc(historyActionLabel(h.action))} · ${h.created_at ? new Date(h.created_at).toLocaleString('zh-CN') : ''}</div>
+            <div style="font-size:.78rem;color:#8a7b6b;margin:4px 0">${esc(h.before_title || '无标题')} → ${esc(h.after_title || '无标题')}</div>
+            ${h.action !== 'rollback' ? `<button class="btn btn-outline btn-sm" onclick="rollbackRecipe('${id}','${h.history_id}')">回滚到修改前</button>` : ''}
+          </div>
+        `).join('')}</div>`
+      : '<p style="color:#8a7b6b">还没有可回滚的编辑记录。</p>';
+    showModal('配方历史', content, null);
+  } catch(e) { showToast('加载历史失败: ' + e.message); }
+}
+
+function historyActionLabel(action) {
+  return { update:'编辑', delete:'删除', restore:'恢复', rollback:'回滚' }[action] || action || '记录';
+}
+
+async function rollbackRecipe(id, historyId) {
+  try {
+    await api('/api/baking/recipes/' + id + '/rollback/' + historyId, { method:'POST' });
+    closeModal();
+    showToast('已回滚');
+    loadRecipeDetail(id);
+  } catch(e) { showToast('回滚失败: ' + e.message); }
+}
+
+/* ─── Upload / Edit Form ─── */
+let parsedRecipeData = null;  // Stores AI-parsed recipe for link/image mode
+
+function md2html(md) {
+  if (!md) return '';
+  return md
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/^### (.+)$/gm,'<h4 style="margin:10px 0 4px;font-size:.95rem;color:#6b4530">$1</h4>')
+    .replace(/^## (.+)$/gm,'<h3 style="margin:14px 0 6px;font-size:1rem;color:#6b4530;border-bottom:1px solid #f0e8d8;padding-bottom:4px">$1</h3>')
+    .replace(/^# (.+)$/gm,'<h2 style="margin:16px 0 8px;font-size:1.1rem;color:#3a3226">$1</h2>')
+    .replace(/^- (.+)$/gm,'<li style="margin:2px 0;font-size:.9rem">$1</li>')
+    .replace(/^(\d+)\. (.+)$/gm,'<li style="margin:2px 0;font-size:.9rem">$2</li>')
+    .replace(/\n\n/g,'<br><br>')
+    .replace(/\n/g,'<br>');
+}
+
+function renderAIPreview(data) {
+  parsedRecipeData = data;
+  const container = document.getElementById('aiPreviewArea');
+  if (!container) return;
+  // Hide template fields, switch to text tab when AI preview is shown
+  const mf = document.getElementById('manualFields');
+  if (mf && mf.closest('.upload-panel')) mf.closest('.upload-panel').style.display = 'none';
+  switchUploadMode('text');
+  container.innerHTML = `
+    <div style="background:#fff;border:1px solid #e0d5c5;border-radius:8px;padding:16px;margin-top:12px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+        <strong style="color:#8b5e3c">🤖 AI 解析结果</strong>
+        <span style="font-size:.75rem;color:#8a7b6b">请核对内容，可补充后重新整合</span>
+      </div>
+      ${data.cover_image ? `<img src="${coverSrc(data.cover_image)}" style="width:100%;max-height:240px;object-fit:cover;border-radius:6px;margin-bottom:10px" onerror="this.style.display='none'">` : ''}
+      <div id="aiRecipeContent" style="line-height:1.7;color:#3a3226;max-height:400px;overflow-y:auto;padding:4px 0">
+        ${md2html(data.recipe_md || data.raw_text || '暂无解析内容')}
+      </div>
+      <div style="margin-top:14px">
+        <label style="font-size:.82rem;font-weight:600;color:#6b5a4a">补充内容（可选）</label>
+        <textarea id="fSupplement" class="form-textarea" placeholder="有什么需要补充或修改的？比如\"温度改成170度\"、\"再加10g糖\"…" style="margin-top:4px"></textarea>
+        <button class="btn btn-primary btn-sm" id="btnReintegrate" onclick="reintegrateRecipe()" style="margin-top:6px">🤖 AI 重新整合</button>
+        <span id="reintegrateStatus" style="font-size:.78rem;color:#8a7b6b;margin-left:8px"></span>
+      </div>
+    </div>
+    <div style="margin-top:16px">
+      <div class="form-group">
+        <label>你的昵称 *</label>
+        <input type="text" id="fAiUploader" class="form-input" placeholder="让大家知道是你分享的">
+        <div class="form-hint">提交后可在本设备编辑自己上传的配方</div>
+      </div>
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="submitAiRecipe()">📤 提交配方</button>
+        <button class="btn btn-ghost" onclick="navigate('#/')">取消</button>
+      </div>
+    </div>`;
+}
+
+async function reintegrateRecipe() {
+  const supplement = document.getElementById('fSupplement').value.trim();
+  if (!supplement) { showToast('请先填写补充内容'); return; }
+  if (!parsedRecipeData) return;
+
+  const btn = document.getElementById('btnReintegrate');
+  const status = document.getElementById('reintegrateStatus');
+  btn.disabled = true;
+  btn.textContent = '整合中…';
+  status.textContent = '';
+
+  try {
+    const result = await api('/api/baking/ai-reintegrate', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ current: parsedRecipeData, supplement })
+    });
+    parsedRecipeData = result;
+    // Preserve metadata that AI doesn't return
+    parsedRecipeData.source_url = parsedRecipeData.source_url || result.source_url || '';
+    parsedRecipeData.source_type = parsedRecipeData.source_type || result.source_type || 'manual';
+    parsedRecipeData.cover_image = parsedRecipeData.cover_image || result.cover_image || '';
+    document.getElementById('aiRecipeContent').innerHTML = md2html(result.recipe_md || '');
+    document.getElementById('fSupplement').value = '';
+    status.textContent = '✅ 已整合';
+  } catch(e) {
+    status.textContent = '整合失败';
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '🤖 AI 重新整合';
+  }
+}
+
+async function submitAiRecipe() {
+  const uploader = document.getElementById('fAiUploader').value.trim();
+  if (!uploader) { showToast('请填写昵称'); return; }
+  if (!parsedRecipeData) { showToast('请先解析配方'); return; }
+
+  const body = {
+    title: parsedRecipeData.title || '未命名配方',
+    description: parsedRecipeData.recipe_md ? parsedRecipeData.recipe_md.split('\n')[0].replace(/^#+\s*/,'').substring(0,100) : '',
+    source_url: parsedRecipeData.source_url || '',
+    source_type: parsedRecipeData.source_type || 'manual',
+    ingredients: parsedRecipeData.ingredients || [],
+    steps: parsedRecipeData.steps || [],
+    temperature: parsedRecipeData.temperature || '',
+    time: parsedRecipeData.time || '',
+    servings: parsedRecipeData.servings || '',
+    tips: parsedRecipeData.tips || [],
+    tags: [],
+    uploader_nickname: uploader,
+    cover_image: parsedRecipeData.cover_image || '',
+  };
+
+  try {
+    const result = await api('/api/baking/recipes', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify(body)
+    });
+    showToast('配方提交成功！');
+    parsedRecipeData = null;
+    loadAllTags();
+    navigate('#/detail/' + result.recipe_id);
+  } catch(e) { showToast('提交失败: ' + e.message); }
+}
+
+async function renderUploadForm(editId) {
+  const container = document.getElementById('uploadForm');
+  const isEdit = !!editId;
+  let recipe = null;
+  let hasAiPreview = false;
+
+  // Consume pending parse result from quick-parse flow
+  if (!isEdit && pendingParseResult) {
+    parsedRecipeData = pendingParseResult;
+    pendingParseResult = null;
+  }
+  hasAiPreview = !isEdit && !!parsedRecipeData;
+
+  if (isEdit) {
+    try { recipe = await api('/api/baking/recipes/' + editId); } catch(e) { showToast('加载配方失败'); return; }
+  }
+
+  const defaults = recipe || {};
+  const title = defaults.title || '';
+  const desc = defaults.description || '';
+  const sourceUrl = defaults.source_url || '';
+  const temp = defaults.temperature || '';
+  const t = defaults.time || '';
+  const servings = defaults.servings || '';
+  const uploader = defaults.uploader_nickname || '';
+  const tags = (defaults.tags || []).join(', ');
+  const tips = (defaults.tips || []).join('\n');
+  const coverImg = defaults.cover_image || '';
+  const ingredients = (defaults.ingredients || [{name:'',amount:''}]);
+  const steps = (defaults.steps || [{text:''}]);
+
+  container.innerHTML = `
+    <h1 style="font-size:1.3rem;color:#3a3226;margin-bottom:20px">${isEdit ? '✏️ 编辑配方' : '📝 上传新配方'}</h1>
+
+    ${!isEdit ? `
+    <div class="upload-mode-tabs" id="modeTabs">
+      <button class="upload-mode-tab" data-mode="text" onclick="switchUploadMode('text')">📝 文字填写</button>
+      <button class="upload-mode-tab active" data-mode="template" onclick="switchUploadMode('template')">📋 模版填写</button>
+    </div>` : ''}
+
+    ${!isEdit ? `
+    <!-- Text Mode (free-form text + optional image) -->
+    <div class="upload-panel" id="panel-text">
+      <div class="form-group">
+        <label>粘贴配方文字</label>
+        <textarea id="txtRecipeText" class="form-textarea" placeholder="粘贴食谱文字、截图识别的文本，或直接描述你的配方…" style="min-height:180px"></textarea>
+        <div class="form-hint">AI 会自动整理格式，不需要照着模板填</div>
+      </div>
+      <div class="form-group">
+        <label>或上传截图自动识别</label>
+        <input type="file" id="txtImageFile" accept="image/jpeg,image/png,image/webp" class="form-input" onchange="previewTxtImage()">
+        <div id="txtImagePreview" style="margin-top:6px"></div>
+        <div id="txtOcrResult" style="margin-top:6px"></div>
+      </div>
+      <button class="btn btn-primary" id="btnAiFormat" onclick="aiFormatText()" style="margin-top:4px">🤖 AI 整理配方</button>
+    </div>
+
+    <!-- AI Preview Area -->
+    <div id="aiPreviewArea">${hasAiPreview ? '' : ''}</div>
+    ` : `
+    <!-- Edit mode: always show manual template -->
+    <div id="manualFields"></div>
+    `}
+
+    ${!isEdit ? `
+    <!-- Manual Template Fields (hidden initially) -->
+    <div class="upload-panel" id="panel-template" style="display:block;margin-top:20px">
+      <div id="manualFields">
+        ${renderManualFields(title, desc, sourceUrl, temp, t, servings, uploader, tags, tips, coverImg, editId)}
+      </div>
+    </div>` : ''}
+  `;
+
+  if (isEdit) {
+    document.getElementById('manualFields').innerHTML = renderManualFields(title, desc, sourceUrl, temp, t, servings, uploader, tags, tips, coverImg, editId);
+    // Ensure edit mode shows template panel
+    const pt = document.getElementById('panel-template');
+    if (pt) pt.style.display = 'block';
+  }
+
+  // Show AI preview if we have pending data
+  if (hasAiPreview && parsedRecipeData) {
+    renderAIPreview(parsedRecipeData);
+  }
+
+  // Render dynamic lists for manual mode
+  if (isEdit || document.getElementById('manualFields').style.display !== 'none') {
+    setTimeout(() => {
+      renderIngredientList(ingredients);
+      renderStepList(steps);
+    }, 50);
+  }
+}
+
+function renderManualFields(title, desc, sourceUrl, temp, t, servings, uploader, tags, tips, coverImg, editId) {
+  const editIdJs = editId ? `'${esc(editId)}'` : "''";
+  return `
+    <div class="form-group"><label>配方名称 *</label><input type="text" id="fTitle" class="form-input" value="${esc(title)}" placeholder="如：抹茶巴斯克芝士蛋糕"></div>
+    <div class="form-group"><label>封面图片</label><input type="file" id="coverFile" accept="image/jpeg,image/png,image/webp" class="form-input">${coverImg ? `<div style="margin-top:6px"><img src="/${coverImg}" style="max-width:200px;max-height:150px;border-radius:6px"><br><span class="form-hint">已上传封面，选择新图片可替换</span></div>` : ''}</div>
+    <div class="form-group"><label>一句话简介</label><input type="text" id="fDesc" class="form-input" value="${esc(desc)}" placeholder="用一句话描述这个配方"></div>
+    <div class="form-group"><label>来源链接</label><input type="url" id="fSourceUrl" class="form-input" value="${esc(sourceUrl)}" placeholder="小红书/公众号链接（选填）"></div>
+    <div class="form-group" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
+      <div><label>温度</label><input type="text" id="fTemp" class="form-input" value="${esc(temp)}" placeholder="如：180°C"></div>
+      <div><label>时间</label><input type="text" id="fTime" class="form-input" value="${esc(t)}" placeholder="如：45分钟"></div>
+      <div><label>份量</label><input type="text" id="fServings" class="form-input" value="${esc(servings)}" placeholder="如：6寸"></div>
+    </div>
+    <div class="form-group"><label>材料</label><div id="ingredientList"></div><button class="btn btn-ghost btn-sm" onclick="addIngredient()" style="margin-top:6px">+ 添加材料</button></div>
+    <div class="form-group"><label>步骤</label><div id="stepList"></div><button class="btn btn-ghost btn-sm" onclick="addStep()" style="margin-top:6px">+ 添加步骤</button></div>
+    <div class="form-group"><label>提示/注意事项（每行一条）</label><textarea id="fTips" class="form-textarea" placeholder="如：奶油奶酪要提前室温软化&#10;烤好后冷藏4小时以上再脱模">${esc(tips)}</textarea></div>
+    <div class="form-group"><label>标签（逗号分隔）</label><input type="text" id="fTags" class="form-input" value="${esc(tags)}" placeholder="如：甜点, 芝士, 免烤箱"></div>
+    <div class="form-group"><label>你的昵称 *</label><input type="text" id="fUploader" class="form-input" value="${esc(uploader)}" placeholder="让大家知道是你分享的"></div>
+    <div class="btn-group" style="margin-top:20px"><button class="btn btn-primary" onclick="submitManualRecipe(${editIdJs})">${editId ? '保存修改' : '提交配方'}</button><button class="btn btn-ghost" onclick="navigate('#/')">取消</button></div>`;
+}
+
+function switchUploadMode(mode) {
+  document.querySelectorAll('.upload-mode-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.upload-panel').forEach(p => p.classList.remove('active'));
+  const panel = document.getElementById('panel-' + mode);
+  if (panel) panel.classList.add('active');
+  document.querySelectorAll('.upload-mode-tab').forEach(t => {
+    if (t.dataset.mode === mode) t.classList.add('active');
+  });
+  // Show/hide template fields
+  const mf = document.getElementById('manualFields');
+  if (mf) mf.style.display = mode === 'template' ? 'block' : 'none';
+  if (mode === 'template' && mf) {
+    setTimeout(() => {
+      renderIngredientList([{name:'',amount:''}]);
+      renderStepList([{text:''}]);
+    }, 30);
+  }
+}
+
+/* ─── Dynamic Ingredient/Step Lists (Manual Mode) ─── */
+function renderIngredientList(ingredients) {
+  const container = document.getElementById('ingredientList');
+  if (!container) return;
+  container.innerHTML = ingredients.map((ing, i) => `
+    <div class="ingredient-row">
+      <input type="text" class="form-input ing-name" placeholder="材料名" value="${esc(ing.name || '')}">
+      <input type="text" class="form-input ing-amount" placeholder="用量" value="${esc(ing.amount || '')}" style="max-width:150px">
+      <button class="btn btn-ghost btn-sm" onclick="this.parentElement.remove()" style="flex-shrink:0">✕</button>
+    </div>`).join('');
+}
+function addIngredient() {
+  const container = document.getElementById('ingredientList');
+  if (!container) return;
+  const row = document.createElement('div');
+  row.className = 'ingredient-row';
+  row.innerHTML = `<input type="text" class="form-input ing-name" placeholder="材料名"><input type="text" class="form-input ing-amount" placeholder="用量" style="max-width:150px"><button class="btn btn-ghost btn-sm" onclick="this.parentElement.remove()" style="flex-shrink:0">✕</button>`;
+  container.appendChild(row);
+}
+function removeIngredient(idx) { document.querySelectorAll('.ingredient-row')[idx]?.remove(); }
+
+function renderStepList(steps) {
+  const container = document.getElementById('stepList');
+  if (!container) return;
+  container.innerHTML = steps.map((s, i) => `
+    <div class="step-row">
+      <span style="min-width:24px;color:#8b5e3c;font-weight:700;font-size:.85rem">${i + 1}.</span>
+      <input type="text" class="form-input step-text" placeholder="步骤说明" value="${esc(typeof s === 'string' ? s : s.text || '')}">
+      <button class="btn btn-ghost btn-sm" onclick="this.parentElement.remove()" style="flex-shrink:0">✕</button>
+    </div>`).join('');
+}
+function addStep() {
+  const container = document.getElementById('stepList');
+  if (!container) return;
+  const idx = container.querySelectorAll('.step-row').length;
+  const row = document.createElement('div');
+  row.className = 'step-row';
+  row.innerHTML = `<span style="min-width:24px;color:#8b5e3c;font-weight:700;font-size:.85rem">${idx + 1}.</span><input type="text" class="form-input step-text" placeholder="步骤说明"><button class="btn btn-ghost btn-sm" onclick="this.parentElement.remove()" style="flex-shrink:0">✕</button>`;
+  container.appendChild(row);
+}
+function removeStep(idx) {
+  document.querySelectorAll('.step-row')[idx]?.remove();
+  document.querySelectorAll('.step-row span').forEach((s, i) => { s.textContent = (i + 1) + '.'; });
+}
+
+/* ─── URL Extraction ─── */
+function extractUrl(text) {
+  // Extract first http/https URL from mixed text
+  const m = text.match(/https?:\/\/[^\s<>"']+/i);
+  return m ? m[0].trim() : null;
+}
+
+/* ─── Quick Parse from Home ─── */
+async function quickParseLink() {
+  const raw = document.getElementById('quickLinkInput').value.trim();
+  const url = extractUrl(raw) || raw;
+  if (!raw) { showToast('请先粘贴链接'); return; }
+  const btn = document.getElementById('quickParseBtn');
+  const origText = btn.textContent;
+  btn.textContent = '解析中…';
+  btn.disabled = true;
+  try {
+    const result = await api('/api/baking/parse-link', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ url })
+    });
+    pendingParseResult = result;
+    pendingParseResult.source_url = url;
+    document.getElementById('quickLinkInput').value = '';
+    navigate('#/upload');
+  } catch(e) { showToast('解析失败: ' + e.message); }
+  finally { btn.textContent = origText; btn.disabled = false; }
+}
+
+/* ─── Image Drag/Drop/Paste for Quick Input ─── */
+let _quickImgProcessing = false;
+
+async function _processQuickImage(file) {
+  if (!file.type.startsWith('image/')) return;
+  if (_quickImgProcessing) return;
+  _quickImgProcessing = true;
+  const btn = document.getElementById('quickParseBtn');
+  const orig = btn.textContent;
+  btn.textContent = '📷 识别中…';
+  btn.disabled = true;
+  try {
+    const fd = new FormData();
+    fd.append('file', file);
+    const uploadRes = await fetch('/api/baking/upload-image', { method:'POST', body:fd });
+    if (!uploadRes.ok) throw new Error('上传失败');
+    const uploadData = await uploadRes.json();
+
+    const ocrRes = await api('/api/baking/ocr-image', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ path: uploadData.path })
+    });
+
+    const aiResult = await api('/api/baking/ai-parse-text', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ text: ocrRes.text })
+    });
+
+    if (aiResult.has_recipe !== false && aiResult.recipe_md) {
+      aiResult.cover_image = uploadData.path;
+    }
+    pendingParseResult = aiResult.has_recipe !== false ? aiResult : { recipe_md: ocrRes.text, cover_image: uploadData.path };
+    pendingParseResult.source_type = 'manual';
+    navigate('#/upload');
+  } catch(e) {
+    showToast('识别失败: ' + e.message);
+  } finally {
+    btn.textContent = orig;
+    btn.disabled = false;
+    _quickImgProcessing = false;
+  }
+}
+
+(function(){
+  const area = document.getElementById('quickLinkInput');
+  if (!area) return;
+  area.addEventListener('dragover', function(e) { e.preventDefault(); this.style.borderColor = '#8b5e3c'; this.style.background = '#f5f0e8'; });
+  area.addEventListener('dragleave', function(e) { this.style.borderColor = '#c4a882'; this.style.background = '#fff'; });
+  area.addEventListener('drop', function(e) {
+    e.preventDefault();
+    this.style.borderColor = '#c4a882'; this.style.background = '#fff';
+    const f = e.dataTransfer.files[0];
+    if (f) _processQuickImage(f);
+  });
+  area.addEventListener('paste', function(e) {
+    const items = e.clipboardData.items;
+    for (const item of items) {
+      if (item.type.startsWith('image/')) {
+        e.preventDefault();
+        _processQuickImage(item.getAsFile());
+        break;
+      }
+    }
+  });
+})();
+/* ─── AI Format Text (Text Mode) ─── */
+async function previewTxtImage() {
+  const file = document.getElementById('txtImageFile').files[0];
+  if (!file) return;
+  const preview = document.getElementById('txtImagePreview');
+  preview.innerHTML = '';
+  const img = document.createElement('img');
+  img.style.cssText = 'max-width:300px;max-height:180px;border-radius:6px;object-fit:cover';
+  img.src = URL.createObjectURL(file);
+  preview.appendChild(img);
+}
+
+async function aiFormatText() {
+  let text = document.getElementById('txtRecipeText').value.trim();
+  const fileInput = document.getElementById('txtImageFile');
+  const ocrDiv = document.getElementById('txtOcrResult');
+  const btn = document.getElementById('btnAiFormat');
+  btn.disabled = true;
+  btn.textContent = 'AI 处理中…';
+
+  try {
+    // If no text but has image, OCR first
+    if (!text && fileInput.files.length) {
+      ocrDiv.innerHTML = '<p style="color:#8a7b6b;font-size:.85rem">📷 识别图片中…</p>';
+      const fd = new FormData();
+      fd.append('file', fileInput.files[0]);
+      const uploadRes = await fetch('/api/baking/upload-image', { method:'POST', body:fd });
+      if (!uploadRes.ok) throw new Error('上传失败');
+      const uploadData = await uploadRes.json();
+      const ocrRes = await api('/api/baking/ocr-image', {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ path: uploadData.path })
+      });
+      text = ocrRes.text;
+      ocrDiv.innerHTML = '';
+    }
+
+    if (!text) { showToast('请粘贴文字或上传图片'); return; }
+
+    const aiResult = await api('/api/baking/ai-parse-text', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ text })
+    });
+
+    if (aiResult.has_recipe !== false && aiResult.recipe_md) {
+      if (fileInput.files.length) {
+        const fd = new FormData(); fd.append('file', fileInput.files[0]);
+        const ur = await fetch('/api/baking/upload-image', { method:'POST', body:fd });
+        const ud = await ur.json();
+        if (ur.ok) aiResult.cover_image = ud.path;
+      }
+      renderAIPreview(aiResult);
+      showToast('✅ AI 已整理配方，可补充后提交');
+    } else {
+      showToast('⚠️ AI 未能识别出配方格式');
+    }
+  } catch(e) {
+    showToast('处理失败: ' + e.message);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '🤖 AI 整理配方';
+  }
+}
+
+/* ─── Submit Manual Recipe ─── */
+async function submitManualRecipe(editId) {
+  const title = document.getElementById('fTitle').value.trim();
+  const uploader = document.getElementById('fUploader').value.trim();
+  if (!title) { showToast('请填写配方名称'); return; }
+  if (!uploader) { showToast('请填写你的昵称'); return; }
+
+  const ingredients = [];
+  document.querySelectorAll('.ingredient-row').forEach(row => {
+    const name = row.querySelector('.ing-name')?.value?.trim();
+    const amount = row.querySelector('.ing-amount')?.value?.trim();
+    if (name) ingredients.push({ name, amount: amount || '' });
+  });
+  const steps = [];
+  document.querySelectorAll('.step-row').forEach(row => {
+    const text = row.querySelector('.step-text')?.value?.trim();
+    if (text) steps.push({ text });
+  });
+  const tipsText = document.getElementById('fTips').value.trim();
+  const tips = tipsText ? tipsText.split('\n').filter(t => t.trim()) : [];
+  const tagsText = document.getElementById('fTags').value.trim();
+  const tags = tagsText ? tagsText.split(/[,，]/).map(t => t.trim()).filter(Boolean) : [];
+
+  let coverPath = '';
+  const coverFile = document.getElementById('coverFile').files[0];
+  if (coverFile) {
+    try {
+      const fd = new FormData(); fd.append('file', coverFile);
+      const res = await fetch('/api/baking/upload-image', { method:'POST', body:fd });
+      const data = await res.json();
+      if (res.ok) coverPath = data.path;
+    } catch(e) { showToast('封面上传失败: ' + e.message); return; }
+  }
+
+  const body = {
+    title, description: document.getElementById('fDesc').value.trim(),
+    source_url: document.getElementById('fSourceUrl').value.trim(),
+    source_type: document.getElementById('fSourceUrl').value.includes('mp.weixin.qq.com') ? 'wechat'
+      : (document.getElementById('fSourceUrl').value.includes('xiaohongshu.com') || document.getElementById('fSourceUrl').value.includes('xhslink.com')) ? 'xiaohongshu'
+      : 'manual',
+    ingredients, steps,
+    temperature: document.getElementById('fTemp').value.trim(),
+    time: document.getElementById('fTime').value.trim(),
+    servings: document.getElementById('fServings').value.trim(),
+    tips, tags, uploader_nickname: uploader,
+  };
+  if (coverPath) body.cover_image = coverPath;
+
+  try {
+    let result;
+    if (editId) {
+      result = await api('/api/baking/recipes/' + editId, {
+        method:'PATCH', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify(body)
+      });
+      showToast('配方已更新');
+    } else {
+      result = await api('/api/baking/recipes', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(body) });
+      showToast('配方提交成功！');
+    }
+    parsedRecipeData = null;
+    loadAllTags();
+    navigate('#/detail/' + (result.recipe_id || editId));
+  } catch(e) { showToast('提交失败: ' + e.message); }
+}
+
+/* ─── Random Recipe ─── */
+async function randomRecipe() {
+  try {
+    const r = await api('/api/baking/random');
+    if (!r) { showToast('还没有配方，快去上传第一个吧！'); return; }
+    navigate('#/detail/' + r.recipe_id);
+  } catch(e) { showToast('获取失败'); }
+}
+
+/* ─── Leaderboard ─── */
+async function loadLeaderboard() {
+  try {
+    const data = await api('/api/baking/leaderboard');
+    const container = document.getElementById('leaderboard');
+    if (data.length === 0) return;
+    container.innerHTML = `
+      <h3>🏆 上传者排行榜</h3>
+      <div class="leaderboard-list">
+        ${data.slice(0, 20).map((item, i) => `
+          <div class="leaderboard-item" onclick="document.getElementById('searchInput').value='${esc(item.nickname)}';searchRecipes()" style="cursor:pointer" title="点击查看 ${esc(item.nickname)} 的配方">
+            <span class="rank">${i < 3 ? ['🥇','🥈','🥉'][i] : '#'+(i+1)}</span>
+            <span>${esc(item.nickname)}</span>
+            <span class="count">${item.count}个</span>
+          </div>
+        `).join('')}
+      </div>`;
+  } catch(e) {}
+}
+</script>
+</body>
+</html>
